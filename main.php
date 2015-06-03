@@ -54,6 +54,7 @@ exit();*/
     <title>Your Surf Spots</title>
 
 </head>
+<!-- todo move all style to seperate css -->
 <body onresize="navsize()" onload="load()" style="background-color:rgb(178,208,254)">
 
 <nav id='navbar' class="navbar navbar-inverse navbar-fixed-top">
@@ -88,17 +89,14 @@ exit();*/
 
 <!-- style="margin-top: 100px;"-->
 <div id="blocker"></div>
-<div id="mainwindow" class="container-fluid">
-<?php
+<div id="mainwindow" data-spy="scroll" data-target=".navbar" class="container-fluid">
 
-foreach ($countygroups as $county => $spots) {
-  echo "<br><b> $county </b>";
-  foreach ($spots as $spot) {
-    echo "<br>{$spot['spot_name']}";
-  }
-}
+  <div class="panel panel-default">
+  <div class="panel-heading">Panel Heading</div>
+  <div class="panel-body">Panel Content</div>
+  </div>
 
-?>
+
 </div>
 
 <!-- Bootstrap Core CSS -->

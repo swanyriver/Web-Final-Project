@@ -43,6 +43,9 @@ function load() {
 
 function onCountySelect(countyName) {
   navbar = document.getElementById('spotNav');
+  body = document.getElementById('mainwindow');
+
+  clearNode(body);
   clearNode(navbar);
 
   for (var i = 0; i < spotInfo[countyName].length; i++) {
@@ -53,9 +56,39 @@ function onCountySelect(countyName) {
     anchor.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
     listitem.appendChild(anchor);
     navbar.appendChild(listitem);
+
+    //add spot to body
+    var panel = document.createElement('div');
+    panel.setAttribute('class', 'panel panel-default');
+    panel.setAttribute('id', spotInfo[countyName][i]['spot_name']);
+    var pHead = document.createElement('div');
+    pHead.setAttribute('class', 'panel-heading');
+    var pBody = document.createElement('div');
+    pBody.setAttribute('class', 'panel-body');
+
+    pHead.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
+    pBody.appendChild(document.createTextNode("place holding for now"));
+
+    panel.appendChild(pHead);
+    panel.appendChild(pBody);
+    body.appendChild(panel);
+    body.appendChild(document.createElement('br'));
+    body.appendChild(document.createElement('br'));
+    body.appendChild(document.createElement('br'));
+    body.appendChild(document.createElement('br'));
+    body.appendChild(document.createElement('br'));
+    body.appendChild(document.createElement('br'));
+    body.appendChild(document.createElement('br'));
+    body.appendChild(document.createElement('br'));
+    body.appendChild(document.createElement('br'));
+    body.appendChild(document.createElement('br'));
+    body.appendChild(document.createElement('br'));
+
   }
 
-  //todo fill in body
+  navsize();
+
+
 }
 
 
