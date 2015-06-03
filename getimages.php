@@ -13,7 +13,11 @@ foreach ($allspots as $spot) {
   $countygroups[$spot['county_name']][] = $spot;
 }
 
+foreach ($countygroups as $county => $group) {
+  echo "$county :" . count($group) . "spots \n";
+}
 
+exit();
 
 ?>
 
