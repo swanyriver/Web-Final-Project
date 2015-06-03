@@ -1,5 +1,8 @@
 <?php
 
+/////////////////////////////////////////
+///////////cached computation///////////
+////////////////////////////////////////
 $json_spots = file_get_contents("allspots.json");
 $allspots = json_decode($json_spots, true);
 
@@ -13,6 +16,18 @@ foreach ($allspots as $spot) {
 }
 $counties = array_keys($countygroups);
 
+$jfile = fopen('countygroups.json', 'w');
+fwrite($jfile, json_encode($countygroups));
+fclose($jfile);
+
+//todo get this to work
+/*
+$jsondata=file_get_contents("countygroups.json");
+$countygroups = json_decode($jsondata)['array'];
+$counties = array_keys($countygroups);
+echo $counties;
+exit();
+*/
 ?>
 
 <!DOCTYPE html>
@@ -22,18 +37,16 @@ $counties = array_keys($countygroups);
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <script type="text/javascript" src="navsize.js"></script>
+    <script type="text/javascript" src="source.js"></script>
 
     <title>Your Surf Spots</title>
 
-    
-
 </head>
-<body onresize="navsize()" onload="navsize()">
+<body onresize="navsize()" onload="load()">
 
 <nav id='navbar' class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
@@ -47,7 +60,7 @@ $counties = array_keys($countygroups);
         <ul class="nav nav-pills nav-justified">
           <?php
           foreach ($counties as $count) {
-            #todo define onclick function to load content in body
+            #TODO define onclick function to load content in body
             echo "<li><a href='#'>$count</a></li>";
           }
           ?>
@@ -79,8 +92,6 @@ foreach ($countygroups as $county => $spots) {
   foreach ($spots as $spot) {
     echo "<br>{$spot['spot_name']}";
   }
-  #echo $countyurl;
-  echo "<img src=$countyurl>";
 }
 
 ?>
