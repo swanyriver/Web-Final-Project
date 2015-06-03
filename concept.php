@@ -3,7 +3,14 @@
 $json_spots = file_get_contents("allspots.json");
 $allspots = json_decode($json_spots, true);
 
-$counties = array("Del Norte", "Humboldt", "Mendocino", "Sonoma", "Marin", "San Francisco", "San Mateo", "Santa Cruz", "Monterey", "San Luis Obispo", "Santa Barbara", "Ventura", "Los Angeles", "Orange County", "San Diego", );
+$countygroups = array();
+foreach ($allspots as $spot) {
+  if(!array_key_exists($spot['county_name'],$countygroups)){
+    $countygroups[$spot['county_name']] = array();
+  }
+  $countygroups[$spot['county_name']][] = $spot;
+}
+$counties = array_keys($countygroups);
 
 ?>
 
