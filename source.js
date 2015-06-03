@@ -13,7 +13,6 @@ function navsize() {
 
   console.log('resize:' + height);
 
-  //todo call in onload
   //todo if we are full collumn, make nav not fixed it will cover the content
   
 }
@@ -42,6 +41,27 @@ function load() {
 
 }
 
-function onCountySelect(name) {
+function onCountySelect(countyName) {
+  navbar = document.getElementById('spotNav');
+  clearNode(navbar);
 
+  for (var i = 0; i < spotInfo[countyName].length; i++) {
+    //<li><a href='#'>test1</a></li>
+    var listitem = document.createElement('li');
+    var anchor = document.createElement('a');
+    anchor.setAttribute('href', '#' + spotInfo[countyName][i]['spot_name']);
+    anchor.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
+    listitem.appendChild(anchor);
+    navbar.appendChild(listitem);
+  }
+
+  //todo fill in body
+}
+
+
+//empyt contents of an HTML element
+function clearNode(node) {
+    while (node.firstChild) {
+        node.removeChild(node.firstChild);
+    }
 }

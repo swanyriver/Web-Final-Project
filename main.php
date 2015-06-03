@@ -54,7 +54,7 @@ exit();*/
     <title>Your Surf Spots</title>
 
 </head>
-<body onresize="navsize()" onload="load()">
+<body onresize="navsize()" onload="load()" style="background-color:rgb(178,208,254)">
 
 <nav id='navbar' class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
@@ -69,16 +69,12 @@ exit();*/
           <?php
           foreach ($counties as $count) {
             #TODO define onclick function to load content in body
-            echo "<li><a href='#'>$count</a></li>";
+            echo "<li><a onclick='onCountySelect(\"$count\")'>$count</a></li>";
           }
           ?>
         </ul>
         <br>
-        <ul class="nav nav-pills">
-          <li><a href='#'>test1</a></li>
-          <li><a href='#'>test1</a></li>
-          <li><a href='#'>test1</a></li>
-          <li><a href='#'>test1</a></li>
+        <ul id="spotNav" class="nav navbar-nav">
         </ul>
       </div>
 
