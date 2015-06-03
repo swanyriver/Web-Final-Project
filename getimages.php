@@ -5,7 +5,20 @@ $allspots = json_decode($json_spots, true);
 
 $counties = array("Del Norte", "Humboldt", "Mendocino", "Sonoma", "Marin", "San Francisco", "San Mateo", "Santa Cruz", "Monterey", "San Luis Obispo", "Santa Barbara", "Ventura", "Los Angeles", "Orange County", "San Diego", );
 
+$countygroups = array();
+
+foreach ($allspots as $spot) {
+  if(!array_key_exists($spot['county_name'],$countygroups)){
+    $countygroups[$spot['county_name']] = array();
+  }
+  $countygroups[$spot['county_name']][] = $spot;
+}
+
+
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,38 +38,14 @@ $counties = array("Del Norte", "Humboldt", "Mendocino", "Sonoma", "Marin", "San 
 </head>
 <body>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-<h3>Centered Tabs</h3>
-<ul class="nav nav-tabs nav-justified">
 <?php
-foreach ($counties as $count) {
-  #todo define onclick function to load content in body
-  echo "<li><a href='#'>$count</a></li>";
+foreach ($countygroups as $county => $spots) {
+  echo "<br><b> $county </b>";
+  foreach ($spots as $spot) {
+    echo "{$spot["spot_name"]}";
+  }
 }
 ?>
-</ul>
-</nav>    
 
-<?php
-
-$county = '';
-echo "counties = array(";
-foreach ($allspots as $spot) {
-  echo "{$spot['spot_name']} --  {$spot['county_name']} -- {$spot['latitude']} <br>";
-}
-echo ");";
-
-?>
-
-<!-- Bootstrap Core CSS -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-
-<!-- jQuery -->
-<script src="js/jquery.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
-  
 </body>
-
 </html>
