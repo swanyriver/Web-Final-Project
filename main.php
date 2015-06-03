@@ -16,18 +16,26 @@ foreach ($allspots as $spot) {
 }
 $counties = array_keys($countygroups);
 
-$jfile = fopen('countygroups.json', 'w');
+if($_POST['request']=='spotinfo'){
+  echo json_encode($countygroups);
+  exit();
+}
+
+
+/*$jfile = fopen('countygroups.json', 'w');
 fwrite($jfile, json_encode($countygroups));
-fclose($jfile);
+fclose($jfile);*/
 
 //todo get this to work
-/*
-$jsondata=file_get_contents("countygroups.json");
-$countygroups = json_decode($jsondata)['array'];
+//todo or make an SQL instead
+/*$jsondata=file_get_contents("countygroups.json");
+$countygroups = json_decode($jsondata, true);
+var_dump($countygroups['Array']);
+
 $counties = array_keys($countygroups);
 echo $counties;
-exit();
-*/
+exit();*/
+
 ?>
 
 <!DOCTYPE html>
