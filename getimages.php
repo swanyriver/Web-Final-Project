@@ -45,7 +45,7 @@ foreach ($allspots as $spot) {
   }
 }*/
 $pipe = "%7C";
-$url = "https://maps.googleapis.com/maps/api/staticmap?size=1020x1280&markers=";
+$url = "https://maps.googleapis.com/maps/api/staticmap?size=600x600&markers=";
 
 foreach ($countygroups as $county => $spots) {
   echo "<br><b> $county </b><br>";
@@ -56,6 +56,13 @@ foreach ($countygroups as $county => $spots) {
   #echo $countyurl;
   echo "<img src=$countyurl>";
 }
+
+/*foreach ($countygroups['San Mateo'] as $spot) {
+  echo "<br> {$spot['spot_name']}";
+  $myurl = $url . $spot['latitude'] . "," . $spot['longitude'];
+  echo "<img src=$myurl>";
+}*/
+
 ?>
 
 </body>

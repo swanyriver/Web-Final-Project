@@ -5,6 +5,7 @@ $allspots = json_decode($json_spots, true);
 
 $countygroups = array();
 foreach ($allspots as $spot) {
+  if ($spot["county_name"] == "Santa Cruz") break;
   if(!array_key_exists($spot['county_name'],$countygroups)){
     $countygroups[$spot['county_name']] = array();
   }
@@ -46,12 +47,14 @@ foreach ($counties as $count) {
 
 <?php
 
-$county = '';
-echo "counties = array(";
-foreach ($allspots as $spot) {
-  echo "{$spot['spot_name']} --  {$spot['county_name']} -- {$spot['latitude']} <br>";
+foreach ($countygroups as $county => $spots) {
+  echo "<br><b> $county </b>";
+  foreach ($spots as $spot) {
+    echo "<br>{$spot['spot_name']}";
+  }
+  #echo $countyurl;
+  echo "<img src=$countyurl>";
 }
-echo ");";
 
 ?>
 
