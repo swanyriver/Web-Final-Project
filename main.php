@@ -17,18 +17,32 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 
     <script type="text/javascript" src="source.js"></script>
 
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- my CSS -->
+    <link href="css/style.css" rel="stylesheet">
+
     <title>Your Surf Spots</title>
 
 </head>
 <!-- todo move all style to seperate css -->
-<body onresize="navsize()" onload="load()" style="background-color:rgb(178,208,254)">
+<body onresize="navsize()" onload="load()">
 
 <nav id='navbar' class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="row">
 
-      <div class = "col-lg-2">
-        <img src="logo.png" style="height:100px; width:auto;">
+      <div id="logo" class = "col-lg-2">
+        <a onclick="mySpots()" >
+          <img src="logo.png">
+        </a>
       </div>
 
       <div class="col-lg-9">
@@ -57,25 +71,73 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 <!-- data-spy="scroll" data-target=".navbar"
 //todo get navspy activity to work
 -->
-<div id="mainwindow" class="container-fluid">
+<div class="container-fluid">
+<div class="row">
+<div id="mainwindow" class="col-lg-8">
+  <!--todo make a splash page, if they arent logged in! -->
+    <div class="panel panel-default">
+    <div class="panel-heading"> <span "spotLabel"> spot name </span>
+    <a class="favoriteButton" onclick="favorite(spotid)">
+      <span class="glyphicon glyphicon-star-empty"></span>
+    </a>
+    </div>
+    <div class="panel-body">
 
-<!--todo make a splash page, if they arent logged in! -->
-  <div class="panel panel-default">
-  <div class="panel-heading">Panel Heading</div>
-  <div class="panel-body">Panel Content</div>
-  </div>
+    <div clas="row">
 
+      <!---weather -->
+      <div class="col-lg-3">
+        <label>Weather</label> <br>
+
+        icon <br> 88&deg; 
+
+        <div style="float:right">
+        HI:<br>
+        LO:
+        </div>
+      </div>
+
+      <!---water temp -->
+      <div class="col-lg-3">
+        <label>Water Temp</label> <br>
+
+        55&deg; 
+
+      </div>
+
+      <!---wave height -->
+      <div class="col-lg-3">
+        <label>wave height</label> <br>
+
+        10ft 
+
+        <div style="float:right">
+        HI:<br>
+        LO:
+        </div>
+      </div>
+
+      <!---grade -->
+      <div class="col-lg-3">
+        <label>Rating</label> <br>
+        <hr>
+        it sucks
+      </div>
+
+
+    </div>
+
+    </div>
+    </div>
+</div>
+<div class="col-lg-4">
+<!-- todo figure out how to get the map to display over here -->
+</div>
+</div>
 
 </div>
 
-<!-- Bootstrap Core CSS -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
 
-<!-- jQuery -->
-<script src="js/jquery.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
   
 </body>
 
