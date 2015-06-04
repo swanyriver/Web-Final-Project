@@ -20,7 +20,6 @@ function navsize() {
 function load() {
   navsize();
 
-  //todo load in names of spots and county groups and ids
   // for later making ajax calls
   var spotReq = new XMLHttpRequest();
   //todo respond to error creating
@@ -67,28 +66,75 @@ function onCountySelect(countyName) {
     pBody.setAttribute('class', 'panel-body');
 
     pHead.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
-    pBody.appendChild(document.createTextNode("place holding for now"));
 
     panel.appendChild(pHead);
     panel.appendChild(pBody);
     body.appendChild(panel);
-    body.appendChild(document.createElement('br'));
-    body.appendChild(document.createElement('br'));
-    body.appendChild(document.createElement('br'));
-    body.appendChild(document.createElement('br'));
-    body.appendChild(document.createElement('br'));
-    body.appendChild(document.createElement('br'));
-    body.appendChild(document.createElement('br'));
-    body.appendChild(document.createElement('br'));
-    body.appendChild(document.createElement('br'));
-    body.appendChild(document.createElement('br'));
-    body.appendChild(document.createElement('br'));
-
   }
 
   navsize();
 
+  for (var i = 0; i < spotInfo[countyName].length; i++) {
+    //add spot to body
+    var panel = document.createElement('div');
+    panel.setAttribute('class', 'panel panel-default');
+    panel.setAttribute('id', spotInfo[countyName][i]['spot_name']);
+    var pHead = document.createElement('div');
+    pHead.setAttribute('class', 'panel-heading');
+    var pBody = document.createElement('div');
+    pBody.setAttribute('class', 'panel-body');
 
+    pHead.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
+
+    panel.appendChild(pHead);
+    panel.appendChild(pBody);
+    //body.appendChild(panel);
+
+    var anchor = document.createElement('a');
+    anchor.setAttribute('class','spotAnchor');
+    anchor.setAttribute('id',spotInfo[countyName][i]['spot_name']);
+    body.appendChild(anchor);
+
+    makeAjaxcalls(spotInfo[countyName][i],pBody);
+
+  }
+
+  waterTempAjax(countyName);
+}
+
+function waterTempAjax(countyName){
+  console.log("water temp for " + countyName);
+
+  //todo implement
+  //todo make ajax for water temp
+  //todo define class of html element in each list item to update
+}
+
+function makeAjaxcalls(spot, htmlContainer){
+
+  //Spitcast call
+  var spotReq = new XMLHttpRequest();
+  //todo respond to error creating
+
+  spotReq.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      if (this.response) {
+        ajaxReturnSpitcast(spot,htmlContainer,this.response);
+      } else {
+        console.log(spot['spot_name'] + " response:" + this.status);
+      }
+    }
+  };
+
+  var url = "http://api.spitcast.com/api/spot/forecast/" + spot['spot_id'] + "/";
+  console.log(url);
+  spotReq.open('GET', url);
+  spotReq.send('request=spotinfo');
+
+}
+
+function ajaxReturnSpitcast(spot,htmlContainer, JSONdata){
+  htmlContainer.appendChild(document.createTextNode(JSONdata));
 }
 
 

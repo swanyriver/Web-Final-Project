@@ -87,9 +87,11 @@ exit();*/
   </div>
 </nav>
 
-<!-- style="margin-top: 100px;"-->
 <div id="blocker"></div>
-<div id="mainwindow" data-spy="scroll" data-target=".navbar" class="container-fluid">
+<!-- data-spy="scroll" data-target=".navbar"
+//todo get navspy activity to work
+-->
+<div id="mainwindow" class="container-fluid">
 
   <div class="panel panel-default">
   <div class="panel-heading">Panel Heading</div>
