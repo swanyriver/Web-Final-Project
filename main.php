@@ -76,7 +76,8 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 <div id="mainwindow" class="col-lg-8">
   <!--todo make a splash page, if they arent logged in! -->
     <div class="panel panel-default">
-    <div class="panel-heading"> <span "spotLabel"> spot name </span>
+    <div class="panel-heading">
+    <span "spotLabel"> spot name </span>
     <a class="favoriteButton" onclick="favorite(spotid)">
       <span class="glyphicon glyphicon-star-empty"></span>
     </a>
@@ -86,41 +87,45 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
     <div clas="row">
 
       <!---weather -->
-      <div class="col-lg-3">
+      <div class="col-lg-4">
         <label>Weather</label> <br>
-
-        icon <br> 88&deg; 
-
-        <div style="float:right">
-        HI:<br>
-        LO:
+          <div class="reportSection">
+          <img class="weatherIcon">
+          <div style="float:left">
+          88&deg; 
+          </div>
+          <div>
+          HI:<br>
+          LO:
+          </div>
         </div>
       </div>
 
       <!---water temp -->
       <div class="col-lg-3">
+      
         <label>Water Temp</label> <br>
-
+        <div class="reportSection">
         55&deg; 
-
+        </div>
       </div>
 
       <!---wave height -->
       <div class="col-lg-3">
         <label>wave height</label> <br>
+        <div class="reportSection">
+        <div class="waveHeightText"> 10ft </div> 
 
-        10ft 
-
-        <div style="float:right">
+        <div>
         HI:<br>
         LO:
+        </div>
         </div>
       </div>
 
       <!---grade -->
-      <div class="col-lg-3">
+      <div class="col-lg-2">
         <label>Rating</label> <br>
-        <hr>
         it sucks
       </div>
 
