@@ -46,38 +46,36 @@ function onCountySelect(countyName) {
 
   navsize();
 
-  for (var i = 0; i < spotInfo[countyName].length; i++) {
+  spotviews = [];
 
-    //add spot to body
-    var views = createPanel(spotInfo[countyName][i], body);
+  for (var i = 0; i < spotInfo[countyName].length; i++) {
 
     var anchor = document.createElement('a');
     anchor.setAttribute('class', 'spotAnchor');
     anchor.setAttribute('id', spotInfo[countyName][i]['spot_name']);
     body.appendChild(anchor);
 
-    console.log(views['WeatherBox']);
-    console.log(views['WeatherBox'].getElementsByClassName('Temperature')[0]);
-    views['WeatherBox'].getElementsByClassName('Temperature')[0].appendChild(document.createTextNode('88'));
-    views['WaterBox'].getElementsByClassName('Temperature')[0].appendChild(document.createTextNode('55'));
-
-    //todo reactivate when html is ready
-    //makeAjaxcalls(spotInfo[countyName][i], document.getElementById(spotInfo[countyName][i]['spot_id']));
+    //add spot to body
+    spotviews[i] = createPanel(spotInfo[countyName][i], body);
 
   }
 
   waterTempAjax(countyName);
+
+  for (var i = 0; i < spotInfo[countyName].length; i++) {
+    makeAjaxcalls(spotInfo[countyName][i], spotviews[i]);
+  }
 }
 
 function waterTempAjax(countyName) {
-  console.log("water temp for " + countyName);
+  console.log("water temp request for " + countyName);
 
   //todo implement
   //todo make ajax for water temp
   //todo define class of html element in each list item to update
 }
 
-function makeAjaxcalls(spot, htmlContainer) {
+function makeAjaxcalls(spot, views) {
 
   //Spitcast call
   var spotReq = new XMLHttpRequest();
@@ -86,7 +84,7 @@ function makeAjaxcalls(spot, htmlContainer) {
   spotReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
       if (this.response) {
-        ajaxReturnSpitcast(spot, htmlContainer, this.response);
+        ajaxReturnSpitcast(views['WaveBox'], views['GradeBox'], this.response);
       } else {
         //todo handle errer here
         console.log(spot['spot_name'] + " response:" + this.status);
@@ -101,13 +99,31 @@ function makeAjaxcalls(spot, htmlContainer) {
 
 }
 
-function ajaxReturnSpitcast(spot, htmlContainer, JSONdata) {
+function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata) {
 
   var spotForcast = JSON.parse(JSONdata);
 
-  var currentConditions = JSON.stringify(spotForcast[getPSTtime()]);
+  var currentConditions = spotForcast[getPSTtime()];
 
-  htmlContainer.appendChild(document.createTextNode(currentConditions));
+  var gradeout = GradeBox.getElementsByClassName('grade')[0];
+  gradeout.appendChild(document.createTextNode(currentConditions['shape_full']));
+
+  var waveout = WaveBox.getElementsByClassName('waveHeight')[0];
+  waveout.appendChild(document.createTextNode(currentConditions['size'] + 'ft'));
+
+  var min = parseInt(spotForcast[0]['size'], 10);
+  var max = parseInt(spotForcast[0]['size'], 10);
+  for (var i = 1; i < spotForcast.length; i++) {
+    if (parseInt(spotForcast[i]['size'], 10) > max)
+      max = parseInt(spotForcast[0]['size'], 10);
+    if (parseInt(spotForcast[i]['size'], 10) < min)
+      min = parseInt(spotForcast[0]['size'], 10);
+  }
+
+  var wavehilo = WaveBox.getElementsByClassName('hilo')[0];
+  wavehilo.appendChild(document.createTextNode('HI:' + max));
+  wavehilo.appendChild(document.createElement('br'));
+  wavehilo.appendChild(document.createTextNode('LO:' + min));
 }
 
 function favorite(spotid) {
