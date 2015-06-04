@@ -59,6 +59,7 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 -->
 <div id="mainwindow" class="container-fluid">
 
+<!--todo make a splash page, if they arent logged in! -->
   <div class="panel panel-default">
   <div class="panel-heading">Panel Heading</div>
   <div class="panel-body">Panel Content</div>
