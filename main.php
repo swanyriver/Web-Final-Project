@@ -40,7 +40,7 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
     <div class="row">
 
       <div id="logo" class = "col-lg-2">
-        <a onclick="mySpots()" >
+        <a href="#" onclick="mySpots()" >
           <img src="logo.png">
         </a>
       </div>
@@ -75,7 +75,7 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 <div class="row">
 <div id="mainwindow" class="col-lg-8">
   <!--todo make a splash page, if they arent logged in! -->
-    <div class="panel panel-default">
+    <div class="panel panel-default" id="testpanel">
     <div class="panel-heading">
     <span "spotLabel"> spot name </span>
     <a class="favoriteButton" onclick="favorite(spotid)">

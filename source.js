@@ -49,26 +49,20 @@ function onCountySelect(countyName) {
   for (var i = 0; i < spotInfo[countyName].length; i++) {
 
     //add spot to body
-    var panel = document.createElement('div');
-    panel.setAttribute('class', 'panel panel-default');
-    panel.setAttribute('id', spotInfo[countyName][i]['spot_id']);
-    var pHead = document.createElement('div');
-    pHead.setAttribute('class', 'panel-heading');
-    var pBody = document.createElement('div');
-    pBody.setAttribute('class', 'panel-body');
-
-    pHead.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
-
-    panel.appendChild(pHead);
-    panel.appendChild(pBody);
-    body.appendChild(panel);
+    var views = createPanel(spotInfo[countyName][i], body);
 
     var anchor = document.createElement('a');
     anchor.setAttribute('class', 'spotAnchor');
     anchor.setAttribute('id', spotInfo[countyName][i]['spot_name']);
     body.appendChild(anchor);
 
-    makeAjaxcalls(spotInfo[countyName][i], document.getElementById(spotInfo[countyName][i]['spot_id']));
+    console.log(views['WeatherBox']);
+    console.log(views['WeatherBox'].getElementsByClassName('Temperature')[0]);
+    views['WeatherBox'].getElementsByClassName('Temperature')[0].appendChild(document.createTextNode('88'));
+    views['WaterBox'].getElementsByClassName('Temperature')[0].appendChild(document.createTextNode('55'));
+
+    //todo reactivate when html is ready
+    //makeAjaxcalls(spotInfo[countyName][i], document.getElementById(spotInfo[countyName][i]['spot_id']));
 
   }
 
@@ -116,6 +110,92 @@ function ajaxReturnSpitcast(spot, htmlContainer, JSONdata) {
   htmlContainer.appendChild(document.createTextNode(currentConditions));
 }
 
+function createPanel(spot, body) {
+
+  var views = [];
+
+  var panel = document.createElement('div');
+  panel.setAttribute('class', 'panel panel-default');
+  panel.setAttribute('id', spot['spot_id']);
+  var pHead = document.createElement('div');
+  pHead.setAttribute('class', 'panel-heading');
+  var pBody = document.createElement('div');
+  pBody.setAttribute('class', 'panel-body');
+
+  pHead.appendChild(document.createTextNode(spot['spot_name']));
+  panel.appendChild(pHead);
+
+  var WeatherBox = createReportBox('Weather', 4, 'WeatherBox');
+  var WaterBox = createReportBox('Water Temperature', 3, 'WaterBox');
+  var WaveBox = createReportBox('Wave Height', 3, 'WaveBox');
+  var GradeBox = createReportBox('Current Rating', 2, 'GradeBox');
+
+  var WeatherBoxReport = WeatherBox.lastChild;
+  var WaterBoxReport = WaterBox.lastChild;
+  var WaveBoxReport = WaveBox.lastChild;
+  var GradeBoxReport = GradeBox.lastChild;
+
+  var weatherIcon = document.createElement('img');
+  weatherIcon.setAttribute('class', 'weatherIcon');
+  WeatherBoxReport.appendChild(weatherIcon);
+  var temp = document.createElement('div');
+  temp.setAttribute('class', 'Temperature');
+  WeatherBoxReport.appendChild(temp);
+  var hilo = document.createElement('div');
+  hilo.setAttribute('class', 'hilo');
+  WeatherBoxReport.appendChild(hilo);
+
+  var watertemp = document.createElement('div');
+  watertemp.setAttribute('class', 'Temperature');
+  WaterBoxReport.appendChild(watertemp);
+
+  var waveH = document.createElement('div');
+  waveH.setAttribute('class', 'waveHeight');
+  WaveBoxReport.appendChild(waveH);
+  var whilo = document.createElement('div');
+  whilo.setAttribute('class', 'hilo');
+  WaveBoxReport.appendChild(whilo);
+
+  var grade = document.createElement('div');
+  grade.setAttribute('class', 'grade');
+  GradeBoxReport.appendChild(grade);
+
+
+  pBody.appendChild(WeatherBox);
+  pBody.appendChild(WaterBox);
+  pBody.appendChild(WaveBox);
+  pBody.appendChild(GradeBox);
+
+  panel.appendChild(pBody);
+  body.appendChild(panel);
+
+  //get hooks to views
+  var mypanel = document.getElementById(spot['spot_id']);
+
+  views['WeatherBox'] = mypanel.getElementsByClassName('WeatherBox')[0];
+  views['WaterBox'] = mypanel.getElementsByClassName('WaterBox')[0];
+  views['WaveBox'] = mypanel.getElementsByClassName('WaveBox')[0];
+  views['GradeBox'] = mypanel.getElementsByClassName('GradeBox')[0];
+
+  return views;
+
+}
+
+function createReportBox(name, width, classname) {
+  //creating report square
+  var box = document.createElement('div');
+  box.setAttribute('class', 'col-lg-' + width);
+  var heading = document.createElement('label');
+  heading.setAttribute('class', 'ReportHeading');
+  heading.appendChild(document.createTextNode(name));
+  box.appendChild(heading);
+  box.appendChild(document.createElement('br'));
+  var report = document.createElement('div');
+  report.setAttribute('class', 'reportSection ' + classname);
+  box.appendChild(report);
+
+  return box;
+}
 
 //empyt contents of an HTML element
 function clearNode(node) {
