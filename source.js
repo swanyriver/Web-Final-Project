@@ -42,10 +42,16 @@ function onCountySelect(countyName) {
     listitem.appendChild(anchor);
     navbar.appendChild(listitem);
 
+  }
+
+  navsize();
+
+  for (var i = 0; i < spotInfo[countyName].length; i++) {
+
     //add spot to body
     var panel = document.createElement('div');
     panel.setAttribute('class', 'panel panel-default');
-    panel.setAttribute('id', spotInfo[countyName][i]['spot_name']);
+    panel.setAttribute('id', spotInfo[countyName][i]['spot_id']);
     var pHead = document.createElement('div');
     pHead.setAttribute('class', 'panel-heading');
     var pBody = document.createElement('div');
@@ -56,32 +62,13 @@ function onCountySelect(countyName) {
     panel.appendChild(pHead);
     panel.appendChild(pBody);
     body.appendChild(panel);
-  }
-
-  navsize();
-
-  for (var i = 0; i < spotInfo[countyName].length; i++) {
-    //add spot to body
-    var panel = document.createElement('div');
-    panel.setAttribute('class', 'panel panel-default');
-    panel.setAttribute('id', spotInfo[countyName][i]['spot_name']);
-    var pHead = document.createElement('div');
-    pHead.setAttribute('class', 'panel-heading');
-    var pBody = document.createElement('div');
-    pBody.setAttribute('class', 'panel-body');
-
-    pHead.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
-
-    panel.appendChild(pHead);
-    panel.appendChild(pBody);
-    //body.appendChild(panel);
 
     var anchor = document.createElement('a');
     anchor.setAttribute('class', 'spotAnchor');
     anchor.setAttribute('id', spotInfo[countyName][i]['spot_name']);
     body.appendChild(anchor);
 
-    makeAjaxcalls(spotInfo[countyName][i], document.getElementById(spotInfo[countyName][i]['spot_name']));
+    makeAjaxcalls(spotInfo[countyName][i], document.getElementById(spotInfo[countyName][i]['spot_id']));
 
   }
 
