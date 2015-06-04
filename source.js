@@ -95,7 +95,7 @@ function onCountySelect(countyName) {
     anchor.setAttribute('id',spotInfo[countyName][i]['spot_name']);
     body.appendChild(anchor);
 
-    makeAjaxcalls(spotInfo[countyName][i],pBody);
+    makeAjaxcalls(spotInfo[countyName][i],document.getElementById(spotInfo[countyName][i]['spot_name']));
 
   }
 
@@ -121,15 +121,16 @@ function makeAjaxcalls(spot, htmlContainer){
       if (this.response) {
         ajaxReturnSpitcast(spot,htmlContainer,this.response);
       } else {
+        //todo handle errer here
         console.log(spot['spot_name'] + " response:" + this.status);
       }
     }
   };
 
   var url = "http://api.spitcast.com/api/spot/forecast/" + spot['spot_id'] + "/";
-  console.log(url);
-  spotReq.open('GET', url);
-  spotReq.send('request=spotinfo');
+  spotReq.open('POST', 'corsurl.php');
+  spotReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  spotReq.send('url=' + url);
 
 }
 
