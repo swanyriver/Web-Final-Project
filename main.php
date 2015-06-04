@@ -1,40 +1,6 @@
 <?php
 
-/////////////////////////////////////////
-///////////cached computation///////////
-////////////////////////////////////////
-$json_spots = file_get_contents("allspots.json");
-$allspots = json_decode($json_spots, true);
-
-$countygroups = array();
-foreach ($allspots as $spot) {
-  if ($spot["county_name"] == "Santa Cruz") break;
-  if(!array_key_exists($spot['county_name'],$countygroups)){
-    $countygroups[$spot['county_name']] = array();
-  }
-  $countygroups[$spot['county_name']][] = $spot;
-}
-$counties = array_keys($countygroups);
-
-if($_POST['request']=='spotinfo'){
-  echo json_encode($countygroups);
-  exit();
-}
-
-
-/*$jfile = fopen('countygroups.json', 'w');
-fwrite($jfile, json_encode($countygroups));
-fclose($jfile);*/
-
-//todo get this to work
-//todo or make an SQL instead
-/*$jsondata=file_get_contents("countygroups.json");
-$countygroups = json_decode($jsondata, true);
-var_dump($countygroups['Array']);
-
-$counties = array_keys($countygroups);
-echo $counties;
-exit();*/
+$counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 
 ?>
 

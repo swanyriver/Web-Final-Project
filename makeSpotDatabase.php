@@ -74,6 +74,10 @@ foreach ($allspots as $spot) {
   }*/
 }
 
-echo json_encode($countygroups);
+//echo json_encode($countygroups);
+$counties = array_keys($countygroups);
+foreach ($counties as $value) {
+  echo "\"$value\",";
+} 
 
 ?>
