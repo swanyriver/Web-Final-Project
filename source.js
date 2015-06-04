@@ -110,6 +110,14 @@ function ajaxReturnSpitcast(spot, htmlContainer, JSONdata) {
   htmlContainer.appendChild(document.createTextNode(currentConditions));
 }
 
+function favorite(spotid) {
+  //todo implement
+}
+
+function mySpots() {
+  //todo implement
+}
+
 function createPanel(spot, body) {
 
   var views = [];
@@ -123,6 +131,16 @@ function createPanel(spot, body) {
   pBody.setAttribute('class', 'panel-body');
 
   pHead.appendChild(document.createTextNode(spot['spot_name']));
+
+  var favlink = document.createElement('a');
+  favlink.setAttribute('class', 'favoriteButton');
+  favlink.setAttribute('onclick', 'favorite(' + spot['spot_id'] + ')');
+  var favglyph = document.createElement('span');
+  favglyph.setAttribute('class', 'glyphicon glyphicon-star-empty');
+  favlink.appendChild(favglyph);
+  pHead.appendChild(favlink);
+
+
   panel.appendChild(pHead);
 
   var WeatherBox = createReportBox('Weather', 4, 'WeatherBox');
