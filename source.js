@@ -342,7 +342,7 @@ function createPanel(spot, body) {
   var description = document.createElement('div');
   description.setAttribute('class', 'weatherDescription');
   thirdbox.appendChild(description);
-  thirdbox.appendChild(document.createElement('br'));
+  //thirdbox.appendChild(document.createElement('br'));
   var hilo = document.createElement('div');
   hilo.setAttribute('class', 'hilo');
 
@@ -411,7 +411,7 @@ function createReportBox(name, width, classname) {
   heading.setAttribute('class', 'ReportHeading');
   heading.appendChild(document.createTextNode(name));
   box.appendChild(heading);
-  box.appendChild(document.createElement('br'));
+  //box.appendChild(document.createElement('br'));
   var report = document.createElement('div');
   report.setAttribute('class', 'reportSection ' + classname);
   box.appendChild(report);
