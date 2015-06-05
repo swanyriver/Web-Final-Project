@@ -451,6 +451,36 @@ function getPSTtime() {
 function user(request) {
   console.log(request);
 
+  //todo maybe check for bad chars and empties here
+  //todo before encoding and sending to php
+  var nameIn = document.getElementById('loginUserName');
+  var passIn = document.getElementById('loginPassword');
+  var submit = document.getElementById('submitLogin');
+  var buttons = submit.getElementsByTagName('button');
+  var message = document.getElementById('loginMessage');
+
+  function message(msg) {
+    message.innerHTML = '';
+    var msgNode = document.createTextNode(msg);
+    message.appendChild(msgNode);
+  }
+
+  function check(name, pass) {
+    if (name == '' && pass == '') {
+      return false;
+    }
+  }
+
+  function buttonControl(nameform, passform) {
+    if (check(nameform.value, passform.value)) {
+      buttons[0].removeAttribute('disabled');
+      buttons[1].removeAttribute('disabled');
+    } else {
+      buttons[0].setAttribute('disabled', 'true');
+      buttons[1].setAttribute('disabled', 'true');
+    }
+  }
+
   loginReq = new XMLHttpRequest();
 
   loginReq.onreadystatechange = function() {
@@ -466,15 +496,11 @@ function user(request) {
     }
   };
 
-  //todo maybe check for bad chars and empties here
-  //todo before encoding and sending to php
-
-  var nameIn = document.getElementById('loginUserName');
   var nameData = encodeURIComponent(nameIn.value);
-  var passIn = document.getElementById('loginPassword');
   var passData = encodeURIComponent(passIn.value);
 
   var postPs = 'username=' + nameData + '&password=' + passData;
+  postPS += '&request=' + request;
   loginReq.open('POST', 'login.php');
   loginReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   loginReq.send(postPs);
