@@ -136,14 +136,38 @@ function makeAjaxcalls(spot, views) {
   spotReq.send();
 
   ///////weather call///////////
+  
+
+  var weatherReq = new XMLHttpRequest();
+  //todo respond to error creating
+
+  weatherReq.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      if (this.response) {
+        ajaxReturnWeather(views['WeatherBox'], this.response);
+      } else {
+        //todo handle errer here
+        console.log(spot['spot_name'] + " response:" + this.status);
+      }
+    }
+  };
+
   var wurl = 'http://api.openweathermap.org/data/2.5/forecast/daily';
   var lat = 'lat=' + spot['latitude'];
   var lon = 'lon=' + spot['longitude'];
   var weatheroptions = 'cnt=1&mode=json';
   var weatherRequest = wurl + '?' + lat + '&' + lon + '&' + weatheroptions;
 
-  console.log(weatherRequest);
+  weatherReq.open('GET', weatherRequest);
+  weatherReq.send();
 
+}
+
+function ajaxReturnWeather(WeatherBox, JSONdata) {
+  var Weather = JSON.parse(JSONdata);
+
+  console.log(WeatherBox);
+  console.log(Weather);
 }
 
 function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata) {
