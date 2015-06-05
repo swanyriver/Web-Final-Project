@@ -99,7 +99,7 @@ function waterTempAjax(countyName) {
 
 function makeAjaxcalls(spot, views) {
 
-  //Spitcast call
+  //////Spitcast call//////////////
   var spotReq = new XMLHttpRequest();
   //todo respond to error creating
 
@@ -109,7 +109,7 @@ function makeAjaxcalls(spot, views) {
         ajaxReturnSpitcast(views['WaveBox'], views['GradeBox'], this.response);
       } else {
         //todo handle errer here
-        console.log(spot['spot_name'] + " response:" + this.status);
+        console.log(spot['spot_name'] + ' response:' + this.status);
       }
     }
   };
@@ -119,8 +119,6 @@ function makeAjaxcalls(spot, views) {
   spotReq.send();
 
   ///////weather call///////////
-  
-
   var weatherReq = new XMLHttpRequest();
   //todo respond to error creating
 
@@ -130,7 +128,7 @@ function makeAjaxcalls(spot, views) {
         ajaxReturnWeather(views['WeatherBox'], this.response);
       } else {
         //todo handle errer here
-        console.log(spot['spot_name'] + " response:" + this.status);
+        console.log(spot['spot_name'] + ' response:' + this.status);
       }
     }
   };
@@ -146,6 +144,31 @@ function makeAjaxcalls(spot, views) {
 
   console.log(weatherRequest);
 
+  ///////forecast call///////////
+  var forecastReq = new XMLHttpRequest();
+  //todo respond to error creating
+
+  forecastReq.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      if (this.response) {
+        ajaxReturnForecast(views['WeatherBox'], this.response);
+      } else {
+        //todo handle errer here
+        console.log(spot['spot_name'] + ' response:' + this.status);
+      }
+    }
+  };
+
+  var wurl = 'http://api.openweathermap.org/data/2.5/forecast/daily';
+  var lat = 'lat=' + spot['latitude'];
+  var lon = 'lon=' + spot['longitude'];
+  var weatheroptions = 'cnt=1&mode=json';
+  var forcastRequest = wurl + '?' + lat + '&' + lon + '&' + weatheroptions;
+
+  forecastReq.open('GET', forcastRequest);
+  forecastReq.send();
+
+
 }
 
 function updateWaterTemp(countyName, JSONdata) {
@@ -153,7 +176,7 @@ function updateWaterTemp(countyName, JSONdata) {
   //todo record in kelvin
   //todo find a way to set all temperatures as function from kelvin and switch in one press
   waterTemp = JSON.parse(JSONdata)['fahrenheit'];
-  console.log(countyName + " waterTemp:" + waterTemp);
+  console.log(countyName + ' waterTemp:' + waterTemp);
 
   for (var i = 0; i < spotInfo[countyName].length; i++) {
     var panel = document.getElementById(spotInfo[countyName][i]['spot_id']);
@@ -165,28 +188,33 @@ function updateWaterTemp(countyName, JSONdata) {
   }
 }
 
-//todo remove this global
-var lastWeather;
-
 function ajaxReturnWeather(WeatherBox, JSONdata) {
   var Weather = JSON.parse(JSONdata);
 
-  //Weather.weather[0].description
-  //Weather.weather[0].icon
-  //Weather.main.temp
-  //Weather.main.temp_min
-  //Weather.main.temp_max
-  var currentTempView = WeatherBox.getElementsByClassName('Temperature')[0];
+  var tempdiv = WeatherBox.getElementsByClassName('currentTemp')[0];
+  var currentTempView = tempdiv.getElementsByClassName('Temperature')[0];
   currentTemp = KtoF(Weather.main.temp);
-  currentTempView.appendChild(document.createTextNode( currentTemp ));
+  currentTempView.appendChild(document.createTextNode(currentTemp));
 
   var iconView = WeatherBox.getElementsByClassName('weatherIcon')[0];
   var iconURL = 'http://openweathermap.org/img/w/' + Weather.weather[0].icon + ".png";
   iconView.setAttribute('src', iconURL);
 
+  var descriptionView = WeatherBox.getElementsByClassName('weatherDescription')[0];
+  descriptionView.appendChild(document.createTextNode(Weather.weather[0].description));
+}
 
-  //todo remove this broadcast to global, it was for navigate json object in console
-  lastWeather = Weather;
+function ajaxReturnForecast(WeatherBox, JSONdata) {
+  var Weather = JSON.parse(JSONdata);
+
+  var hiloView = WeatherBox.getElementsByClassName('hilo')[0];
+
+  var lotemp = hiloView.getElementsByClassName('lo')[0].getElementsByClassName('Temperature')[0];
+  var hitemp = hiloView.getElementsByClassName('hi')[0].getElementsByClassName('Temperature')[0];
+
+  setTemp(Weather.list[0].temp.min, lotemp);
+  setTemp(Weather.list[0].temp.max, hitemp);
+
 }
 
 function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata) {
@@ -211,14 +239,29 @@ function mySpots() {
   //todo implement
 }
 
-function KtoF(kelvin){
+function updateTemp(tempView) {
+  setTemp(tempView.getAttribute('data-kelvin'));
+}
+
+function setTemp(kelvin, tempview) {
+  clearNode(tempview);
+
+  tempview.setAttribute('data-kelvin', kelvin);
+
+  //todo implement session variable of users prefrence k or f
+  var Temperature = KtoF(kelvin);
+
+  tempview.appendChild(document.createTextNode(Temperature)); //todo add degree symbol
+}
+
+function KtoF(kelvin) {
   var fahrenheit = (kelvin - 273.15) * 1.8 + 32;
   return Math.round(fahrenheit);
 }
-function KtoC(kelvin){
+function KtoC(kelvin) {
   return Math.round(kelvin - 273.15);
 }
-function FtoK(fahrenheit){
+function FtoK(fahrenheit) {
   var kelvin = (fahrenheit - 32) / 1.8 + 273.15;
   return Math.round(kelvin);
 }
@@ -262,11 +305,44 @@ function createPanel(spot, body) {
   weatherIcon.setAttribute('class', 'weatherIcon');
   WeatherBoxReport.appendChild(weatherIcon);
   var temp = document.createElement('div');
-  temp.setAttribute('class', 'Temperature');
+  temp.setAttribute('class', 'currentTemp');
+  var tempspan = document.createElement('span');
+  tempspan.setAttribute('class', 'Temperature');
+  temp.appendChild(tempspan);
   WeatherBoxReport.appendChild(temp);
+
+  //third box
+  var thirdbox = document.createElement('div');
+  var description = document.createElement('div');
+  description.setAttribute('class', 'weatherDescription');
+  thirdbox.appendChild(description);
+  thirdbox.appendChild(document.createElement('br'));
   var hilo = document.createElement('div');
   hilo.setAttribute('class', 'hilo');
-  WeatherBoxReport.appendChild(hilo);
+
+
+  var lo = document.createElement('span');
+  lo.setAttribute('class', 'lo');
+  lo.appendChild(document.createTextNode('LOW:'));
+  var lotemp = document.createElement('span');
+  lotemp.setAttribute('class', 'Temperature');
+  lo.appendChild(lotemp);
+  hilo.appendChild(lo);
+
+  var hi = document.createElement('span');
+  hi.setAttribute('class', 'hi');
+  hi.appendChild(document.createTextNode('HIGH:'));
+  var hitemp = document.createElement('span');
+  hitemp.setAttribute('class', 'Temperature');
+  hi.appendChild(hitemp);
+  hilo.appendChild(hi);
+
+
+  thirdbox.appendChild(hilo);
+  WeatherBoxReport.appendChild(thirdbox);
+
+
+
 
   var watertemp = document.createElement('div');
   watertemp.setAttribute('class', 'Temperature');
