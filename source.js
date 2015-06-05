@@ -1,3 +1,4 @@
+var tempUnit="F";
 var spotInfo;
 var waterCounties = [];
 waterCounties['Sonoma'] = 'sonoma';
@@ -239,17 +240,38 @@ function mySpots() {
   //todo implement
 }
 
-function updateTemp(tempView) {
-  setTemp(tempView.getAttribute('data-kelvin'));
+function updateAllTemps() {
+  temps = document.getElementsByClassName('Temperature');
+  for (var i = temps.length - 1; i >= 0; i--) {
+    updateTemp(temps[i]);
+  };
+}
+
+function updateTemp(tempview) {
+  setTemp(tempview.getAttribute('data-kelvin'), tempview);
+}
+
+//todo update user prefrences if logged in
+//this will be a call to my php file
+function changeUnit(unit) {
+  if (unit != tempUnit) {
+    tempUnit = unit;
+    updateAllTemps();
+  }
 }
 
 function setTemp(kelvin, tempview) {
-  clearNode(tempview);
+
+  tempview.innerHTML = '';
 
   tempview.setAttribute('data-kelvin', kelvin);
 
   //todo implement session variable of users prefrence k or f
-  var Temperature = KtoF(kelvin);
+  if (tempUnit == 'C') {
+    var Temperature = KtoC(kelvin);
+  } else {
+    var Temperature = KtoF(kelvin);
+  }
 
   tempview.appendChild(document.createTextNode(Temperature)); //todo add degree symbol
 }

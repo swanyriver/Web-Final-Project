@@ -62,7 +62,12 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
       </div>
 
       <div class="col-lg-1">
-        <p style="color:white;">userstuff <br> api logo</p>
+        <p style="color:white;">userstuff <br> api logo
+        <!-- todo make the anchors so that there is the click mous icon, 
+              but not blue with underline -->
+        <br> <span onclick="changeUnit('F')"> F&deg; </span>  - 
+        <span onclick="changeUnit('C')"> C&deg; </span>
+        </p>
       </div>
 
     </div>
