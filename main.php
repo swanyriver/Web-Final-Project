@@ -63,10 +63,14 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 
       <div class="col-lg-1">
         <p style="color:white;">userstuff
-        <!-- todo make the anchors so that there is the click mous icon, 
-              but not blue with underline -->
-        <br> <span onclick="changeUnit('F')"> F&deg; </span>  - 
-        <span onclick="changeUnit('C')"> C&deg; </span>
+        <div class="btn-group">
+          <button id="Fbutton" type="button" class="btn btn-default active" onclick="changeUnit('F')">
+            F&deg;
+          </button>
+          <button id="Cbutton" type="button" class="btn btn-default" onclick="changeUnit('C')">
+            C&deg;
+          </button>
+        </div>
         </p>
       </div>
 

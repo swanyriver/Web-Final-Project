@@ -260,6 +260,16 @@ function changeUnit(unit) {
   if (unit != tempUnit) {
     tempUnit = unit;
     updateAllTemps();
+
+    var Cbutton = document.getElementById('Cbutton');
+    var Fbutton = document.getElementById('Fbutton');
+    if (unit == 'C') {
+      Fbutton.setAttribute('class', 'btn btn-default');
+      Cbutton.setAttribute('class', 'btn btn-default active');
+    } else {
+      Cbutton.setAttribute('class', 'btn btn-default');
+      Fbutton.setAttribute('class', 'btn btn-default active');
+    }
   }
 }
 
