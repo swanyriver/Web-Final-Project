@@ -15,6 +15,8 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <script type="text/javascript" src="spotJSON.js"></script>
+
     <script type="text/javascript" src="source.js"></script>
 
     <!-- Bootstrap Core CSS -->
