@@ -1,4 +1,11 @@
 var spotInfo;
+var waterCounties = [];
+waterCounties['Sonoma'] = 'sonoma';
+waterCounties['Marin'] = 'marin';
+waterCounties['San Francisco'] = 'san-francisco';
+waterCounties['San Mateo'] = 'san-mateo';
+waterCounties['Santa Cruz'] = 'santa-cruz';
+
 
 function navsize() {
   var navbar = document.getElementById('navbar');
@@ -70,9 +77,42 @@ function onCountySelect(countyName) {
 function waterTempAjax(countyName) {
   console.log("water temp request for " + countyName);
 
-  //todo implement
-  //todo make ajax for water temp
-  //todo define class of html element in each list item to update
+  //Spitcast call
+  var spotReq = new XMLHttpRequest();
+  //todo respond to error creating
+
+  spotReq.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      if (this.response) {
+        updateWaterTemp(countyName, this.response);
+      } else {
+        //todo handle errer here
+        console.log(countyName + " response:" + this.status);
+      }
+    }
+  };
+
+  var url = "http://api.spitcast.com/api/county/water-temperature/" + waterCounties[countyName] + "/";
+  spotReq.open('POST', 'corsurl.php');
+  spotReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  spotReq.send('url=' + url);
+}
+
+function updateWaterTemp(countyName, JSONdata) {
+
+  //todo record in kelvin
+  //todo find a way to set all temperatures as function from kelvin and switch in one press
+  waterTemp = JSON.parse(JSONdata)['fahrenheit'];
+  console.log(countyName + " waterTemp:" + waterTemp);
+
+  for (var i = 0; i < spotInfo[countyName].length; i++) {
+    var panel = document.getElementById(spotInfo[countyName][i]['spot_id']);
+    if (panel) {
+      var out = panel.getElementsByClassName("WaterBox")[0].getElementsByClassName("Temperature")[0];
+      //todo put degree symbol after temperature
+      out.appendChild(document.createTextNode(waterTemp));
+    }
+  }
 }
 
 function makeAjaxcalls(spot, views) {
@@ -111,19 +151,6 @@ function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata) {
   var waveout = WaveBox.getElementsByClassName('waveHeight')[0];
   waveout.appendChild(document.createTextNode(currentConditions['size'] + 'ft'));
 
-  var min = parseInt(spotForcast[0]['size'], 10);
-  var max = parseInt(spotForcast[0]['size'], 10);
-  for (var i = 1; i < spotForcast.length; i++) {
-    if (parseInt(spotForcast[i]['size'], 10) > max)
-      max = parseInt(spotForcast[0]['size'], 10);
-    if (parseInt(spotForcast[i]['size'], 10) < min)
-      min = parseInt(spotForcast[0]['size'], 10);
-  }
-
-  var wavehilo = WaveBox.getElementsByClassName('hilo')[0];
-  wavehilo.appendChild(document.createTextNode('HI:' + max));
-  wavehilo.appendChild(document.createElement('br'));
-  wavehilo.appendChild(document.createTextNode('LO:' + min));
 }
 
 function favorite(spotid) {
@@ -186,9 +213,6 @@ function createPanel(spot, body) {
   var waveH = document.createElement('div');
   waveH.setAttribute('class', 'waveHeight');
   WaveBoxReport.appendChild(waveH);
-  var whilo = document.createElement('div');
-  whilo.setAttribute('class', 'hilo');
-  WaveBoxReport.appendChild(whilo);
 
   var grade = document.createElement('div');
   grade.setAttribute('class', 'grade');
