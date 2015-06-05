@@ -25,4 +25,22 @@ body {
   float: left;
   margin-left: 10px;
   margin-right: 15px;
-  }
+}
+
+.Temperature {
+  font-size: xx-large;
+  font-family: monospace;
+}
+
+.hilo .Temperature {
+  font-size:inherit;
+}
+
+.waveHeight {
+  font-size: xx-large;
+  font-family: monospace;
+}
+
+.ReportHeading {
+ 
+}

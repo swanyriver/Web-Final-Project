@@ -228,7 +228,10 @@ function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata) {
   gradeout.appendChild(document.createTextNode(currentConditions['shape_full']));
 
   var waveout = WaveBox.getElementsByClassName('waveHeight')[0];
-  waveout.appendChild(document.createTextNode(currentConditions['size'] + 'ft'));
+  waveout.appendChild(document.createTextNode(currentConditions['size']));
+  sup = document.createElement('sup');
+  sup.appendChild(document.createTextNode('ft'));
+  waveout.appendChild(sup);
 
 }
 
@@ -273,7 +276,8 @@ function setTemp(kelvin, tempview) {
     var Temperature = KtoF(kelvin);
   }
 
-  tempview.appendChild(document.createTextNode(Temperature)); //todo add degree symbol
+  tempview.appendChild(document.createTextNode(Temperature + '\xB0')); 
+  //todo add degree symbol
 }
 
 function KtoF(kelvin) {
