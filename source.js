@@ -132,9 +132,9 @@ function makeAjaxcalls(spot, views) {
   };
 
   var url = "http://api.spitcast.com/api/spot/forecast/" + spot['spot_id'] + "/";
-  spotReq.open('POST', 'corsurl.php');
-  spotReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  spotReq.send('url=' + url);
+  spotReq.open('GET', url);
+  spotReq.send();
+
 
 }
 
