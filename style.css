@@ -43,6 +43,19 @@ body {
   font-family: monospace;
 }
 
+.controlPanel > * {
+  width: 100%
+}
+
+.controlPanel .glyphicon {
+  float:left;
+  font-size: large;
+}
+
+#tempControls > * {
+  width:50%;
+}
+
 .ReportHeading {
  
 }
@@ -54,5 +67,8 @@ body {
 
 /*todo reduce stacked margins and paddings here*/
 div {
-  border-style:solid;
+  /*border-style:solid;*/
 }
+
+
+

@@ -29,7 +29,7 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
     <script src="js/bootstrap.min.js"></script>
 
     <!-- my CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 
     <title>Your Surf Spots</title>
 
@@ -61,9 +61,28 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
         </ul>
       </div>
 
-      <div class="col-lg-1">
-        <p style="color:white;">userstuff
-        <div class="btn-group">
+      <div class="col-lg-1 controlPanel">
+        <!-- todo connect to modal -->
+        <!-- todo dont display if already logged in -->
+        <button class = "btn btn-success" data-toggle="modal" data-target="#loginMod">
+          <span class="glyphicon glyphicon-user"></span>
+          Login
+        </button>
+
+        <!-- <button class = "btn btn-danger">
+          <span class="glyphicon glyphicon-log-out"></span>
+          Logout
+        </button> -->
+
+        <!-- todo connect to modal -->
+        <!-- todo connect to sign in if not signed in -->
+        <button class = "btn btn-default" data-toggle="modal" data-target="#settingsMod">
+          <span class="glyphicon glyphicon-cog"></span>
+          Settings
+        </button>
+
+
+        <div id="tempControls" class="btn-group">
           <button id="Fbutton" type="button" class="btn btn-default active" onclick="changeUnit('F')">
             F&deg;
           </button>
@@ -147,7 +166,10 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
     </div>
 </div>
 <div class="col-lg-4">
-<!-- todo figure out how to get the map to display over here -->
+<!-- todo figure out how to get the map to display over here 
+      todo change this from collumn to just all panel divs are n% wide
+      and make image a static background
+-->
 </div>
 </div>
 
@@ -157,7 +179,53 @@ API FOOTER ROLL HERE
 
 </div>
 
+<!-- Login Modal -->
+<div class="modal fade" id="loginMod" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Sign in to My Surf Spots</h4>
+      </div>
+      <div class="modal-body">
+        <p>Users can save their favorite surf spots and 
+        set minimum weather and wave conditions to be alerted to wich spots are particularily primo today</p>
 
+        <br> #insert form here
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+
+<!-- settings modal -->
+<div class="modal fade" id="settingsMod" role="dialog">
+  <div class="modal-dialog modal-lg">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Sign in to My Surf Spots</h4>
+      </div>
+      <div class="modal-body">
+        <p>Tell us how you like your Surf Spots and we will help you spot that perfect spot to hit the waves today</p>
+
+        <br> #insert form here
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
   
 </body>
 
