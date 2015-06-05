@@ -47,10 +47,12 @@ body {
   width: 100%
 }
 
-.controlPanel .glyphicon {
+button .glyphicon {
   float:left;
   font-size: large;
+  margin-right: 15px;
 }
+
 
 #tempControls > * {
   width:50%;

@@ -447,3 +447,36 @@ function getPSTtime() {
   var utcHour = new Date().getUTCHours();
   return ((utcHour + 23) - 7) % 23;
 }
+
+function user(request) {
+  console.log(request);
+
+  loginReq = new XMLHttpRequest();
+
+  loginReq.onreadystatechange = function() {
+    if (this.readyState === 4) {
+      if (this.response && this.status === 200) {
+        console.log(this.response);
+      } else if (this.response) {
+        console.log('bad code:', this.status);
+        console.log(this.response);
+      } else {
+        //todo server returned no string, why
+      }
+    }
+  };
+
+  //todo maybe check for bad chars and empties here
+  //todo before encoding and sending to php
+
+  var nameIn = document.getElementById('loginUserName');
+  var nameData = encodeURIComponent(nameIn.value);
+  var passIn = document.getElementById('loginPassword');
+  var passData = encodeURIComponent(passIn.value);
+
+  var postPs = 'username=' + nameData + '&password=' + passData;
+  loginReq.open('POST', 'login.php');
+  loginReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  loginReq.send(postPs);
+}
+

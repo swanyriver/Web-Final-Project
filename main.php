@@ -193,7 +193,36 @@ API FOOTER ROLL HERE
         <p>Users can save their favorite surf spots and 
         set minimum weather and wave conditions to be alerted to wich spots are particularily primo today</p>
 
-        <br> #insert form here
+        <!-- login form -->
+
+        <form class="form-horizontal" id="LoginForm">
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">UserName</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="loginUserName" placeholder="UserName">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-info" onclick="user('login')">
+              <span class="glyphicon glyphicon-log-in"></span>
+              Sign in
+            </button>
+            <button class="btn btn-info" onclick="user('signup')">
+              <span class="glyphicon glyphicon-user"></span>
+              Create Account
+            </button>
+          </div>
+        </div>
+      </form>
+        <!-- end login form -->
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
