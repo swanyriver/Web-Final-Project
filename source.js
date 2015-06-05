@@ -406,7 +406,7 @@ function createPanel(spot, body) {
 function createReportBox(name, width, classname) {
   //creating report square
   var box = document.createElement('div');
-  box.setAttribute('class', 'col-lg-' + width);
+  box.setAttribute('class', 'col-lg-' + width + ' displayBox');
   var heading = document.createElement('label');
   heading.setAttribute('class', 'ReportHeading');
   heading.appendChild(document.createTextNode(name));

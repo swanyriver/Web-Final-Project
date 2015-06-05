@@ -44,3 +44,8 @@ body {
 .ReportHeading {
  
 }
+
+.displayBox {
+  /*todo fix warping of boxes on shrink*/
+  /* display: inline-block; */
+}
