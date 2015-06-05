@@ -93,9 +93,8 @@ function waterTempAjax(countyName) {
   };
 
   var url = "http://api.spitcast.com/api/county/water-temperature/" + waterCounties[countyName] + "/";
-  spotReq.open('POST', 'corsurl.php');
-  spotReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  spotReq.send('url=' + url);
+  spotReq.open('GET', url);
+  spotReq.send();
 }
 
 function updateWaterTemp(countyName, JSONdata) {
