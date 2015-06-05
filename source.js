@@ -327,18 +327,24 @@ function createPanel(spot, body) {
   var WaveBoxReport = WaveBox.lastChild;
   var GradeBoxReport = GradeBox.lastChild;
 
+  var weatherrow = document.createElement('div');
+  weatherrow.setAttribute('class', 'row');
+  var iconcol = document.createElement('div');
+  iconcol.setAttribute('class', 'col-lg-4');
   var weatherIcon = document.createElement('img');
   weatherIcon.setAttribute('class', 'weatherIcon');
-  WeatherBoxReport.appendChild(weatherIcon);
+  iconcol.appendChild(weatherIcon);
+  weatherrow.appendChild(iconcol);
   var temp = document.createElement('div');
-  temp.setAttribute('class', 'currentTemp');
+  temp.setAttribute('class', 'currentTemp col-lg-4');
   var tempspan = document.createElement('span');
   tempspan.setAttribute('class', 'Temperature');
   temp.appendChild(tempspan);
-  WeatherBoxReport.appendChild(temp);
+  weatherrow.appendChild(temp);
 
   //third box
   var thirdbox = document.createElement('div');
+  thirdbox.setAttribute('class', 'col-lg-4');
   var description = document.createElement('div');
   description.setAttribute('class', 'weatherDescription');
   thirdbox.appendChild(description);
@@ -365,7 +371,8 @@ function createPanel(spot, body) {
 
 
   thirdbox.appendChild(hilo);
-  WeatherBoxReport.appendChild(thirdbox);
+  weatherrow.appendChild(thirdbox);
+  WeatherBoxReport.appendChild(weatherrow);
 
 
 

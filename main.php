@@ -62,7 +62,7 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
       </div>
 
       <div class="col-lg-1">
-        <p style="color:white;">userstuff <br> api logo
+        <p style="color:white;">userstuff
         <!-- todo make the anchors so that there is the click mous icon, 
               but not blue with underline -->
         <br> <span onclick="changeUnit('F')"> F&deg; </span>  - 
@@ -146,6 +146,10 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 <!-- todo figure out how to get the map to display over here -->
 </div>
 </div>
+
+<!-- todo make a api footer roll -->
+<!-- todo make sure it displays at the bottom of the page -->
+API FOOTER ROLL HERE
 
 </div>
 

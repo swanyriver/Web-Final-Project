@@ -18,13 +18,15 @@ body {
 .weatherIcon {
   height: 50px;
   width: 50px;
-  float:left;
 }
 
 .reportSection > * {
-  float: left;
-  margin-left: 10px;
-  margin-right: 15px;
+  /*float: left;*/
+  /*margin-left: 10px;
+  margin-right: 15px;*/
+}
+.reportSection:last-child {
+  clear: right;
 }
 
 .Temperature {
@@ -48,4 +50,9 @@ body {
 .displayBox {
 /*todo fix warping of boxes on shrink*/
 
+}
+
+/*todo reduce stacked margins and paddings here*/
+div {
+  border-style:solid;
 }
