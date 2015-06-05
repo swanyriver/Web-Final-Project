@@ -183,7 +183,8 @@ function updateWaterTemp(countyName, JSONdata) {
     if (panel) {
       var out = panel.getElementsByClassName("WaterBox")[0].getElementsByClassName("Temperature")[0];
       //todo put degree symbol after temperature
-      out.appendChild(document.createTextNode(waterTemp));
+      //out.appendChild(document.createTextNode(waterTemp));
+      setTemp(FtoK(waterTemp), out);
     }
   }
 }
@@ -193,8 +194,7 @@ function ajaxReturnWeather(WeatherBox, JSONdata) {
 
   var tempdiv = WeatherBox.getElementsByClassName('currentTemp')[0];
   var currentTempView = tempdiv.getElementsByClassName('Temperature')[0];
-  currentTemp = KtoF(Weather.main.temp);
-  currentTempView.appendChild(document.createTextNode(currentTemp));
+  setTemp(Weather.main.temp, currentTempView);
 
   var iconView = WeatherBox.getElementsByClassName('weatherIcon')[0];
   var iconURL = 'http://openweathermap.org/img/w/' + Weather.weather[0].icon + ".png";
