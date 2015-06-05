@@ -135,6 +135,14 @@ function makeAjaxcalls(spot, views) {
   spotReq.open('GET', url);
   spotReq.send();
 
+  ///////weather call///////////
+  var wurl = 'http://api.openweathermap.org/data/2.5/forecast/daily';
+  var lat = 'lat=' + spot['latitude'];
+  var lon = 'lon=' + spot['longitude'];
+  var weatheroptions = 'cnt=1&mode=json';
+  var weatherRequest = wurl + '?' + lat + '&' + lon + '&' + weatheroptions;
+
+  console.log(weatherRequest);
 
 }
 
