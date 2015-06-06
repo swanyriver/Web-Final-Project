@@ -8,9 +8,8 @@ header('Content-Type: text/plain');
 include "storedInfo.php"; //contains hostname/username/password/databasename
 //todo on login make a session, set $_SESSION['user'] & $_SESSION['hash']
 
-// todo make this callable from main, accept hash, check that its correct user
-// todo maybe migrate to a different php
-//only to be called from succesfull log-in or create-account
+$minPassLength = 7;
+
 function return_user($sql, $username, $surfTable){
 
   $user = array();
@@ -103,10 +102,15 @@ if($_POST['request'] == 'login'){
 
 } else if ($_POST['request'] == 'signup'){
 
-
   if($userExists) {
     http_response_code(409);
     echo "A user with that name already exists";
+    exit();
+  }
+
+  if(strlen($_POST['password']) < $minPassLength) {
+    http_response_code(406);
+    echo "Password must be at least $minPassLength long";
     exit();
   }
 

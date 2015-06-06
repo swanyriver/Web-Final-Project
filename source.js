@@ -568,6 +568,9 @@ function user(request) {
             break;
           case 409: //username exists
             //empty neither, red username,
+          case 406: //pass too short
+            //todo highlight password
+            console.log("pass too short");
           default: //php fail
             // todo decide what to do on utter failure, disable all fields
 
