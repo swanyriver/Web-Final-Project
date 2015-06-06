@@ -17,12 +17,19 @@ http_response_code(404);
 
 $table = "surfUsers";
 
-if(mysql_num_rows(mysql_query("SHOW TABLES LIKE '".$table."'"))==1){
-  echo "table exists";
-} else {
-  echo "no table";
-}
+//create table if it doesnt exist
+$mysqli->query("CREATE TABLE IF NOT EXISTS $surfUsers (
+  name VARCHAR(127) UNIQUE NOT NULL,
+  passSalt VARCHAR(255), NOT NULL,
+  passHashed VARCHAR(255), NOT NULL,
+  prefWeather INT,
+  prefWater INT,
+  prefWave INT,
+  prefRating INT,
+  favoritesJSON CHAR(269)
+)");
 
 
+  
 
 ?>

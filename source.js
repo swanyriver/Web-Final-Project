@@ -33,22 +33,8 @@ function load() {
   //todo delete allspots.json
   spotInfo = JSON.parse(spotJSON);
 
-  //todo remove this generation
-  favoriteSpots = new Object();
-  keys = Object.keys(spotInfo);
-  var key;
-  for(var c = 0; c<keys.length; c++){
-    key= keys[c];
-    console.log(key);
-    for(var s=0; s<spotInfo[key].length; s++){
-      console.log(spotInfo[key][s]);
-      var id=spotInfo[key][s]['spot_id'];
-      console.log(id);
-      favoriteSpots[id]=0;
-    }
-  }
-  //console.log(favoriteSpots);
-  console.log(JSON.stringify(favoriteSpots));
+  //todo if logged in load favorites //actually put this in php
+  favoriteSpots = JSON.parse(noFavorites);
 }
 
 function onCountySelect(countyName) {
@@ -516,6 +502,16 @@ $('#loginMod').on('show.bs.modal', function(e) {
 
     displayMessage('', ErrorOut);
 
+    var maxlength = 126;
+    if (name.length > maxlength) {
+      displayMessage('Username is too long', ErrorOut);
+      return false;
+    }
+    if (pass.length > maxlength) {
+      displayMessage('Password is too long', ErrorOut);
+      return false;
+    }
+
     if (!name.length && !pass.length) {
       return false;
     } else if (!name.length) {
@@ -523,6 +519,7 @@ $('#loginMod').on('show.bs.modal', function(e) {
     } else if (!pass.length) {
       return false;
     }
+
 
     var letters = /^[0-9a-zA-Z]+$/;
     if (!letters.test(name) || !letters.test(pass)) {
