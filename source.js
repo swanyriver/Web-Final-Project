@@ -345,6 +345,18 @@ function updateUser(poststring, onFinish){
   updateReq.send(poststring);
 }
 
+function updateUserFavorites(){
+  //todo stringify and send favorites
+}
+
+function updateUserSettings(){
+  //todo read settings from form
+  function notify(code,response){
+    console.log(code + response);
+  }
+  updateUser("prefWeather==200&prefWater=250&prefWave=4&prefRating=3",notify);
+}
+
 function changeUnit(unit) {
 
   if (unit != userInfo.tempUnit) {
@@ -565,6 +577,7 @@ function userloggedin(JSONprofile) {
   //todo apply to html, settemp etc put user name in settings and welcom modal
     //set temp
     //enable settings controls and remove sign in button
+    // set setting controls to user prefs
     //disable sign in tooltip on favorites button
     //jump to myspots ??  or not let them
     //set favorite icons accordingly
