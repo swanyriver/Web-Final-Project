@@ -8,6 +8,12 @@ waterCounties['Santa Cruz'] = 'santa-cruz';
 //todo delete allspots.json
 var spotInfo = JSON.parse(spotJSON);
 
+function load() {
+  navsize();
+  changeUnitButton(userInfo.tempUnit);
+  //todo generate favorites page, if user has favorites
+}
+
 function requestState(panel) {
   this.numRequests = 0;
   this.numWaiting = 5; //todo 6 if i can get callback for image load
@@ -81,9 +87,7 @@ function navsize() {
 
 }
 
-function load() {
-  navsize();
-}
+
 
 function onCountySelect(countyName) {
   navbar = document.getElementById('spotNav');
@@ -313,22 +317,33 @@ function updateTemp(tempview) {
   setTemp(tempview.getAttribute('data-kelvin'), tempview);
 }
 
-//todo update user prefrences if logged in
-//this will be a call to my php file
+function changeUnitButton(unit){
+  if (unit == 'C') {
+    Fbutton.setAttribute('class', 'btn btn-default');
+    Cbutton.setAttribute('class', 'btn btn-default active');
+  } else {
+    Cbutton.setAttribute('class', 'btn btn-default');
+    Fbutton.setAttribute('class', 'btn btn-default active');
+  }
+}
+
 function changeUnit(unit) {
-  if (unit != userInfo.userInfo.tempUnit) {
+
+  if (unit != userInfo.tempUnit) {
+
+    changeUnitButton(unit);
+
     userInfo.tempUnit = unit;
     updateAllTemps();
 
     var Cbutton = document.getElementById('Cbutton');
     var Fbutton = document.getElementById('Fbutton');
-    if (unit == 'C') {
-      Fbutton.setAttribute('class', 'btn btn-default');
-      Cbutton.setAttribute('class', 'btn btn-default active');
-    } else {
-      Cbutton.setAttribute('class', 'btn btn-default');
-      Fbutton.setAttribute('class', 'btn btn-default active');
-    }
+    
+
+    //todo store new pref in session and database
+
+  } else {
+    //no effect
   }
 }
 
@@ -541,6 +556,9 @@ function user(request) {
   var ErrorOut = document.getElementById('loginMessage');
   displayMessage('', ErrorOut);
 
+  var passIn = document.getElementById('loginUserName');
+  var nameIn = document.getElementById('loginPassword');
+
   loginReq = new XMLHttpRequest();
 
   loginReq.onreadystatechange = function() {
@@ -557,20 +575,22 @@ function user(request) {
           return;
         }
         displayMessage(this.response, ErrorOut);
+        var warning = 'rosybrown';
         switch (this.status) {
-          //todo implement conditions
           case 404: //username not found
-            //disable login, leave create enabled
-            break;
+              document.getElementById('submitLogin').
+                getElementsByTagName('button')[0].
+                setAttribute('disabled','true');
+              break;
           case 403: //incorect password
-            //empty password field, turn it red?
-            //todo add clear textbox state to oninput and set when bad
+            passIn.value ='';
+            passIn.style.backgroundColor=warning;
             break;
           case 409: //username exists
-            //empty neither, red username,
+            nameIn.style.backgroundColor=warning;
           case 406: //pass too short
-            //todo highlight password
-            console.log("pass too short");
+            passIn.style.backgroundColor=warning;
+
           default: //php fail
             // todo decide what to do on utter failure, disable all fields
 
@@ -590,7 +610,7 @@ function user(request) {
 
   var postPs = 'username=' + nameData + '&password=' + passData;
   postPs += '&request=' + request;
-  postPs += '&userInfo.tempUnit=' + userInfo.tempUnit;
+  postPs += '&tempUnit=' + userInfo.tempUnit;
   postPs += '&favorites=' + JSON.stringify(favoriteSpots);
   loginReq.open('POST', 'login.php');
   loginReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -641,7 +661,8 @@ $('#loginMod').on('show.bs.modal', function(e) {
     return true;
   }
 
-  function buttonControl() {
+  function buttonControl(field) {
+    field.style.backgroundColor='initial';
 
     if (check(nameIn.value, passIn.value)) {
       buttons[0].removeAttribute('disabled');
@@ -655,7 +676,8 @@ $('#loginMod').on('show.bs.modal', function(e) {
   //enable buttons if fields were autofilled
   buttonControl(nameIn, passIn);
 
-  nameIn.oninput = buttonControl;
-  passIn.oninput = buttonControl;
+  nameIn.oninput = function() {buttonControl(nameIn);};
+  passIn.oninput = function() {buttonControl(passIn);};
+  //passIn.oninput = buttonControl;
 });
 

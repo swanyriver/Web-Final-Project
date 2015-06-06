@@ -121,7 +121,7 @@ $userLoggedin = false;
 
 
         <div id="tempControls" class="btn-group">
-          <button id="Fbutton" type="button" class="btn btn-default active" onclick="changeUnit('F')">
+          <button id="Fbutton" type="button" class="btn btn-default>" onclick="changeUnit('F')">
             F&deg;
           </button>
           <button id="Cbutton" type="button" class="btn btn-default" onclick="changeUnit('C')">
