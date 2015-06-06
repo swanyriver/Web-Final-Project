@@ -8,15 +8,6 @@ waterCounties['Santa Cruz'] = 'santa-cruz';
 //todo delete allspots.json
 var spotInfo = JSON.parse(spotJSON);
 
-var tempUnit="F";
-var favoriteSpots;
-var userInfo;
-//var userInfo = JSON.parse(noUser);
-//todo replace refs to favoriteSpots and tempUnit;
-
-//todo if logged in load favorites //actually put this in php
-favoriteSpots = JSON.parse(noFavorites);
-
 function requestState(panel) {
   this.numRequests = 0;
   this.numWaiting = 5; //todo 6 if i can get callback for image load
@@ -325,8 +316,8 @@ function updateTemp(tempview) {
 //todo update user prefrences if logged in
 //this will be a call to my php file
 function changeUnit(unit) {
-  if (unit != tempUnit) {
-    tempUnit = unit;
+  if (unit != userInfo.userInfo.tempUnit) {
+    userInfo.tempUnit = unit;
     updateAllTemps();
 
     var Cbutton = document.getElementById('Cbutton');
@@ -348,7 +339,7 @@ function setTemp(kelvin, tempview) {
   tempview.setAttribute('data-kelvin', kelvin);
 
   //todo implement session variable of users prefrence k or f
-  if (tempUnit == 'C') {
+  if (userInfo.tempUnit == 'C') {
     var Temperature = KtoC(kelvin);
   } else {
     var Temperature = KtoF(kelvin);
@@ -525,7 +516,7 @@ function displayMessage(msg, element) {
 }
 
 function userloggedin(JSONprofile) {
-  console.log(JSONprofile);
+  //console.log(JSONprofile);
 
   userPackage = JSON.parse(JSONprofile);
   //console.log(userPackage);
@@ -536,11 +527,12 @@ function userloggedin(JSONprofile) {
   console.log(favoriteSpots);
 
   //todo apply to html, settemp etc put user name in settings and welcom modal
-
-  //todo replace globals , favorites, temp unit
-  //    with single user object, blank one begins on page load, replaced when logged in
-  //    must also then change refrence of params when sending temp and favorites on sign in/ create account
-
+    //set temp
+    //enable settings controls and remove sign in button
+    //disable sign in tooltip on favorites button
+    //jump to myspots ??  or not let them
+    //set favorite icons accordingly
+    //set report box backgrounds according to settings
 }
 
 function user(request) {
@@ -595,7 +587,7 @@ function user(request) {
 
   var postPs = 'username=' + nameData + '&password=' + passData;
   postPs += '&request=' + request;
-  postPs += '&tempUnit=' + tempUnit;
+  postPs += '&userInfo.tempUnit=' + userInfo.tempUnit;
   postPs += '&favorites=' + JSON.stringify(favoriteSpots);
   loginReq.open('POST', 'login.php');
   loginReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');

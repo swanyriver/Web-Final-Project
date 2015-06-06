@@ -10,26 +10,6 @@ echo "<!DOCTYPE html>";
 $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 $userLoggedin = false;
 
-
-if(session_status() != PHP_SESSION_ACTIVE){
-  echo "<!-- Problem starting session -->";
-} else {
-  echo "<!--started session -->";
-
-  if(isset($_POST['logout'])){
-    //destroy session
-    session_unset();
-    session_destroy();
-    echo "<!--user is logged out-->";
-  } else if(isset($_SESSION['userInfo'])){
-    echo "<!--user: {$_SESSION['username']} -->";
-    echo "<!--" . var_export($_SESSION) . "-->";
-    $userLoggedin=true;
-  }
-
-}
-
-
 ?>
 <html lang="en">
 
@@ -54,6 +34,40 @@ if(session_status() != PHP_SESSION_ACTIVE){
     <link href="style.css" rel="stylesheet">
 
     <script type="text/javascript" src="spotJSON.js"></script>
+    <?php
+      if(session_status() != PHP_SESSION_ACTIVE){
+        echo "<!-- Problem starting session -->";
+      } else {
+        echo "<!--started session -->";
+
+        if(isset($_POST['logout'])){
+          //destroy session
+          session_unset();
+          session_destroy();
+          echo "<!--user is logged out-->";
+        } else if(isset($_SESSION['userInfo'])){
+          echo "<!--user: {$_SESSION['username']} -->";
+          //echo "<!--" . var_export($_SESSION) . "-->";
+          $userLoggedin=true;
+
+          echo "
+            <script>
+              var userInfo = JSON.parse('{$_SESSION['userInfo']}');
+              var favoriteSpots = JSON.parse('{$_SESSION['favorites']}');
+            </script>
+          ";
+        }
+      }
+
+      if(session_status() != PHP_SESSION_ACTIVE || !isset($_SESSION['userInfo'])){
+        echo "
+            <script>
+              var userInfo = JSON.parse(noUser);
+              var favoriteSpots = JSON.parse(noFavorites);
+            </script>
+          ";
+      }
+    ?>
 
     <title>Your Surf Spots</title>
 
