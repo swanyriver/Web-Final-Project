@@ -32,6 +32,23 @@ function load() {
 
   //todo delete allspots.json
   spotInfo = JSON.parse(spotJSON);
+
+  //todo remove this generation
+  favoriteSpots = new Object();
+  keys = Object.keys(spotInfo);
+  var key;
+  for(var c = 0; c<keys.length; c++){
+    key= keys[c];
+    console.log(key);
+    for(var s=0; s<spotInfo[key].length; s++){
+      console.log(spotInfo[key][s]);
+      var id=spotInfo[key][s]['spot_id'];
+      console.log(id);
+      favoriteSpots[id]=0;
+    }
+  }
+  //console.log(favoriteSpots);
+  console.log(JSON.stringify(favoriteSpots));
 }
 
 function onCountySelect(countyName) {
