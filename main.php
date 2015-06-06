@@ -221,7 +221,7 @@ API FOOTER ROLL HERE
 
         <!-- login form -->
 
-        <form class="form-horizontal" id="LoginForm">
+        <form class="form-horizontal" id="LoginForm" onsubmit="return false;">
         <div class="form-group">
           <label for="inputEmail3" class="col-sm-2 control-label">UserName</label>
           <div class="col-sm-10">

@@ -76,7 +76,7 @@ function onCountySelect(countyName) {
 }
 
 function waterTempAjax(countyName) {
-  console.log("water temp request for " + countyName);
+  console.log('water temp request for ' + countyName);
 
   //Spitcast call
   var spotReq = new XMLHttpRequest();
@@ -88,12 +88,12 @@ function waterTempAjax(countyName) {
         updateWaterTemp(countyName, this.response);
       } else {
         //todo handle errer here
-        console.log(countyName + " response:" + this.status);
+        console.log(countyName + ' response:' + this.status);
       }
     }
   };
 
-  var url = "http://api.spitcast.com/api/county/water-temperature/" + waterCounties[countyName] + "/";
+  var url = 'http://api.spitcast.com/api/county/water-temperature/' + waterCounties[countyName] + '/';
   spotReq.open('GET', url);
   spotReq.send();
 }
@@ -496,7 +496,6 @@ $('#loginMod').on('show.bs.modal', function(e) {
 
 
   function check(name, pass) {
-    console.log(name.length, pass.length);
 
     displayMessage('', ErrorOut);
 
@@ -518,7 +517,6 @@ $('#loginMod').on('show.bs.modal', function(e) {
   }
 
   function buttonControl() {
-    console.log('buttonControl called');
 
     if (check(nameIn.value, passIn.value)) {
       buttons[0].removeAttribute('disabled');
