@@ -1,5 +1,6 @@
 var tempUnit="F";
 var spotInfo;
+var favoriteSpots;
 var waterCounties = [];
 waterCounties['Sonoma'] = 'sonoma';
 waterCounties['Marin'] = 'marin';
@@ -250,7 +251,7 @@ function updateAllTemps() {
   temps = document.getElementsByClassName('Temperature');
   for (var i = temps.length - 1; i >= 0; i--) {
     updateTemp(temps[i]);
-  };
+  }
 }
 
 function updateTemp(tempview) {
@@ -482,10 +483,16 @@ function user(request) {
 
   var postPs = 'username=' + nameData + '&password=' + passData;
   postPs += '&request=' + request;
+  postPs += '&favorites=' + JSON.stringify(favoriteSpots);
   loginReq.open('POST', 'login.php');
   loginReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   loginReq.send(postPs);
 }
+
+//move cursor to name field
+$('#loginMod').on('shown.bs.modal', function(e) {
+  document.getElementById('loginUserName').select();
+});
 
 $('#loginMod').on('show.bs.modal', function(e) {
     //todo maybe check for bad chars and empties here
@@ -495,8 +502,6 @@ $('#loginMod').on('show.bs.modal', function(e) {
   var submit = document.getElementById('submitLogin');
   var buttons = submit.getElementsByTagName('button');
   var ErrorOut = document.getElementById('loginMessage');
-
-
 
   function check(name, pass) {
 
