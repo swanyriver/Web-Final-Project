@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 //todo disable
 ini_set('display_errors', 'On');
 
@@ -26,9 +26,9 @@ function return_user($sql, $username, $surfTable){
 
   $userInfo = json_encode($user);
 
-/*  if(session_status() == PHP_SESSION_ACTIVE){
+  if(session_status() == PHP_SESSION_ACTIVE){
     $_SESSION['userInfo'] = $userInfo;
-  }*/
+  }
 
   echo $userInfo;
   exit();

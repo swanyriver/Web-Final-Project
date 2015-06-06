@@ -1,14 +1,19 @@
 <?php
 
+//todo disable
+ini_set('display_errors', 'On');
+
 $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 $userLoggedin = false;
-//todo check for $_SESSION['user']
-//get user info from session
+
 session_start();
 if(session_status() != PHP_SESSION_ACTIVE){
   echo "<!-- Problem starting session -->";
 } else {
   echo "<!--started session -->";
+
+  //test write todo remove
+  $_SESSION['test'] = "passed";
 
   if(isset($_POST['logout'])){
     //destroy session
@@ -177,12 +182,18 @@ if(session_status() != PHP_SESSION_ACTIVE){
         <label>Rating</label> <br>
         it sucks
       </div>
-
-
     </div>
+    </div>user
+    </div>
+    <!--end of panel -->
 
-    </div>
-    </div>
+    <form action="login.php" method="POST">
+      <input type="text" name="username" value="doris">
+      <input type="text" name="password" value="hate">
+      <input type="text" name="request" value="login">
+      <input type="submit" value="login">
+     </form> 
+
 </div>
 <div class="col-lg-4">
 <!-- todo figure out how to get the map to display over here 
@@ -310,6 +321,8 @@ API FOOTER ROLL HERE
   echo "<script> 
     userInfo = JSON.parse({$_SESSION['userInfo']});
   </script>";
+
+  session_write_close();
  }
  
  ?>

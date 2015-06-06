@@ -10,8 +10,8 @@ var spotInfo;
 var tempUnit="F";
 var favoriteSpots;
 
-//var userInfo = JSON.parse(noUser);
-var userInfo = new Object();
+var userInfo = JSON.parse(noUser);
+//todo replace refs to favoriteSpots and tempUnit;
 
 
 function requestState(panel) {
