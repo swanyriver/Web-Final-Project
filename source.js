@@ -327,6 +327,24 @@ function changeUnitButton(unit){
   }
 }
 
+function updateUser(poststring, onFinish){
+  updateReq = new XMLHttpRequest();
+
+  updateReq.onreadystatechange = function() {
+    if (this.readyState === 4) {
+      if (this.response) {
+        onFinish(this.status,this.response);
+      } else {
+        //todo server returned no string, why
+      }
+    }
+  };
+
+  updateReq.open('POST', 'updateUser.php');
+  updateReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  updateReq.send(poststring);
+}
+
 function changeUnit(unit) {
 
   if (unit != userInfo.tempUnit) {
@@ -339,8 +357,11 @@ function changeUnit(unit) {
     var Cbutton = document.getElementById('Cbutton');
     var Fbutton = document.getElementById('Fbutton');
     
-
+    var onFinish = function(code,response){
+      console.log("temp changed: " + code + response);
+    }
     //todo store new pref in session and database
+    updateUser("tempUnit=" + unit, onFinish);
 
   } else {
     //no effect
