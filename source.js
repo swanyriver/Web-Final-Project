@@ -1,12 +1,18 @@
-var tempUnit="F";
-var spotInfo;
-var favoriteSpots;
 var waterCounties = [];
 waterCounties['Sonoma'] = 'sonoma';
 waterCounties['Marin'] = 'marin';
 waterCounties['San Francisco'] = 'san-francisco';
 waterCounties['San Mateo'] = 'san-mateo';
 waterCounties['Santa Cruz'] = 'santa-cruz';
+
+var spotInfo;
+
+var tempUnit="F";
+var favoriteSpots;
+
+//var userInfo = JSON.parse(noUser);
+var userInfo = new Object();
+
 
 function requestState(panel) {
   this.numRequests = 0;
@@ -627,6 +633,8 @@ $('#loginMod').on('show.bs.modal', function(e) {
     if (!name.length || !pass.length) {
       return false;
     }
+
+    //todo add minimums?
 
     var maxlength = 126;
     if (name.length > maxlength) {

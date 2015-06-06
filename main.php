@@ -1,9 +1,27 @@
 <?php
 
 $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
-
+$userLoggedin = false;
 //todo check for $_SESSION['user']
-//make call with $_SESSION['user'] hash to get user info, pass it to javascript
+//get user info from session
+session_start();
+if(session_status() != PHP_SESSION_ACTIVE){
+  echo "<!-- Problem starting session -->";
+} else {
+  echo "<!--started session -->";
+
+  if(isset($_POST['logout'])){
+    //destroy session
+    session_unset();
+    session_destroy();
+    echo "<!--user is logged out-->";
+  } else if(isset($_SESSION['userInfo'])){
+    echo "<!--user is logged in -->";
+    $userLoggedin=true;
+  }
+
+}
+
 
 ?>
 
@@ -288,9 +306,12 @@ API FOOTER ROLL HERE
 
  <?php 
  //todo if logged in overide user object here
- echo "<script> 
-
- </script>"
+ if($userLoggedin){
+  echo "<script> 
+    userInfo = JSON.parse({$_SESSION['userInfo']});
+  </script>";
+ }
+ 
  ?>
   
 </body>

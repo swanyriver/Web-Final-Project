@@ -1,12 +1,10 @@
 <?php
-
+//session_start();
 //todo disable
 ini_set('display_errors', 'On');
 
 header('Content-Type: text/plain');
-
 include "storedInfo.php"; //contains hostname/username/password/databasename
-
 //todo on login make a session, set $_SESSION['user'] & $_SESSION['hash']
 
 // todo make this callable from main, accept hash, check that its correct user
@@ -22,10 +20,17 @@ function return_user($sql, $username, $surfTable){
   $stmt->execute();
   $stmt->bind_result($user['name'],$user['prefWeather'],$user['prefWater'],
     $user['prefRating'],$user['prefRating'],$user['tempUnit'],$user['favorites']);
+  $user['logedin'] = true;
   $stmt->fetch();
   $stmt->close();
 
-  echo json_encode($user);
+  $userInfo = json_encode($user);
+
+/*  if(session_status() == PHP_SESSION_ACTIVE){
+    $_SESSION['userInfo'] = $userInfo;
+  }*/
+
+  echo $userInfo;
   exit();
 }
 
