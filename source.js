@@ -448,38 +448,14 @@ function getPSTtime() {
   return ((utcHour + 23) - 7) % 23;
 }
 
+function displayMessage(msg, element) {
+  element.innerHTML = '';
+  var msgNode = document.createTextNode(msg);
+  element.appendChild(msgNode);
+}
+
 function user(request) {
   console.log(request);
-
-  //todo maybe check for bad chars and empties here
-  //todo before encoding and sending to php
-  var nameIn = document.getElementById('loginUserName');
-  var passIn = document.getElementById('loginPassword');
-  var submit = document.getElementById('submitLogin');
-  var buttons = submit.getElementsByTagName('button');
-  var message = document.getElementById('loginMessage');
-
-  function message(msg) {
-    message.innerHTML = '';
-    var msgNode = document.createTextNode(msg);
-    message.appendChild(msgNode);
-  }
-
-  function check(name, pass) {
-    if (name == '' && pass == '') {
-      return false;
-    }
-  }
-
-  function buttonControl(nameform, passform) {
-    if (check(nameform.value, passform.value)) {
-      buttons[0].removeAttribute('disabled');
-      buttons[1].removeAttribute('disabled');
-    } else {
-      buttons[0].setAttribute('disabled', 'true');
-      buttons[1].setAttribute('disabled', 'true');
-    }
-  }
 
   loginReq = new XMLHttpRequest();
 
@@ -496,13 +472,67 @@ function user(request) {
     }
   };
 
+  var nameIn = document.getElementById('loginUserName');
+  var passIn = document.getElementById('loginPassword');
   var nameData = encodeURIComponent(nameIn.value);
   var passData = encodeURIComponent(passIn.value);
 
   var postPs = 'username=' + nameData + '&password=' + passData;
-  postPS += '&request=' + request;
+  postPs += '&request=' + request;
   loginReq.open('POST', 'login.php');
   loginReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   loginReq.send(postPs);
 }
+
+$('#loginMod').on('show.bs.modal', function(e) {
+    //todo maybe check for bad chars and empties here
+  //todo before encoding and sending to php
+  var nameIn = document.getElementById('loginUserName');
+  var passIn = document.getElementById('loginPassword');
+  var submit = document.getElementById('submitLogin');
+  var buttons = submit.getElementsByTagName('button');
+  var ErrorOut = document.getElementById('loginMessage');
+
+
+
+  function check(name, pass) {
+    console.log(name.length, pass.length);
+
+    displayMessage('', ErrorOut);
+
+    if (!name.length && !pass.length) {
+      return false;
+    } else if (!name.length) {
+      return false;
+    } else if (!pass.length) {
+      return false;
+    }
+
+    var letters = /^[0-9a-zA-Z]+$/;
+    if (!letters.test(name) || !letters.test(pass)) {
+      displayMessage('Letters and Numbers only please', ErrorOut);
+      return false;
+    }
+
+    return true;
+  }
+
+  function buttonControl() {
+    console.log('buttonControl called');
+
+    if (check(nameIn.value, passIn.value)) {
+      buttons[0].removeAttribute('disabled');
+      buttons[1].removeAttribute('disabled');
+    } else {
+      buttons[0].setAttribute('disabled', 'true');
+      buttons[1].setAttribute('disabled', 'true');
+    }
+  }
+
+  //enable buttons if fields were autofilled
+  buttonControl(nameIn, passIn);
+
+  nameIn.oninput = buttonControl;
+  passIn.oninput = buttonControl;
+});
 

@@ -58,6 +58,10 @@ button .glyphicon {
   width:50%;
 }
 
+#loginMessage {
+ /*todo align error to left, possibly put red background when there is message */
+}
+
 .ReportHeading {
  
 }

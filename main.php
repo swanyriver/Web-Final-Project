@@ -15,10 +15,6 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <script type="text/javascript" src="spotJSON.js"></script>
-
-    <script type="text/javascript" src="source.js"></script>
-
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -30,6 +26,8 @@ $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 
     <!-- my CSS -->
     <link href="style.css" rel="stylesheet">
+
+    <script type="text/javascript" src="spotJSON.js"></script>
 
     <title>Your Surf Spots</title>
 
@@ -253,7 +251,7 @@ API FOOTER ROLL HERE
         
       </div>
       <div class="modal-footer">
-        <span id="loginMessage" class="text-warning"> </span>
+        <span id="loginMessage" class="text-danger"> </span>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -262,7 +260,7 @@ API FOOTER ROLL HERE
 </div>
 
 
-
+ <script type="text/javascript" src="source.js"></script>
   
 </body>
 
