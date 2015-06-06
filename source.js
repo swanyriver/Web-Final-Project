@@ -8,6 +8,59 @@ waterCounties['San Francisco'] = 'san-francisco';
 waterCounties['San Mateo'] = 'san-mateo';
 waterCounties['Santa Cruz'] = 'santa-cruz';
 
+function requestState(panel) {
+  this.numRequests = 0;
+  this.numWaiting = 5; //todo 6 if i can get callback for image load
+  this.panel = panel;
+
+  this.spotName = panel.getElementsByClassName('panel-heading')[0].textContent;
+  console.log(this.spotName + ' begining');
+
+  var blocker = document.createElement('div');
+  blocker.setAttribute('class', 'blocker');
+  blocker.appendChild(document.createTextNode(this.spotName));
+  this.panel.getElementsByClassName('panel-body')[0].appendChild(blocker);
+
+  this.myBlock = panel.getElementsByClassName('blocker')[0];
+
+  var progress = document.createElement('div');
+  progress.setAttribute('class', 'progress');
+  var bar = document.createElement('div');
+  bar.setAttribute('class', 'progress-bar progress-bar-info progress-bar-striped active');
+  bar.setAttribute('role', 'progressbar');
+  bar.setAttribute('aria-valuenow', '0');
+  bar.setAttribute('aria-valuemin', '0');
+  bar.setAttribute('aria-valuemax', String(this.numWaiting));
+  bar.setAttribute('style', 'width:0%');
+  progress.appendChild(bar);
+  this.panel.getElementsByClassName('panel-heading')[0].appendChild(progress);
+
+  this.myBar = panel.getElementsByClassName('progress-bar')[0];
+
+  this.response = function() {
+    this.numRequests++;
+
+    this.myBar.setAttribute('style', 'width:' + Math.round(this.numRequests / this.numWaiting * 100) + '%');
+    this.myBar.setAttribute('aria-valuenow', String(this.numRequests));
+
+    if (this.numRequests == this.numWaiting) { 
+      //remove progress and blockers
+      console.log(panel.getElementsByClassName('panel-heading')[0].textContent + ' finished');
+      $(this.myBar.parentElement).fadeOut(1600, function() {
+        this.parentElement.removeChild(this);
+      });
+
+      $(this.myBlock).fadeOut(700, function() {
+        this.parentElement.removeChild(this);
+      });
+
+    }
+  };
+}
+var spotRequestStates = new Object();
+
+//todo make global user object, parsed from server
+
 
 function navsize() {
   var navbar = document.getElementById('navbar');
@@ -111,7 +164,7 @@ function makeAjaxcalls(spot, views) {
   spotReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
       if (this.response) {
-        ajaxReturnSpitcast(views['WaveBox'], views['GradeBox'], this.response);
+        ajaxReturnSpitcast(views['WaveBox'], views['GradeBox'], this.response, spot['spot_id']);
       } else {
         //todo handle errer here
         console.log(spot['spot_name'] + ' response:' + this.status);
@@ -130,7 +183,7 @@ function makeAjaxcalls(spot, views) {
   weatherReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
       if (this.response) {
-        ajaxReturnWeather(views['WeatherBox'], this.response);
+        ajaxReturnWeather(views['WeatherBox'], this.response, spot['spot_id']);
       } else {
         //todo handle errer here
         console.log(spot['spot_name'] + ' response:' + this.status);
@@ -156,7 +209,7 @@ function makeAjaxcalls(spot, views) {
   forecastReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
       if (this.response) {
-        ajaxReturnForecast(views['WeatherBox'], this.response);
+        ajaxReturnForecast(views['WeatherBox'], this.response, spot['spot_id']);
       } else {
         //todo handle errer here
         console.log(spot['spot_name'] + ' response:' + this.status);
@@ -184,17 +237,17 @@ function updateWaterTemp(countyName, JSONdata) {
   console.log(countyName + ' waterTemp:' + waterTemp);
 
   for (var i = 0; i < spotInfo[countyName].length; i++) {
-    var panel = document.getElementById(spotInfo[countyName][i]['spot_id']);
+    var spotID = spotInfo[countyName][i]['spot_id'];
+    var panel = document.getElementById(spotID);
     if (panel) {
       var out = panel.getElementsByClassName("WaterBox")[0].getElementsByClassName("Temperature")[0];
-      //todo put degree symbol after temperature
-      //out.appendChild(document.createTextNode(waterTemp));
       setTemp(FtoK(waterTemp), out);
+      spotRequestStates[spotID].response();
     }
   }
 }
 
-function ajaxReturnWeather(WeatherBox, JSONdata) {
+function ajaxReturnWeather(WeatherBox, JSONdata, spotID) {
   var Weather = JSON.parse(JSONdata);
 
   var tempdiv = WeatherBox.getElementsByClassName('currentTemp')[0];
@@ -207,9 +260,11 @@ function ajaxReturnWeather(WeatherBox, JSONdata) {
 
   var descriptionView = WeatherBox.getElementsByClassName('weatherDescription')[0];
   descriptionView.appendChild(document.createTextNode(Weather.weather[0].description));
+
+  spotRequestStates[spotID].response();
 }
 
-function ajaxReturnForecast(WeatherBox, JSONdata) {
+function ajaxReturnForecast(WeatherBox, JSONdata, spotID) {
   var Weather = JSON.parse(JSONdata);
 
   var hiloView = WeatherBox.getElementsByClassName('hilo')[0];
@@ -220,9 +275,11 @@ function ajaxReturnForecast(WeatherBox, JSONdata) {
   setTemp(Weather.list[0].temp.min, lotemp);
   setTemp(Weather.list[0].temp.max, hitemp);
 
+  spotRequestStates[spotID].response();
+
 }
 
-function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata) {
+function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata, spotID) {
 
   var spotForcast = JSON.parse(JSONdata);
 
@@ -231,11 +288,15 @@ function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata) {
   var gradeout = GradeBox.getElementsByClassName('grade')[0];
   gradeout.appendChild(document.createTextNode(currentConditions['shape_full']));
 
+  spotRequestStates[spotID].response();
+
   var waveout = WaveBox.getElementsByClassName('waveHeight')[0];
   waveout.appendChild(document.createTextNode(currentConditions['size']));
   sup = document.createElement('sup');
   sup.appendChild(document.createTextNode('ft'));
   waveout.appendChild(sup);
+
+  spotRequestStates[spotID].response();
 
 }
 
@@ -419,6 +480,8 @@ function createPanel(spot, body) {
   views['WaterBox'] = mypanel.getElementsByClassName('WaterBox')[0];
   views['WaveBox'] = mypanel.getElementsByClassName('WaveBox')[0];
   views['GradeBox'] = mypanel.getElementsByClassName('GradeBox')[0];
+
+  spotRequestStates[spot['spot_id']] = new requestState(mypanel);
 
   return views;
 

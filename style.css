@@ -1,7 +1,3 @@
-.panel-heading {
-  height: 50px;
-}
-
 .favoriteButton {
   float: right;
 }
@@ -68,7 +64,24 @@ button .glyphicon {
 
 .displayBox {
 /*todo fix warping of boxes on shrink*/
+}
 
+.progress, .blocker {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color:white;
+  top: 0px;
+  left: 0px;
+}
+
+.panel-heading {
+  height: 50px;
+  position: relative;
+}
+
+.panel-body {
+  position: relative;
 }
 
 /*todo reduce stacked margins and paddings here*/
