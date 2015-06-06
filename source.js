@@ -464,6 +464,7 @@ function user(request) {
   loginReq = new XMLHttpRequest();
 
   loginReq.onreadystatechange = function() {
+    console.log(this.readyState);
     if (this.readyState === 4) {
       if (this.response && this.status === 200) {
         console.log(this.response);
@@ -483,6 +484,7 @@ function user(request) {
 
   var postPs = 'username=' + nameData + '&password=' + passData;
   postPs += '&request=' + request;
+  postPs += '&tempUnit=' + tempUnit;
   postPs += '&favorites=' + JSON.stringify(favoriteSpots);
   loginReq.open('POST', 'login.php');
   loginReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -507,6 +509,17 @@ $('#loginMod').on('show.bs.modal', function(e) {
 
     displayMessage('', ErrorOut);
 
+    var letters = /^[0-9a-zA-Z]+$/;
+    if ((name.length && !letters.test(name)) ||
+      (pass.length && !letters.test(pass))) {
+      displayMessage('Letters and Numbers only please', ErrorOut);
+      return false;
+    }
+
+    if (!name.length || !pass.length) {
+      return false;
+    }
+
     var maxlength = 126;
     if (name.length > maxlength) {
       displayMessage('Username is too long', ErrorOut);
@@ -514,21 +527,6 @@ $('#loginMod').on('show.bs.modal', function(e) {
     }
     if (pass.length > maxlength) {
       displayMessage('Password is too long', ErrorOut);
-      return false;
-    }
-
-    if (!name.length && !pass.length) {
-      return false;
-    } else if (!name.length) {
-      return false;
-    } else if (!pass.length) {
-      return false;
-    }
-
-
-    var letters = /^[0-9a-zA-Z]+$/;
-    if (!letters.test(name) || !letters.test(pass)) {
-      displayMessage('Letters and Numbers only please', ErrorOut);
       return false;
     }
 
