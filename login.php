@@ -1,4 +1,5 @@
 <?php
+ini_set('session.save_path',realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/../session'));
 session_start();
 //todo disable
 ini_set('display_errors', 'On');
@@ -28,6 +29,7 @@ function return_user($sql, $username, $surfTable){
 
   if(session_status() == PHP_SESSION_ACTIVE){
     $_SESSION['userInfo'] = $userInfo;
+    $_SESSION['username'] = $username;
   }
 
   echo $userInfo;

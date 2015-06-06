@@ -1,5 +1,5 @@
 <?php
-
+ini_set('session.save_path',realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/../session'));
 //todo disable
 ini_set('display_errors', 'On');
 
@@ -21,7 +21,7 @@ if(session_status() != PHP_SESSION_ACTIVE){
     session_destroy();
     echo "<!--user is logged out-->";
   } else if(isset($_SESSION['userInfo'])){
-    echo "<!--user is logged in -->";
+    echo "<!--user: {$_SESSION['username']} -->";
     $userLoggedin=true;
   }
 
@@ -194,6 +194,14 @@ if(session_status() != PHP_SESSION_ACTIVE){
       <input type="submit" value="login">
      </form> 
 
+    <form action="main.php" method="POST">
+      <input type="text" name="logout" value="logout" hidden>
+      <button type="submit" class = "btn btn-danger">
+        <span class="glyphicon glyphicon-log-out"></span>
+        Logout
+      </button> 
+     </form> 
+
 </div>
 <div class="col-lg-4">
 <!-- todo figure out how to get the map to display over here 
@@ -318,10 +326,10 @@ API FOOTER ROLL HERE
  <?php 
  //todo if logged in overide user object here
  if($userLoggedin){
-  echo "<script> 
+/*  echo "<script> 
     userInfo = JSON.parse({$_SESSION['userInfo']});
   </script>";
-
+*/
   session_write_close();
  }
  

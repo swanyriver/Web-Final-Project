@@ -10,9 +10,8 @@ var spotInfo;
 var tempUnit="F";
 var favoriteSpots;
 
-var userInfo = JSON.parse(noUser);
+//var userInfo = JSON.parse(noUser);
 //todo replace refs to favoriteSpots and tempUnit;
-
 
 function requestState(panel) {
   this.numRequests = 0;
@@ -52,7 +51,7 @@ function requestState(panel) {
     if (this.numRequests == this.numWaiting) { 
       //remove progress and blockers
       console.log(panel.getElementsByClassName('panel-heading')[0].textContent + ' finished');
-      $(this.myBar.parentElement).fadeOut(1600, function() {
+      $(this.myBar.parentElement).fadeOut(1400, function() {
         this.parentElement.removeChild(this);
       });
 
