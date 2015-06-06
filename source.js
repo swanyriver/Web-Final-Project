@@ -530,10 +530,10 @@ function userloggedin(JSONprofile) {
   userPackage = JSON.parse(JSONprofile);
   //console.log(userPackage);
   userInfo = userPackage['userInfo'];
-  //favoriteSpots = JSON.parse(userPackage['favorites']);
+  favoriteSpots = JSON.parse(userPackage['favorites']);
 
   console.log(userInfo);
-  //console.log(favoriteSpots);
+  console.log(favoriteSpots);
 
   //todo apply to html, settemp etc put user name in settings and welcom modal
 
