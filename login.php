@@ -1,10 +1,33 @@
 <?php
 
+//todo disable
 ini_set('display_errors', 'On');
 
 header('Content-Type: text/plain');
 
 include "storedInfo.php"; //contains hostname/username/password/databasename
+
+//todo on login make a session, set $_SESSION['user'] & $_SESSION['hash']
+
+// todo make this callable from main, accept hash, check that its correct user
+// todo maybe migrate to a different php
+//only to be called from succesfull log-in or create-account
+function return_user($sql, $username, $surfTable){
+
+  $user = array();
+
+  $stmt = $sql->prepare("SELECT name,prefWeather,prefWater,prefWave,prefRating,tempUnit,favoritesJSON 
+    FROM $surfTable WHERE name = ?");
+  $stmt->bind_param("s",$username);
+  $stmt->execute();
+  $stmt->bind_result($user['name'],$user['prefWeather'],$user['prefWater'],
+    $user['prefRating'],$user['prefRating'],$user['tempUnit'],$user['favorites']);
+  $stmt->fetch();
+  $stmt->close();
+
+  echo json_encode($user);
+  exit();
+}
 
 //connect to database with created mysqli object
 $mysqli = new mysqli($hostname, $Username, $Password, $DatabaseName);
@@ -55,11 +78,11 @@ if($_POST['request'] == 'login'){
   $getHash->fetch();
   $getHash->close();
 
+  //PLEASE NOTE: the database stored string includes algo, random salt, and hash
   if(password_verify($_POST['password'],$hash)){
     http_response_code(200);
-    //todo need to echo json of entire row, except hash and username
-    echo "succesfully logged in";
-    exit();
+    return_user($mysqli, $_POST['username'], $surfTable);
+
   } else {
     http_response_code(403);
     echo "Incorect Password";
@@ -93,8 +116,7 @@ if($_POST['request'] == 'login'){
   $addUser->close();
 
   http_response_code(201);
-  echo "Account created";
-  exit();
+  return_user($mysqli, $_POST['username'], $surfTable);
 
 } else {
   http_response_code(500);

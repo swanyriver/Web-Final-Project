@@ -2,6 +2,9 @@
 
 $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 
+//todo check for $_SESSION['user']
+//make call with $_SESSION['user'] hash to get user info, pass it to javascript
+
 ?>
 
 <!DOCTYPE html>
@@ -185,7 +188,7 @@ API FOOTER ROLL HERE
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Sign in to My Surf Spots</h4>
+        <h4 class="modal-title">Your Surf Spot Sweet Spot</h4>
       </div>
       <div class="modal-body">
         <p>Tell us how you like your Surf Spots and we will help you spot that perfect spot to hit the waves today</p>
@@ -196,6 +199,27 @@ API FOOTER ROLL HERE
           <span class="glyphicon glyphicon-user"></span>
           Login
         </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- welcom modal -->
+<div class="modal fade" id="welcomeMod" role="dialog">
+  <div class="modal-dialog modal-lg">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Welcome to My Surf Spots</h4>
+      </div>
+      <div class="modal-body">
+        <p>#insert welcom display here</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -261,6 +285,13 @@ API FOOTER ROLL HERE
 
 
  <script type="text/javascript" src="source.js"></script>
+
+ <?php 
+ //todo if logged in overide user object here
+ echo "<script> 
+
+ </script>"
+ ?>
   
 </body>
 

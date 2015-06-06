@@ -458,19 +458,64 @@ function displayMessage(msg, element) {
   element.appendChild(msgNode);
 }
 
+function userloggedin(JSONprofile) {
+  console.log(JSONprofile);
+
+  var userProfile = JSON.parse(JSONprofile);
+
+  var myfavorites = JSON.parse(userProfile.favorites);
+  userProfile.favorites = myfavorites;
+
+  console.log(userProfile);
+
+  //todo set globals, favorites temp, prefs
+  //todo apply to html, settemp etc put user name in settings and welcom modal
+
+  //todo replace globals , favorites, temp unit
+  //    with single user object, blank one begins on page load, replaced when logged in
+  //    must also then change refrence of params when sending temp and favorites on sign in/ create account
+
+}
+
 function user(request) {
   console.log(request);
+
+  var ErrorOut = document.getElementById('loginMessage');
+  displayMessage('', ErrorOut);
 
   loginReq = new XMLHttpRequest();
 
   loginReq.onreadystatechange = function() {
-    console.log(this.readyState);
     if (this.readyState === 4) {
-      if (this.response && this.status === 200) {
-        console.log(this.response);
-      } else if (this.response) {
-        console.log('bad code:', this.status);
-        console.log(this.response);
+      if (this.response) {
+        if (this.status == 200) {
+          $('#loginMod').modal('hide');
+          userloggedin(this.response);
+          return;
+        } else if (this.status == 201) {
+          $('#loginMod').modal('hide');
+          $('#welcomeMod').modal('show');
+          userloggedin(this.response);
+          return;
+        }
+        displayMessage(this.response, ErrorOut);
+        switch (this.status) {
+          //todo implement conditions
+          case 404: //username not found
+            //disable login, leave create enabled
+            break;
+          case 403: //incorect password
+            //empty password field, turn it red?
+            //todo add clear textbox state to oninput and set when bad
+            break;
+          case 409: //username exists
+            //empty neither, red username,
+          default: //php fail
+            // todo decide what to do on utter failure, disable all fields
+
+          }
+
+
       } else {
         //todo server returned no string, why
       }
