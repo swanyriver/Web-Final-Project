@@ -25,13 +25,18 @@ function return_user($sql, $username, $surfTable){
   $stmt->fetch();
   $stmt->close();
 
-  $userInfo = json_encode($user);
+  
 
   if(session_status() == PHP_SESSION_ACTIVE){
-    $_SESSION['userInfo'] = $userInfo;
+    $_SESSION['userInfo'] = json_encode($user);
     $_SESSION['username'] = $username;
   }
 
+  $userPackage = array();
+  $userPackage['userInfo'] = $user;
+  $userPackage['favorites'] = $_SESSION['favorites'];
+
+  $userInfo = json_encode($userPackage);
   echo $userInfo;
   exit();
 }

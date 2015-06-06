@@ -10,7 +10,7 @@ var spotInfo = JSON.parse(spotJSON);
 
 var tempUnit="F";
 var favoriteSpots;
-
+var userInfo;
 //var userInfo = JSON.parse(noUser);
 //todo replace refs to favoriteSpots and tempUnit;
 
@@ -527,14 +527,14 @@ function displayMessage(msg, element) {
 function userloggedin(JSONprofile) {
   console.log(JSONprofile);
 
-  var userProfile = JSON.parse(JSONprofile);
+  userPackage = JSON.parse(JSONprofile);
+  //console.log(userPackage);
+  userInfo = userPackage['userInfo'];
+  //favoriteSpots = JSON.parse(userPackage['favorites']);
 
-  var myfavorites = JSON.parse(userProfile.favorites);
-  userProfile.favorites = myfavorites;
+  console.log(userInfo);
+  //console.log(favoriteSpots);
 
-  console.log(userProfile);
-
-  //todo set globals, favorites temp, prefs
   //todo apply to html, settemp etc put user name in settings and welcom modal
 
   //todo replace globals , favorites, temp unit
