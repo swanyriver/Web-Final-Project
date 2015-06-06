@@ -1,19 +1,20 @@
 <?php
-ini_set('session.save_path',realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/../session'));
 //todo disable
 ini_set('display_errors', 'On');
+
+ini_set('session.save_path',realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/../session'));
+session_start();
+
+echo "<!DOCTYPE html>";
 
 $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
 $userLoggedin = false;
 
-session_start();
+
 if(session_status() != PHP_SESSION_ACTIVE){
   echo "<!-- Problem starting session -->";
 } else {
   echo "<!--started session -->";
-
-  //test write todo remove
-  $_SESSION['test'] = "passed";
 
   if(isset($_POST['logout'])){
     //destroy session
@@ -22,6 +23,7 @@ if(session_status() != PHP_SESSION_ACTIVE){
     echo "<!--user is logged out-->";
   } else if(isset($_SESSION['userInfo'])){
     echo "<!--user: {$_SESSION['username']} -->";
+    echo "<!--" . var_export($_SESSION) . "-->";
     $userLoggedin=true;
   }
 
@@ -29,8 +31,6 @@ if(session_status() != PHP_SESSION_ACTIVE){
 
 
 ?>
-
-<!DOCTYPE html>
 <html lang="en">
 
 <head>

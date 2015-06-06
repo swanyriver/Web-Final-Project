@@ -5,13 +5,17 @@ waterCounties['San Francisco'] = 'san-francisco';
 waterCounties['San Mateo'] = 'san-mateo';
 waterCounties['Santa Cruz'] = 'santa-cruz';
 
-var spotInfo;
+//todo delete allspots.json
+var spotInfo = JSON.parse(spotJSON);
 
 var tempUnit="F";
 var favoriteSpots;
 
 //var userInfo = JSON.parse(noUser);
 //todo replace refs to favoriteSpots and tempUnit;
+
+//todo if logged in load favorites //actually put this in php
+favoriteSpots = JSON.parse(noFavorites);
 
 function requestState(panel) {
   this.numRequests = 0;
@@ -88,12 +92,6 @@ function navsize() {
 
 function load() {
   navsize();
-
-  //todo delete allspots.json
-  spotInfo = JSON.parse(spotJSON);
-
-  //todo if logged in load favorites //actually put this in php
-  favoriteSpots = JSON.parse(noFavorites);
 }
 
 function onCountySelect(countyName) {
