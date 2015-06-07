@@ -51,8 +51,11 @@ $userLoggedin = false;
           session_destroy();
           echo "<!--user is logged out-->";
         } else if(isset($_SESSION['userInfo'])){
+
+          //todo dont display user info in html
           echo "<!--user: {$_SESSION['username']} -->";
-          //echo "<!--" . var_export($_SESSION) . "-->";
+
+
           $userLoggedin=true;
 
           echo "
@@ -327,7 +330,7 @@ API FOOTER ROLL HERE
         </button>";
           else
             echo "<button id=\"settingsSave\" class =\"btn btn-success\" 
-          data-dismiss=\"modal\" onclick=\"updateUserSettings()\">
+          data-dismiss=\"modal\">
           <span class=\"glyphicon glyphicon-edit\"></span>
           Save Settings
         </button>"
@@ -421,7 +424,16 @@ API FOOTER ROLL HERE
     <span class=\"glyphicon glyphicon-log-out\"></span>
     Logout
   </button> 
- </form> "
+ </form> ";
+
+
+  echo "
+  <form hidden>
+  <button id=\"settingsSave\" class =\"btn btn-success\" 
+  data-dismiss=\"modal\">
+  <span class=\"glyphicon glyphicon-edit\"></span>
+  Save Settings
+  </button> </form>";
 ?>
 
  <script type="text/javascript" src="source.js"></script>

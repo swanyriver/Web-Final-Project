@@ -148,16 +148,16 @@ function navsize() {
   console.log('resize:' + height);
 
   //todo if we are full collumn, make nav not fixed it will cover the content
-  
+
   navHeight = height;
 
   //todo not working
   var anchors = document.getElementsByClassName('spotAnchor');
   for (var i = anchors.length - 1; i >= 0; i--) {
-    anchors[i].style.top = -1 * navHeight;
-    anchors[i].style.position = "relative";
-
-  };
+    anchors[i].style.top = '-' + String(navHeight);
+    anchors[i].style.position = 'relative';
+    anchors[i].style.padding = navHeight;
+  }
 
 }
 
@@ -190,8 +190,9 @@ function onCountySelect(countyName) {
     var anchor = document.createElement('a');
     anchor.setAttribute('class', 'spotAnchor');
     // todo not working
-    anchor.style.position = "relative";
-    anchor.style.top = -1 * navHeight;
+    anchor.style.position = 'relative';
+    anchor.style.top = '-' + String(navHeight);
+    anchor.style.padding = navHeight;
     anchor.setAttribute('id', spotInfo[countyName][i]['spot_name']);
     body.appendChild(anchor);
 
@@ -450,25 +451,29 @@ function updateUserSettings(){
   userInfo.prefRating = document.getElementById('userRating').value;
   userInfo.prefWater = document.getElementById('userWaterTemp').value;
 
-  var poststring = "prefWave=" + userInfo.prefWave;
-  poststring += "&" + "prefWeather=" + userInfo.prefWeather;
-  poststring += "&" + "prefRating=" + userInfo.prefRating;
-  poststring += "&" + "prefWater=" + userInfo.prefWater;
+  var poststring = 'prefWave=' + userInfo.prefWave;
+  poststring += '&' + 'prefWeather=' + userInfo.prefWeather;
+  poststring += '&' + 'prefRating=' + userInfo.prefRating;
+  poststring += '&' + 'prefWater=' + userInfo.prefWater;
 
-  updateUser(poststring,notify);
+  updateUser(poststring, notify);
 
 
+  refreshSpotHighlights();
+}
+
+function refreshSpotHighlights() {
   //refresh highlights
   spotPanels = document.getElementsByClassName('spotPanel');
-  for(var i=0; i < spotPanels.length; i++){
+  for (var i = 0; i < spotPanels.length; i++) {
     id = spotPanels[i].id;
-    if(spotRequestStates[id].completed){
+    if (spotRequestStates[id].completed) {
       updateRequestBoxes(spotRequestStates[id].responsVals);
     }
   }
 }
 
-//todo button click causes setting update to fire twice
+//button click relies on this for submiting
 $('#settingsMod').on('hide.bs.modal', updateUserSettings);
 
 function changeUnit(unit) {
@@ -486,8 +491,9 @@ function changeUnit(unit) {
     var onFinish = function(code,response){
       console.log("temp changed: " + code + response);
     }
-    //todo store new pref in session and database
-    updateUser("tempUnit=" + unit, onFinish);
+    
+    if (userInfo.name)
+      updateUser("tempUnit=" + unit, onFinish);
 
   } else {
     //no effect
@@ -690,20 +696,27 @@ function userloggedin(JSONprofile) {
   console.log(userInfo);
   console.log(favoriteSpots);
 
-  //set temp
+  //set temperature
   changeUnitButton(userInfo.tempUnit);
   changeUnit(userInfo.tempUnit);
   //change sign in to log out button
   var loginbutton = document.getElementById('loginButton');
   var logoutbutton = document.getElementById('logoutbutton');
-  loginbutton.parentElement.replaceChild(logoutbutton,loginbutton);
+  loginbutton.parentElement.replaceChild(logoutbutton, loginbutton);
   logoutbutton.removeAttribute('hidden');
-  // TODO enable settings controls and remove sign in button
+  // enable settings controls and remove sign in button reflect user prefs
   enableSettings();
-  // TODO set setting controls to user prefs
+  document.getElementById('settingsLogin').parentElement.replaceChild(
+    document.getElementById('settingsSave'), //new child
+    document.getElementById('settingsLogin')); //old child
+  document.getElementById('settingsSave').removeAttribute('hidden');
   adjustSettingsPanel();
-  // TODO disable sign in tooltip on favorites button
-  // TODO jump to myspots ??  or not let them
+
+  //highlight spots
+  refreshSpotHighlights();
+
+  // TODO disable sign in tooltip on favorites button TODO make tooltips
+  // TODO jump to myspots ??  TODO make myspots
   // TODO set favorite icons accordingly
   // TODO set report box backgrounds according to settings
   // TODO put user name somwhere on page
@@ -739,16 +752,18 @@ function user(request) {
           case 404: //username not found
               document.getElementById('submitLogin').
                 getElementsByTagName('button')[0].
-                setAttribute('disabled','true');
+                setAttribute('disabled', 'true');
+              document.getElementById('submitLogin').
+                getElementsByTagName('button')[1].select();
               break;
           case 403: //incorect password
-            passIn.value ='';
-            passIn.style.backgroundColor=warning;
+            passIn.value = '';
+            passIn.style.backgroundColor = warning;
             break;
           case 409: //username exists
-            nameIn.style.backgroundColor=warning;
+            nameIn.style.backgroundColor = warning;
           case 406: //pass too short
-            passIn.style.backgroundColor=warning;
+            passIn.style.backgroundColor = warning;
 
           default: //php fail
             // todo decide what to do on utter failure, disable all fields
@@ -872,13 +887,13 @@ function adjustSettingsPanel(){
         sets[i].opts[v].removeAttribute('selected');
       }
     };
-    if(!sets[i].set) sets[i].opts[0].setAttribute('selected','true');
+    if (!sets[i].set) sets[i].opts[0].setAttribute('selected', 'true');
   };
 
 
 }
 
-function enableSettings(){
+function enableSettings() {
   document.getElementById('userWeather').removeAttribute('disabled');
   document.getElementById('userWaterTemp').removeAttribute('disabled');
   document.getElementById('userWaveHeight').removeAttribute('disabled');
