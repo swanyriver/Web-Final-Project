@@ -225,8 +225,10 @@ function waterTempAjax(countyName) {
 
   //Spitcast call
   var spotReq = new XMLHttpRequest();
-  unabletoMakeAjax();
-  return;
+  if(! spotReq) {
+    unabletoMakeAjax();
+    return;
+  }
 
   spotReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
@@ -251,8 +253,10 @@ function makeAjaxcalls(spot, views) {
 
   //////Spitcast call//////////////
   var spotReq = new XMLHttpRequest();
-  unabletoMakeAjax();
-  return;
+  if(! spotReq) {
+    unabletoMakeAjax();
+    return;
+  }
 
   spotReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
@@ -274,9 +278,10 @@ function makeAjaxcalls(spot, views) {
 
   ///////weather call///////////
   var weatherReq = new XMLHttpRequest();
-  unabletoMakeAjax();
-  return;
-
+  if(! weatherReq) {
+    unabletoMakeAjax();
+    return;
+  }
   weatherReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
       ajaxReturnWeather(views['WeatherBox'], this.response, spot['spot_id']);
@@ -303,8 +308,10 @@ function makeAjaxcalls(spot, views) {
 
   ///////forecast call///////////
   var forecastReq = new XMLHttpRequest();
-  unabletoMakeAjax();
-  return;
+  if(! forecastReq) {
+    unabletoMakeAjax();
+    return;
+  }
 
   forecastReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
