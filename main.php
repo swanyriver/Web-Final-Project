@@ -8,6 +8,11 @@ session_start();
 echo "<!DOCTYPE html>";
 
 $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
+$conditions = array("Poor","Poor-Fair","Fair","Fair-Good","Good");
+$tempmin = 283;
+$tempMax = 313;
+$waveMin = 1;
+$waveMax = 10;
 $userLoggedin = false;
 
 ?>
@@ -247,21 +252,65 @@ API FOOTER ROLL HERE
       <div class="modal-body">
         <p>Tell us how you like your Surf Spots and we will help you spot that perfect spot to hit the waves today</p>
 
-        <form id="userSettings" <?php if(!$userLoggedin) echo "disabled" ?>>
+        <form id="userSettings">
           <div class="row">
 
             <!--todo generate settings and select users prefs -->
             <div class="col-lg-3 settingBox">
               <h2>Weather<br><small>Minimum</small></h2>
+              <select class="form-control" id="userWeather"
+                <?php if(!$userLoggedin) echo " disabled" ?>>
+                <option value="null" selected="">Not Selected</option>
+                <?php
+                  for($i = $tempMax; $i>=$tempmin; $i-=3){
+                    echo "<option value=\"$i\" 
+                    class=\"Temperature\" data-kelvin=\"$i\">
+                    </option>";
+                  }
+                ?>
+              </select>
             </div>
             <div class="col-lg-3 settingBox">
               <h2>Water<br><small>Minimum</small></h2>
+              <select class="form-control" id="userWaterTemp" 
+              <?php if(!$userLoggedin) echo " disabled" ?>>
+                <option value="null" selected="">Not Selected</option>
+                <?php
+                  for($i = $tempMax; $i>=$tempmin; $i-=3){
+                    echo "<option value=\"$i\" 
+                    class=\"Temperature\" data-kelvin=\"$i\">
+                    </option>";
+                  }
+                ?>
+              </select>
             </div>
             <div class="col-lg-3 settingBox">
               <h2>Wave Height<br><small>Minimum</small></h2>
+              <select class="form-control" id="userWaveHeight"
+                <?php if(!$userLoggedin) echo " disabled" ?>>
+                <option value="null" selected="">Not Selected</option>
+                <?php
+                  for($i = $waveMax; $i>=$waveMin; $i--){
+                    echo "<option value=\"$i\" 
+                    class=\"WaveHeight\"> $i <sup>ft</sup>
+                    </option>";
+                  }
+                ?>
+              </select>
             </div>
             <div class="col-lg-3 settingBox">
               <h2>Rating<br><small>Minimum</small></h2>
+              <select class="form-control" id="userWeather"
+                <?php if(!$userLoggedin) echo " disabled" ?>>
+                <option value="null" selected="">Not Selected</option>
+                <?php
+                  for ($i=4; $i>=0; $i--) {
+                    echo "<option value=\"$i\" 
+                    class=\"WaveHeight\"> {$conditions[$i]}
+                    </option>";
+                  }
+                ?>
+              </select>
             </div>
           </div>
           <!--todo add another temp control, maybe -->

@@ -13,6 +13,7 @@ var navHeight;
 function load() {
   navsize();
   changeUnitButton(userInfo.tempUnit);
+  updateAllTemps();
   //todo generate favorites page, if user has favorites
 }
 
@@ -354,7 +355,7 @@ function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata, spotID) {
   gradeout.appendChild(document.createTextNode(currentConditions['shape_full']));
 
   //todo store numerically
-  spotRequestStates[spotID].response(true,'Grade',currentConditions['shape_full'],GradeBox);
+  spotRequestStates[spotID].response(true,'Grade',conditions.indexOf(currentConditions['shape_full']),GradeBox);
 
   var waveout = WaveBox.getElementsByClassName('waveHeight')[0];
   waveout.appendChild(document.createTextNode(currentConditions['size']));
@@ -516,14 +517,15 @@ function createPanel(spot, body) {
 
   var weatherrow = document.createElement('div');
   weatherrow.setAttribute('class', 'row');
+
   var iconcol = document.createElement('div');
-  iconcol.setAttribute('class', 'col-lg-4');
+  iconcol.setAttribute('class', 'col-lg-3');
   var weatherIcon = document.createElement('img');
   weatherIcon.setAttribute('class', 'weatherIcon');
   iconcol.appendChild(weatherIcon);
   weatherrow.appendChild(iconcol);
   var temp = document.createElement('div');
-  temp.setAttribute('class', 'currentTemp col-lg-4');
+  temp.setAttribute('class', 'currentTemp col-lg-3');
   var tempspan = document.createElement('span');
   tempspan.setAttribute('class', 'Temperature');
   temp.appendChild(tempspan);
@@ -531,7 +533,7 @@ function createPanel(spot, body) {
 
   //third box
   var thirdbox = document.createElement('div');
-  thirdbox.setAttribute('class', 'col-lg-4');
+  thirdbox.setAttribute('class', 'col-lg-6');
   var description = document.createElement('div');
   description.setAttribute('class', 'weatherDescription');
   thirdbox.appendChild(description);
@@ -559,6 +561,7 @@ function createPanel(spot, body) {
 
   thirdbox.appendChild(hilo);
   weatherrow.appendChild(thirdbox);
+
   WeatherBoxReport.appendChild(weatherrow);
 
 

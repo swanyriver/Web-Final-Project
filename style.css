@@ -51,18 +51,19 @@ button .glyphicon {
 }
 
 .displayBox {
-border-style:ridge;
 height:100%;
 padding:0px;
 }
 
 .ReportHeading {
- 
+  width:100%;
+  text-align:center;
+  border-style:ridge;
 }
 
-.reportSection{
-  border-style:ridge;
 
+.reportSection * {
+  text-align:center
 }
 
 
@@ -99,6 +100,5 @@ padding:0px;
 div {
   /*border-style:solid;*/
 }
-
 
 
