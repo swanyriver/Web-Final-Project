@@ -27,7 +27,7 @@ body {
   font-size:inherit;
 }
 
-.waveHeight {
+.waveHeight, .grade {
   font-size: xx-large;
   font-family: monospace;
 }
