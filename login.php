@@ -19,7 +19,7 @@ function return_user($sql, $username, $surfTable){
   $stmt->bind_param("s",$username);
   $stmt->execute();
   $stmt->bind_result($user['name'],$user['prefWeather'],$user['prefWater'],
-    $user['prefRating'],$user['prefRating'],$user['tempUnit'],$_SESSION['favorites']);
+    $user['prefWave'],$user['prefRating'],$user['tempUnit'],$_SESSION['favorites']);
   $user['logedin'] = true;
   $stmt->fetch();
   $stmt->close();

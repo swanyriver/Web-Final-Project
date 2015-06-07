@@ -19,7 +19,9 @@ function load() {
 
 function requestState(panel) {
   this.numRequests = 0;
-  this.numWaiting = 5; //todo 6 if i can get callback for image load
+
+  //todo 6 if i can get callback for image load
+  this.numWaiting = 5; 
   this.panel = panel;
 
   this.responsVals = new Object();
@@ -51,7 +53,9 @@ function requestState(panel) {
   function ajaxReturn(success,value,view){
     this.success = success;
     this.value = value;
+    
     this.view = view;
+    if(view)this.header = view.parentElement.getElementsByClassName('ReportHeading')[0];
     this.completed = false;
     return this;
   }
@@ -89,7 +93,10 @@ function updateRequestBoxes(responsVals){
 
   var keys = spotRequestStates.boxKeys;
 
+  if(!responsVals.hilo.success) responsVals.hilo.view.innerHTML='';
+
   for (var i = keys.length - 1; i >= 0; i--) {
+    if(!userInfo.name) return;
     if(responsVals[keys[i]].success){
       //todo set class to , below, at, above
       //todo define css highlighting
@@ -99,7 +106,6 @@ function updateRequestBoxes(responsVals){
       responsVals[keys[i]].view.appendChild(unavailicon());
     }
   }
-  if(!responsVals.hilo.success) responsVals.hilo.view.innerHTML='';
 }
 
 function unavailicon() {
@@ -341,7 +347,7 @@ function ajaxReturnForecast(WeatherBox, JSONdata, spotID) {
   setTemp(Weather.list[0].temp.min, lotemp);
   setTemp(Weather.list[0].temp.max, hitemp);
 
-  spotRequestStates[spotID].response(true,'hilo','hilo',null);
+  spotRequestStates[spotID].response(true,'hilo','hilo',WeatherBox.getElementsByClassName('hilo')[0]);
 
 }
 
