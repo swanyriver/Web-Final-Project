@@ -181,3 +181,18 @@ padding:0px;
 #controlPanel {
   display: inline;
 }
+
+#cpHolder {
+  z-index: -1;
+}
+
+
+#logo #controlPanel {
+ width: 60%;
+ display:block;
+ float:right
+}
+#logo #controlPanel > *, #logo #controlPanel > * > button {
+  width:40%;
+  display:inline;
+}

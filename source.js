@@ -938,10 +938,9 @@ function goBig() {
   document.getElementById('spotNav').hidden = false;
 
 
+  var cp = document.getElementById('controlPanel');
+  document.getElementById('cpHolder').appendChild(cp);
 
-  // todo the button group breaks when its moved, maybe clone it and re add it
-  //var cp = document.getElementById('controlPanel');
-  //document.getElementById('cpHolder').appendChild(cp);
 }
 
 function goLittle() {
@@ -950,9 +949,12 @@ function goLittle() {
   document.getElementById('APIroll').style.position = 'static';
   document.getElementById('spotNav').hidden = true;
 
+  //document.getElementById('cpHolder').hidden = true;
+
+
   // todo the button group breaks when its moved, maybe clone it and re add it
-  //var cp = document.getElementById('controlPanel');
-  //document.getElementById('logo').appendChild(cp);
+  var cp = document.getElementById('controlPanel');
+  document.getElementById('logo').appendChild(cp);
 }
 
 function navsize() {
@@ -967,11 +969,11 @@ function navsize() {
   //console.log('resize:' + height);
 
   navHeight = height;
-  var allowed = innerHeight / 4;
-  console.log(height, window.innerHeight, allowed);
-  if (height > allowed) {
+  var toobig = innerHeight / 3;
+  var small = (innerHeight / 4)
+  if (height > toobig) {
     goLittle();
-  } else {
+  } else if (height < small) {
     goBig();
   }
 
