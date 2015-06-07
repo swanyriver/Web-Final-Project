@@ -1,0 +1,20 @@
+main.php:150://todo get navspy activity to work
+main.php:157:<!--todo make a splash page, if they arent logged in! -->
+main.php:189:<!-- todo credit google if maps are used
+main.php:202:<!-- todo figure out how to get the map to display over here 
+main.php:227:            <!--todo generate settings and select users prefs -->
+source.js:19:  //todo generate favorites page, if user has favorites
+source.js:26:  //todo 6 if i can get callback for image load
+source.js:153:    // todo the button group breaks when its moved, maybe clone it and re add it
+source.js:161:    // todo the button group breaks when its moved, maybe clone it and re add it
+source.js:166:  //todo anchors not working
+source.js:204:    // todo not working
+source.js:411:  //todo implement
+source.js:415:  //todo implement
+source.js:449:        //todo server returned no string, why
+source.js:460:  //todo stringify and send favorites
+source.js:610:  //todo put favorite buttons back
+source.js:833:            // todo decide what to do on utter failure, disable all fields?
+source.js:838:        //todo server returned no string, why
+style.css:47: /*todo align error to left, possibly put red background when there is message */
+updateUser.php:9://todo on login make a session, set $_SESSION['user'] & $_SESSION['hash']

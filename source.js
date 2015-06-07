@@ -5,7 +5,6 @@ waterCounties['San Francisco'] = 'san-francisco';
 waterCounties['San Mateo'] = 'san-mateo';
 waterCounties['Santa Cruz'] = 'santa-cruz';
 
-//todo delete allspots.json
 var spotInfo = JSON.parse(spotJSON);
 
 var navHeight;
@@ -107,15 +106,12 @@ function updateRequestBoxes(responsVals) {
     response.header.classList.remove('prefNotMet');
 
     if (response.success && userPref && userPref != 'null') {
-      //todo set class to , below, at, above
       if (response.value >= userPref) {
         response.header.classList.add('prefMet');
       } else {
         response.header.classList.add('prefNotMet');
       }
 
-      //todo define css highlighting
-      //todo TIMEPERMIT subdue race condition here
     } else if (!response.success) {
       responsVals[keys[i]].view.innerHTML = '';
       responsVals[keys[i]].view.appendChild(unavailicon());
@@ -229,7 +225,8 @@ function waterTempAjax(countyName) {
 
   //Spitcast call
   var spotReq = new XMLHttpRequest();
-  //todo respond to error creating
+  unabletoMakeAjax();
+  return;
 
   spotReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
@@ -244,13 +241,18 @@ function waterTempAjax(countyName) {
   spotReq.send();
 }
 
+function unabletoMakeAjax() {
+  alert("our apolagies but the browser doesn't want to talk the surf seers");
+}
+
 function makeAjaxcalls(spot, views) {
 
   var spotID = spot.spot_id;
 
   //////Spitcast call//////////////
   var spotReq = new XMLHttpRequest();
-  //todo respond to error creating
+  unabletoMakeAjax();
+  return;
 
   spotReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
@@ -272,17 +274,18 @@ function makeAjaxcalls(spot, views) {
 
   ///////weather call///////////
   var weatherReq = new XMLHttpRequest();
-  //todo respond to error creating
+  unabletoMakeAjax();
+  return;
 
   weatherReq.onreadystatechange = function() {
-    if (this.readyState === 4 && this.status === 200 && this.response){
+    if (this.readyState === 4 && this.status === 200 && this.response) {
       ajaxReturnWeather(views['WeatherBox'], this.response, spot['spot_id']);
     } else if (this.readyState === 4) {
       this.ontimeout();
     }
   };
 
-  weatherReq.ontimeout = function(){
+  weatherReq.ontimeout = function() {
     console.log('no response: weather timeout');
     spotRequestStates[spotID].response(false, 'weather', null, views['WeatherBox']);
   } 
@@ -300,7 +303,8 @@ function makeAjaxcalls(spot, views) {
 
   ///////forecast call///////////
   var forecastReq = new XMLHttpRequest();
-  //todo respond to error creating
+  unabletoMakeAjax();
+  return;
 
   forecastReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
@@ -391,8 +395,7 @@ function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata, spotID) {
   var gradeout = GradeBox.getElementsByClassName('grade')[0];
   gradeout.appendChild(document.createTextNode(currentConditions['shape_full']));
 
-  //todo store numerically
-  spotRequestStates[spotID].response(true,'Grade',conditions.indexOf(currentConditions['shape_full']),GradeBox);
+  spotRequestStates[spotID].response(true, 'Grade',conditions.indexOf(currentConditions['shape_full']),GradeBox);
 
   var waveout = WaveBox.getElementsByClassName('waveHeight')[0];
   waveout.appendChild(document.createTextNode(currentConditions['size']));
@@ -461,11 +464,9 @@ function updateUserSettings() {
 
   function notify(code, response) {
     console.log('user settings updated' + code + response);
-    //todo notify user of setting saved
 
     if (code == 201) {
       var color = 'background-color: lightgreen;';
-      //var message = 'User Settings Saved Successfully';
     } else {
       var color = 'background-color: lightcoral;';
     }
@@ -569,7 +570,6 @@ function setTemp(kelvin, tempview) {
 
   tempview.setAttribute('data-kelvin', kelvin);
 
-  //todo implement session variable of users prefrence k or f
   if (userInfo.tempUnit == 'C') {
     var Temperature = KtoC(kelvin);
   } else {
@@ -577,7 +577,6 @@ function setTemp(kelvin, tempview) {
   }
 
   tempview.appendChild(document.createTextNode(Temperature + '\xB0')); 
-  //todo add degree symbol
 }
 
 function KtoF(kelvin) {
@@ -831,8 +830,7 @@ function user(request) {
             passIn.style.backgroundColor = warning;
 
           default: //php fail
-            // todo decide what to do on utter failure, disable all fields
-
+            // todo decide what to do on utter failure, disable all fields?
           }
 
 
@@ -882,8 +880,6 @@ $('#loginMod').on('show.bs.modal', function(e) {
     if (!name.length || !pass.length) {
       return false;
     }
-
-    //todo add minimums?
 
     var maxlength = 126;
     if (name.length > maxlength) {
@@ -964,5 +960,4 @@ function enableSettings() {
   document.getElementById('userWaveHeight').removeAttribute('disabled');
   document.getElementById('userRating').removeAttribute('disabled');
 
-  //todo remove sign in button, replace with proper one
 }
