@@ -466,16 +466,34 @@ function updateUserSettings() {
         });
   } //end of notify
 
-  userInfo.prefWave = document.getElementById('userWaveHeight').value;
-  userInfo.prefWeather = document.getElementById('userWeather').value;
-  userInfo.prefRating = document.getElementById('userRating').value;
-  userInfo.prefWater = document.getElementById('userWaterTemp').value;
+  var newPrefWave = document.getElementById('userWaveHeight').value;
+  var newPrefWeather = document.getElementById('userWeather').value;
+  var newPrefRating = document.getElementById('userRating').value;
+  var newPrefWater = document.getElementById('userWaterTemp').value;
 
-  var poststring = 'prefWave=' + userInfo.prefWave;
-  poststring += '&' + 'prefWeather=' + userInfo.prefWeather;
-  poststring += '&' + 'prefRating=' + userInfo.prefRating;
-  poststring += '&' + 'prefWater=' + userInfo.prefWater;
+  var poststring = '';
 
+  if (userInfo.prefWave != newPrefWave) {
+    poststring += '&' + 'prefWave=' + newPrefWave;
+    userInfo.prefWave = newPrefWave;
+  }
+  if (userInfo.prefWeather != newPrefWeather) {
+    poststring += '&' + 'prefWeather=' + newPrefWeather;
+    userInfo.prefWeather = newPrefWeather;
+  }
+  if (userInfo.prefWater != newPrefWater) {
+    poststring += '&' + 'prefWater=' + newPrefWater;
+    userInfo.prefWater = newPrefWater;
+  }
+  if (userInfo.prefRating != newPrefRating) {
+    poststring += '&' + 'prefRating=' + newPrefRating;
+    userInfo.prefRating = newPrefRating;
+  }
+
+  if (poststring == '') return;
+  else poststring = poststring.substring(1);
+
+  console.log("updating user:"+poststring);
   updateUser(poststring, notify);
 
 
