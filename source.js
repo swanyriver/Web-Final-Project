@@ -81,9 +81,35 @@ function requestState(panel) {
   };
 }
 var spotRequestStates = new Object();
+spotRequestStates.boxKeys = ["watertemp","Grade","waveHeight","weather"]
 
 function updateRequestBoxes(responsVals){
   console.log(responsVals);
+
+  var keys = spotRequestStates.boxKeys;
+
+  for (var i = keys.length - 1; i >= 0; i--) {
+    if(responsVals[keys[i]].success){
+      //todo set class to , below, at, above
+      //todo define css highlighting
+      //todo TIMEPERMIT subdue race condition here
+    } else {
+      responsVals[keys[i]].view.innerHTML='';
+      responsVals[keys[i]].view.appendChild(unavailicon());
+    }
+  }
+  if(!responsVals.hilo.success) responsVals.hilo.view.innerHTML='';
+}
+
+function unavailicon() {
+  var div = document.createElement('div');
+  div.setAttribute('class', 'unavailDiv');
+  var icon = document.createElement('span');
+  icon.setAttribute('class', 'glyphicon glyphicon-remove');
+  div.appendChild(icon);
+  div.appendChild(document.createElement('br'))
+  div.appendChild(document.createTextNode('Unavailable'));
+  return div;
 }
 
 

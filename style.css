@@ -84,6 +84,16 @@ button .glyphicon {
   position: relative;
 }
 
+.unavailDiv *, .unavailDiv{
+  text-align: center;
+  color: red;
+  align-content:center;
+}
+
+.uavailDiv .glyphicon {
+  font-size: larger;
+}
+
 /*todo reduce stacked margins and paddings here*/
 div {
   /*border-style:solid;*/
