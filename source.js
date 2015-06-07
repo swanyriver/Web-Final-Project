@@ -136,40 +136,6 @@ function unavailicon() {
 }
 
 
-function navsize() {
-  var navbar = document.getElementById('navbar');
-  var blocker = document.getElementById('blocker');
-
-  var height = navbar.clientHeight;
-
-  blocker.setAttribute('style' , 'display:block;height:' + height);
-  blocker.style.height = height + 'px';
-
-  console.log('resize:' + height);
-
-  navHeight = height;
-  var allowed = innerHeight / 4;
-  console.log(height, window.innerHeight, allowed);
-  if (height > allowed) {
-    document.getElementById('navbar').style.position = 'static';
-    blocker.style.height = '0px';
-    document.getElementById('APIroll').style.position = 'static';
-
-    // todo the button group breaks when its moved, maybe clone it and re add it
-    //var cp = document.getElementById('controlPanel');
-    //document.getElementById('logo').appendChild(cp);
-
-  } else {
-    document.getElementById('navbar').style.position = 'fixed';
-    document.getElementById('APIroll').style.position = 'fixed';
-
-    // todo the button group breaks when its moved, maybe clone it and re add it
-    //var cp = document.getElementById('controlPanel');
-    //document.getElementById('cpHolder').appendChild(cp);
-  }
-
-}
-
 function onCountySelect(countyName) {
   navbar = document.getElementById('spotNav');
   body = document.getElementById('mainwindow');
@@ -186,7 +152,7 @@ function onCountySelect(countyName) {
 
     if (i)var href = '#' + spotInfo[countyName][i - 1]['spot_id'];
     else var href = '#blocker';
-        
+
     anchor.setAttribute('href', href);
     anchor.setAttribute('onclick', '$.scrollTo( ' + href + ', 750 ); return false;"');
     anchor.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
@@ -963,5 +929,50 @@ function enableSettings() {
   document.getElementById('userWaterTemp').removeAttribute('disabled');
   document.getElementById('userWaveHeight').removeAttribute('disabled');
   document.getElementById('userRating').removeAttribute('disabled');
+
+}
+
+function goBig() {
+  document.getElementById('navbar').style.position = 'fixed';
+  document.getElementById('APIroll').style.position = 'fixed';
+  document.getElementById('spotNav').hidden = false;
+
+
+
+  // todo the button group breaks when its moved, maybe clone it and re add it
+  //var cp = document.getElementById('controlPanel');
+  //document.getElementById('cpHolder').appendChild(cp);
+}
+
+function goLittle() {
+  document.getElementById('navbar').style.position = 'static';
+  blocker.style.height = '0px';
+  document.getElementById('APIroll').style.position = 'static';
+  document.getElementById('spotNav').hidden = true;
+
+  // todo the button group breaks when its moved, maybe clone it and re add it
+  //var cp = document.getElementById('controlPanel');
+  //document.getElementById('logo').appendChild(cp);
+}
+
+function navsize() {
+  var navbar = document.getElementById('navbar');
+  var blocker = document.getElementById('blocker');
+
+  var height = navbar.clientHeight;
+
+  blocker.setAttribute('style' , 'display:block;height:' + height);
+  blocker.style.height = height + 'px';
+
+  //console.log('resize:' + height);
+
+  navHeight = height;
+  var allowed = innerHeight / 4;
+  console.log(height, window.innerHeight, allowed);
+  if (height > allowed) {
+    goLittle();
+  } else {
+    goBig();
+  }
 
 }
