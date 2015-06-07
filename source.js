@@ -173,7 +173,14 @@ function navsize() {
 
 }
 
+function scrollSpot(spotid) {
+  var panel = document.getElementById(spotid);
+  var top = panel.getBoundingClientRect().top;
+  top -= navHeight;
+  window.scrollTo(0, top);
 
+  console('scrolled to:', top);
+}
 
 function onCountySelect(countyName) {
   navbar = document.getElementById('spotNav');
@@ -186,7 +193,9 @@ function onCountySelect(countyName) {
     //<li><a href='#'>test1</a></li>
     var listitem = document.createElement('li');
     var anchor = document.createElement('a');
-    anchor.setAttribute('href', '#' + spotInfo[countyName][i]['spot_name']);
+    //anchor.setAttribute('href', '#' + spotInfo[countyName][i]['spot_name']);
+    anchor.setAttribute('href', '#');
+    anchor.setAttribute('onclick', 'scrollSpot(' + spotInfo[countyName][i]['spot_id'] + ')');
     anchor.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
     listitem.appendChild(anchor);
     navbar.appendChild(listitem);
@@ -225,13 +234,15 @@ function waterTempAjax(countyName) {
 
   //Spitcast call
   var spotReq = new XMLHttpRequest();
-  unabletoMakeAjax();
-  return;
+  if (!spotReq) {
+    unabletoMakeAjax();
+    return;
+  }
 
   spotReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
       updateWaterTemp(countyName, this.response, true);
-    } else if (this.readyState === 4){
+    } else if (this.readyState === 4) {
       updateWaterTemp(countyName, null, false);
     }
   };
@@ -242,6 +253,7 @@ function waterTempAjax(countyName) {
 }
 
 function unabletoMakeAjax() {
+  console.log('unable to make ajax');
   alert("our apolagies but the browser doesn't want to talk the surf seers");
 }
 
@@ -251,8 +263,11 @@ function makeAjaxcalls(spot, views) {
 
   //////Spitcast call//////////////
   var spotReq = new XMLHttpRequest();
-  unabletoMakeAjax();
-  return;
+  if (!spotReq) {
+    unabletoMakeAjax();
+    return;
+  }
+  
 
   spotReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
@@ -274,8 +289,10 @@ function makeAjaxcalls(spot, views) {
 
   ///////weather call///////////
   var weatherReq = new XMLHttpRequest();
-  unabletoMakeAjax();
-  return;
+  if (!weatherReq) {
+    unabletoMakeAjax();
+    return;
+  }
 
   weatherReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
@@ -288,7 +305,7 @@ function makeAjaxcalls(spot, views) {
   weatherReq.ontimeout = function() {
     console.log('no response: weather timeout');
     spotRequestStates[spotID].response(false, 'weather', null, views['WeatherBox']);
-  } 
+  };
 
   var wurl = 'http://api.openweathermap.org/data/2.5/weather';
   var lat = 'lat=' + spot['latitude'];
@@ -303,8 +320,10 @@ function makeAjaxcalls(spot, views) {
 
   ///////forecast call///////////
   var forecastReq = new XMLHttpRequest();
-  unabletoMakeAjax();
-  return;
+  if (!forecastReq) {
+    unabletoMakeAjax();
+    return;
+  }
 
   forecastReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
@@ -346,7 +365,7 @@ function updateWaterTemp(countyName, JSONdata, success) {
     var panel = document.getElementById(spotID);
     if (panel) {
       var out = panel.getElementsByClassName("WaterBox")[0].getElementsByClassName("Temperature")[0];
-      if(success) setTemp(FtoK(waterTemp), out);
+      if (success) setTemp(FtoK(waterTemp), out);
       spotRequestStates[spotID].response(success, 'watertemp', FtoK(waterTemp),
         panel.getElementsByClassName("WaterBox")[0]);
     }
@@ -806,7 +825,7 @@ function user(request) {
           return;
         } else if (this.status == 201) {
           $('#loginMod').modal('hide');
-          $('#welcomeMod').modal('show');
+          //$('#welcomeMod').modal('show');
           userloggedin(this.response);
           return;
         }

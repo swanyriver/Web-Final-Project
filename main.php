@@ -88,9 +88,9 @@ $userLoggedin = false;
     <div class="row">
 
       <div id="logo" class = "col-lg-2">
-        <a href="#" onclick="mySpots()" >
+        
           <img src="logo.png">
-        </a>
+        
       </div>
 
       <div class="col-lg-8">
