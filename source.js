@@ -19,6 +19,7 @@ function load() {
 
 function requestState(panel) {
   this.numRequests = 0;
+  this.completed = false;
 
   //todo 6 if i can get callback for image load
   this.numWaiting = 5; 
@@ -56,7 +57,6 @@ function requestState(panel) {
     
     this.view = view;
     if(view)this.header = view.parentElement.getElementsByClassName('ReportHeading')[0];
-    this.completed = false;
     return this;
   }
 
@@ -69,7 +69,7 @@ function requestState(panel) {
     this.myBar.setAttribute('aria-valuenow', String(this.numRequests));
 
     if (this.numRequests == this.numWaiting) {
-      this.responsVals.completed = true;
+      this.completed = true;
       updateRequestBoxes(this.responsVals);
 
       //remove progress and blockers
@@ -91,17 +91,29 @@ spotRequestStates.boxKeys = ["watertemp","Grade","waveHeight","weather"]
 function updateRequestBoxes(responsVals){
   console.log(responsVals);
 
-  var keys = spotRequestStates.boxKeys;
+  var keys = spotRequestStates.boxKeys; 
 
   if(!responsVals.hilo.success) responsVals.hilo.view.innerHTML='';
 
   for (var i = keys.length - 1; i >= 0; i--) {
     if(!userInfo.name) return;
-    if(responsVals[keys[i]].success){
+    var response = responsVals[keys[i]];
+    var userPref = userInfo[prefMap[keys[i]]];
+
+    response.header.classList.remove('prefMet');    
+    response.header.classList.remove('prefNotMet');
+
+    if(response.success && userPref && userPref != 'null' ) {
       //todo set class to , below, at, above
+      if(response.value >= userPref){
+        response.header.classList.add('prefMet');
+      } else {
+        response.header.classList.add('prefNotMet');
+      }
+
       //todo define css highlighting
       //todo TIMEPERMIT subdue race condition here
-    } else {
+    } else if (!response.success) {
       responsVals[keys[i]].view.innerHTML='';
       responsVals[keys[i]].view.appendChild(unavailicon());
     }
@@ -425,13 +437,36 @@ function updateUserFavorites(){
 }
 
 function updateUserSettings(){
-  //todo read settings from form
+  //todo read settings from form // SUPER TODO
   function notify(code,response){
-    console.log(code + response);
+    console.log("user settings updated" + code + response);
+    //todo notify user of setting saved
   }
-  updateUser("prefWeather==200&prefWater=250&prefWave=4&prefRating=3",notify);
+
+  userInfo.prefWave = document.getElementById('userWaveHeight').value;
+  userInfo.prefWeather = document.getElementById('userWeather').value;
+  userInfo.prefRating = document.getElementById('userRating').value;
+  userInfo.prefWater = document.getElementById('userWaterTemp').value;
+
+  var poststring = "prefWave=" + userInfo.prefWave;
+  poststring += "&" + "prefWeather=" + userInfo.prefWeather;
+  poststring += "&" + "prefRating=" + userInfo.prefRating;
+  poststring += "&" + "prefWater=" + userInfo.prefWater;
+
+  updateUser(poststring,notify);
+
+
+  //refresh highlights
+  spotPanels = document.getElementsByClassName('spotPanel');
+  for(var i=0; i < spotPanels.length; i++){
+    id = spotPanels[i].id;
+    if(spotRequestStates[id].completed){
+      updateRequestBoxes(spotRequestStates[id].responsVals);
+    }
+  }
 }
 
+//todo button click causes setting update to fire twice
 $('#settingsMod').on('hide.bs.modal', updateUserSettings);
 
 function changeUnit(unit) {
@@ -491,7 +526,7 @@ function createPanel(spot, body) {
   var views = [];
 
   var panel = document.createElement('div');
-  panel.setAttribute('class', 'panel panel-default');
+  panel.setAttribute('class', 'panel panel-default spotPanel');
   panel.setAttribute('id', spot['spot_id']);
   var pHead = document.createElement('div');
   pHead.setAttribute('class', 'panel-heading');

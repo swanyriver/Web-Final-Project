@@ -8,7 +8,7 @@ session_start();
 echo "<!DOCTYPE html>";
 
 $counties = array("Sonoma","Marin","San Francisco","San Mateo","Santa Cruz");
-$conditions = array("Poor","Poor-Fair","Fair","Fair-Good","Good");
+$conditions = array("0","Poor","Poor-Fair","Fair","Fair-Good","Good");
 $tempmin = 283;
 $tempMax = 313;
 $waveMin = 1;
@@ -300,13 +300,13 @@ API FOOTER ROLL HERE
             </div>
             <div class="col-lg-3 settingBox">
               <h2>Rating<br><small>Minimum</small></h2>
-              <select class="form-control" id="userWeather"
+              <select class="form-control" id="userRating"
                 <?php if(!$userLoggedin) echo " disabled" ?>>
                 <option value="null" selected="">Not Selected</option>
                 <?php
-                  for ($i=4; $i>=0; $i--) {
+                  for ($i=5; $i>=1; $i--) {
                     echo "<option value=\"$i\" 
-                    class=\"WaveHeight\"> {$conditions[$i]}
+                    class=\"grade\"> {$conditions[$i]}
                     </option>";
                   }
                 ?>

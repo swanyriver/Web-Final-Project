@@ -96,9 +96,11 @@ padding:0px;
   font-size: larger;
 }
 
-/*todo reduce stacked margins and paddings here*/
-div {
-  /*border-style:solid;*/
+.prefMet {
+  background-color: lightgreen;
+}
+.prefNotMet {
+  background-color: lightcoral;
 }
 
 
