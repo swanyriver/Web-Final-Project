@@ -183,7 +183,10 @@ function onCountySelect(countyName) {
     //<li><a href='#'>test1</a></li>
     var listitem = document.createElement('li');
     var anchor = document.createElement('a');
-    var href = '#' + spotInfo[countyName][i]['spot_id'];
+
+    if (i)var href = '#' + spotInfo[countyName][i - 1]['spot_id'];
+    else var href = '#blocker';
+        
     anchor.setAttribute('href', href);
     anchor.setAttribute('onclick', '$.scrollTo( ' + href + ', 750 ); return false;"');
     anchor.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
