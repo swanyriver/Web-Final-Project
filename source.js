@@ -14,6 +14,8 @@ function load() {
   navsize();
   changeUnitButton(userInfo.tempUnit);
   updateAllTemps();
+
+  if(userInfo.name) adjustSettingsPanel();
   //todo generate favorites page, if user has favorites
 }
 
@@ -697,7 +699,9 @@ function userloggedin(JSONprofile) {
   loginbutton.parentElement.replaceChild(logoutbutton,loginbutton);
   logoutbutton.removeAttribute('hidden');
   // TODO enable settings controls and remove sign in button
+  enableSettings();
   // TODO set setting controls to user prefs
+  adjustSettingsPanel();
   // TODO disable sign in tooltip on favorites button
   // TODO jump to myspots ??  or not let them
   // TODO set favorite icons accordingly
@@ -834,3 +838,51 @@ $('#loginMod').on('show.bs.modal', function(e) {
   //passIn.oninput = buttonControl;
 });
 
+function adjustSettingsPanel(){
+
+  var weatherSet = new Object();
+  var waterSet = new Object();
+  var waveSet = new Object();
+  var ratingSet = new Object();
+
+  weatherSet.opts = document.getElementById('userWeather').
+    getElementsByTagName('option');
+  waterSet.opts = document.getElementById('userWaterTemp').
+    getElementsByTagName('option');
+  waveSet.opts = document.getElementById('userWaveHeight').
+    getElementsByTagName('option');
+  ratingSet.opts = document.getElementById('userRating').
+    getElementsByTagName('option');
+
+  
+  weatherSet.setting = userInfo.prefWeather;
+  waterSet.setting = userInfo.prefWater;
+  waveSet.setting = userInfo.prefWave;
+  ratingSet.setting = userInfo.prefRating;
+
+  var sets = [weatherSet, waterSet,waveSet,ratingSet];
+
+  for (var i = sets.length - 1; i >= 0; i--) {
+    sets[i].set = false;
+    for (var v = sets[i].opts.length - 1; v >= 0; v--) {
+      if(sets[i].opts[v].value == sets[i].setting){
+        sets[i].opts[v].setAttribute('selected','true');
+        sets[i].set = true;
+      } else {
+        sets[i].opts[v].removeAttribute('selected');
+      }
+    };
+    if(!sets[i].set) sets[i].opts[0].setAttribute('selected','true');
+  };
+
+
+}
+
+function enableSettings(){
+  document.getElementById('userWeather').removeAttribute('disabled');
+  document.getElementById('userWaterTemp').removeAttribute('disabled');
+  document.getElementById('userWaveHeight').removeAttribute('disabled');
+  document.getElementById('userRating').removeAttribute('disabled');
+
+  //todo remove sign in button, replace with proper one
+}
