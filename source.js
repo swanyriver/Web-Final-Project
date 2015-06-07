@@ -81,7 +81,7 @@ function requestState(panel) {
         this.parentElement.removeChild(this);
       });
 
-      $(this.myBlock).fadeOut(700, function() {
+      $(this.myBlock).fadeOut(1400, function() {
         this.parentElement.removeChild(this);
       });
 

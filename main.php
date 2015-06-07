@@ -166,33 +166,35 @@ OpenWeatherMap_logo_white.png
 -->
 <div id="APIroll" class='row'>
 
-<div id="apiSpit" class="col-lg-3">
+<div id="apiSpit">
 <a href="http://www.spitcast.com/">
  <img src = 'spitlogowhite.png'>
  Spitcast Surf Forecast
 </a>
 </div>
 
-<div id="apiOpenWeather" class="col-lg-3">
+<div id="apiOpenWeather">
 <a href="http://openweathermap.org/">
  <img src = 'OpenWeatherMap_logo_white.png'>
  Open Weather Map
 </a>
 </div>
 
-<div id="apiBootstrap" class="col-lg-3">
+<div id="apiBootstrap">
 <a href="http://getbootstrap.com/">
  <img src = 'Bootstrap.png'>
  Twitter Bootsrap
 </a>
 </div>
 
-<div id="apiMap" class="col-lg-3" hidden>
+<!-- todo credit google if maps are used
+<div id="apiMap">
 <a href="https://developers.google.com/maps/">
  <img src = 'Maps-logo-white.png'>
  Google Maps
 </a>
 </div>
+-->
 
 </div> <!--api roll -->
 
