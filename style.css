@@ -128,6 +128,7 @@ padding:0px;
   bottom: 0px;
   padding: 5px;
   font-size: large;
+  padding-left: 35px;
 }
 
 #APIroll a {
@@ -148,6 +149,7 @@ padding:0px;
   text-align: center;
   display: inline;
   margin-right:25px; 
+  white-space: nowrap;
 }
 
 #apiBootstrap img {

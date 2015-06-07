@@ -98,21 +98,26 @@ function updateRequestBoxes(responsVals) {
   if (!responsVals.hilo.success) responsVals.hilo.view.innerHTML = '';
 
   for (var i = keys.length - 1; i >= 0; i--) {
-    if (!userInfo.name) return;
+
     var response = responsVals[keys[i]];
     var userPref = userInfo[prefMap[keys[i]]];
 
-    response.header.classList.remove('prefMet');
-    response.header.classList.remove('prefNotMet');
+    if (userInfo.name) {
 
-    if (response.success && userPref && userPref != 'null') {
-      if (response.value >= userPref) {
-        response.header.classList.add('prefMet');
-      } else {
-        response.header.classList.add('prefNotMet');
+      response.header.classList.remove('prefMet');
+      response.header.classList.remove('prefNotMet');
+
+      if (response.success && userPref && userPref != 'null') {
+        if (response.value >= userPref) {
+          response.header.classList.add('prefMet');
+        } else {
+          response.header.classList.add('prefNotMet');
+        }
       }
 
-    } else if (!response.success) {
+    } 
+
+    if (!response.success) {
       responsVals[keys[i]].view.innerHTML = '';
       responsVals[keys[i]].view.appendChild(unavailicon());
     }
@@ -163,23 +168,6 @@ function navsize() {
     //document.getElementById('cpHolder').appendChild(cp);
   }
 
-  //todo anchors not working
-  var anchors = document.getElementsByClassName('spotAnchor');
-  for (var i = anchors.length - 1; i >= 0; i--) {
-    anchors[i].style.top = '-' + String(navHeight);
-    anchors[i].style.position = 'relative';
-    anchors[i].style.padding = navHeight;
-  }
-
-}
-
-function scrollSpot(spotid) {
-  var panel = document.getElementById(spotid);
-  var top = panel.getBoundingClientRect().top;
-  top -= navHeight;
-  window.scrollTo(0, top);
-
-  console.log('scrolled to:', top);
 }
 
 function onCountySelect(countyName) {
@@ -195,9 +183,9 @@ function onCountySelect(countyName) {
     //<li><a href='#'>test1</a></li>
     var listitem = document.createElement('li');
     var anchor = document.createElement('a');
-    //anchor.setAttribute('href', '#' + spotInfo[countyName][i]['spot_name']);
-    anchor.setAttribute('href', '#');
-    anchor.setAttribute('onclick', 'scrollSpot(' + spotInfo[countyName][i]['spot_id'] + ')');
+    var href = '#' + spotInfo[countyName][i]['spot_id'];
+    anchor.setAttribute('href', href);
+    anchor.setAttribute('onclick', '$.scrollTo( ' + href + ', 750 ); return false;"');
     anchor.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
     listitem.appendChild(anchor);
     navbar.appendChild(listitem);
@@ -209,15 +197,6 @@ function onCountySelect(countyName) {
   spotviews = [];
 
   for (var i = 0; i < spotInfo[countyName].length; i++) {
-
-    var anchor = document.createElement('a');
-    anchor.setAttribute('class', 'spotAnchor');
-    // todo not working
-    anchor.style.position = 'relative';
-    anchor.style.top = '-' + String(navHeight);
-    anchor.style.padding = navHeight;
-    anchor.setAttribute('id', spotInfo[countyName][i]['spot_name']);
-    body.appendChild(anchor);
 
     //add spot to body
     spotviews[i] = createPanel(spotInfo[countyName][i], body);
@@ -626,9 +605,10 @@ function createPanel(spot, body) {
 
   pHead.appendChild(document.createTextNode(spot['spot_name']));
 
-  var favlink = document.createElement('a');
+  
 
   //todo put favorite buttons back
+  //var favlink = document.createElement('a');
   //favlink.setAttribute('class', 'favoriteButton');
   //favlink.setAttribute('onclick', 'favorite(' + spot['spot_id'] + ')');
   //var favglyph = document.createElement('span');
