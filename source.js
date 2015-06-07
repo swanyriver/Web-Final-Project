@@ -357,6 +357,8 @@ function updateUserSettings(){
   updateUser("prefWeather==200&prefWater=250&prefWave=4&prefRating=3",notify);
 }
 
+$('#settingsMod').on('hide.bs.modal', updateUserSettings);
+
 function changeUnit(unit) {
 
   if (unit != userInfo.tempUnit) {
@@ -657,8 +659,6 @@ $('#loginMod').on('shown.bs.modal', function(e) {
 });
 
 $('#loginMod').on('show.bs.modal', function(e) {
-    //todo maybe check for bad chars and empties here
-  //todo before encoding and sending to php
   var nameIn = document.getElementById('loginUserName');
   var passIn = document.getElementById('loginPassword');
   var submit = document.getElementById('submitLogin');

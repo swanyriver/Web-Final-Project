@@ -89,7 +89,6 @@ $userLoggedin = false;
         <ul class="nav nav-pills nav-justified">
           <?php
           foreach ($counties as $count) {
-            #TODO define onclick function to load content in body
             echo "<li><a onclick='onCountySelect(\"$count\")'>$count</a></li>";
           }
           ?>
@@ -100,20 +99,24 @@ $userLoggedin = false;
       </div>
 
       <div class="col-lg-1 controlPanel">
-        <!-- todo connect to modal -->
-        <!-- todo dont display if already logged in -->
-        <button class = "btn btn-success" data-toggle="modal" data-target="#loginMod">
-          <span class="glyphicon glyphicon-user"></span>
-          Login
-        </button>
 
-        <!-- <button class = "btn btn-danger">
-          <span class="glyphicon glyphicon-log-out"></span>
-          Logout
-        </button> -->
+         <!--login button -->
+        <?php if(!$userLoggedin) 
+          echo "<button class = \"btn btn-success\" data-toggle=\"modal\" data-target=\"#loginMod\">
+            <span class=\"glyphicon glyphicon-user\"></span>
+            Login
+          </button>";
+          else
+          echo "<form action=\"main.php\" method=\"POST\" id=\"logout\">
+          <input type=\"text\" name=\"logout\" value=\"logout\" hidden>
+          <button type=\"submit\" class = \"btn btn-danger\">
+            <span class=\"glyphicon glyphicon-log-out\"></span>
+            Logout
+          </button> 
+         </form> "
+        ?>
+        
 
-        <!-- todo connect to modal -->
-        <!-- todo connect to sign in if not signed in -->
         <button class = "btn btn-default" data-toggle="modal" data-target="#settingsMod">
           <span class="glyphicon glyphicon-cog"></span>
           Settings
@@ -244,14 +247,40 @@ API FOOTER ROLL HERE
       <div class="modal-body">
         <p>Tell us how you like your Surf Spots and we will help you spot that perfect spot to hit the waves today</p>
 
-        <br> #insert form here
-        <br>
-         <button class = "btn btn-success" data-toggle="modal" data-target="#loginMod">
-          <span class="glyphicon glyphicon-user"></span>
-          Login
-        </button>
+        <form id="userSettings" <?php if(!$userLoggedin) echo "disabled" ?>>
+          <div class="row">
+            <div class="col-lg-3 settingBox">
+              <h2>Weather<br><small>Minimum</small></h2>
+            </div>
+            <div class="col-lg-3 settingBox">
+              <h2>Water<br><small>Minimum</small></h2>
+            </div>
+            <div class="col-lg-3 settingBox">
+              <h2>Wave Height<br><small>Minimum</small></h2>
+            </div>
+            <div class="col-lg-3 settingBox">
+              <h2>Rating<br><small>Minimum</small></h2>
+            </div>
+          </div>
+          <!--todo add another temp control, maybe -->
+        </form>
+
       </div>
       <div class="modal-footer">
+        <?php 
+          if(!$userLoggedin)
+            echo "<button id=\"settingsLogin\" class =\"btn btn-success\" 
+          data-toggle=\"modal\" data-target=\"#loginMod\">
+          <span class=\"glyphicon glyphicon-user\"></span>
+          Login
+        </button>";
+          else
+            echo "<button id=\"settingsSave\" class =\"btn btn-success\" 
+          data-dismiss=\"modal\" onclick=\"updateUserSettings(false)\">
+          <span class=\"glyphicon glyphicon-edit\"></span>
+          Save Settings
+        </button>"
+        ?>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -337,17 +366,6 @@ API FOOTER ROLL HERE
 
  <script type="text/javascript" src="source.js"></script>
 
- <?php 
- //todo if logged in overide user object here
- if($userLoggedin){
-/*  echo "<script> 
-    userInfo = JSON.parse({$_SESSION['userInfo']});
-  </script>";
-*/
-  session_write_close();
- }
- 
- ?>
   
 </body>
 
