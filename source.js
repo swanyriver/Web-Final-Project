@@ -21,7 +21,7 @@ function requestState(panel) {
   this.numWaiting = 5; //todo 6 if i can get callback for image load
   this.panel = panel;
 
-  var this.responsVals;
+  this.responsVals = new Object();
 
   this.spotName = panel.getElementsByClassName('panel-heading')[0].textContent;
   console.log(this.spotName + ' begining');
@@ -51,19 +51,20 @@ function requestState(panel) {
     this.success = success;
     this.value = value;
     this.view = view;
-
+    this.completed = false;
     return this;
   }
 
   this.response = function(success, key, value, view) {
     this.numRequests++;
 
-    this.responsVals['key']=new ajaxReturn(success, value, view);
+    this.responsVals[key]=new ajaxReturn(success, value, view);
 
     this.myBar.setAttribute('style', 'width:' + Math.round(this.numRequests / this.numWaiting * 100) + '%');
     this.myBar.setAttribute('aria-valuenow', String(this.numRequests));
 
     if (this.numRequests == this.numWaiting) {
+      this.responsVals.completed = true;
       updateRequestBoxes(this.responsVals);
 
       //remove progress and blockers
@@ -264,7 +265,7 @@ function updateWaterTemp(countyName, JSONdata, success) {
     if (panel) {
       var out = panel.getElementsByClassName("WaterBox")[0].getElementsByClassName("Temperature")[0];
       if(success) setTemp(FtoK(waterTemp), out);
-      spotRequestStates[spotID].response(success, 'watertemp', watertemp,
+      spotRequestStates[spotID].response(success, 'watertemp', FtoK(waterTemp),
         panel.getElementsByClassName("WaterBox")[0]);
     }
   }
