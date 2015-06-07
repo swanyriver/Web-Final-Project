@@ -154,23 +154,17 @@ function navsize() {
     blocker.style.height = '0px';
     document.getElementById('APIroll').style.position = 'static';
 
-    /*var childs = document.getElementsByClassName('controlPanel')[0].children;
-    for (var i = childs.length - 1; i >= 0; i--) {
-      childs[i].style.width = '30%';
-      childs[i].style.marginLeft = '5px';
-      childs[i].style.marginRight = '5px';
-    }*/
+    // todo the button group breaks when its moved, maybe clone it and re add it
+    //var cp = document.getElementById('controlPanel');
+    //document.getElementById('logo').appendChild(cp);
 
   } else {
     document.getElementById('navbar').style.position = 'fixed';
     document.getElementById('APIroll').style.position = 'fixed';
 
-/*    var childs = document.getElementsByClassName('controlPanel')[0].children;
-    for (var i = childs.length - 1; i >= 0; i--) {
-      childs[i].style.width = '100%';
-      childs[i].style.marginLeft = '0px';
-      childs[i].style.marginRight = '0px';
-    }*/
+    // todo the button group breaks when its moved, maybe clone it and re add it
+    //var cp = document.getElementById('controlPanel');
+    //document.getElementById('cpHolder').appendChild(cp);
   }
 
   //todo anchors not working

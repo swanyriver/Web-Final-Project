@@ -107,7 +107,7 @@ $userLoggedin = false;
         </ul>
       </div>
 
-      <div class="col-lg-2 controlPanel">
+      <div class="col-lg-2" id="cpHolder"> <div id="controlPanel" class = "controlPanel">
 
          <!--login button -->
         <?php if(!$userLoggedin) 
@@ -140,7 +140,7 @@ $userLoggedin = false;
             C&deg;
           </button>
         </div>
-      </div>
+      </div></div>
 
     </div>
   </div>

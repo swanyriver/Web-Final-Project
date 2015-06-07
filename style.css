@@ -9,6 +9,7 @@ body {
 #logo img {
   height:100px; 
   width:auto;
+  display: inline;
 }
 
 .weatherIcon {
@@ -148,5 +149,9 @@ padding:0px;
 }
 
 .controlPanel > * {
+  display: inline;
+}
+
+#controlPanel {
   display: inline;
 }
