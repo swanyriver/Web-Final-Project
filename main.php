@@ -150,7 +150,7 @@ $userLoggedin = false;
 <!-- data-spy="scroll" data-target=".navbar"
 //todo get navspy activity to work
 -->
-<div class="container-fluid">
+<div class="container-fluid" id="bodyContainer">
 <div class="row">
 <div id="mainwindow" class="col-lg-8">
   <!--todo make a splash page, if they arent logged in! -->

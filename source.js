@@ -15,7 +15,7 @@ function load() {
   changeUnitButton(userInfo.tempUnit);
   updateAllTemps();
 
-  if(userInfo.name) adjustSettingsPanel();
+  if (userInfo.name) adjustSettingsPanel();
   //todo generate favorites page, if user has favorites
 }
 
@@ -24,7 +24,7 @@ function requestState(panel) {
   this.completed = false;
 
   //todo 6 if i can get callback for image load
-  this.numWaiting = 5; 
+  this.numWaiting = 5;
   this.panel = panel;
 
   this.responsVals = new Object();
@@ -417,13 +417,13 @@ function changeUnitButton(unit){
   }
 }
 
-function updateUser(poststring, onFinish){
+function updateUser(poststring, onFinish) {
   updateReq = new XMLHttpRequest();
 
   updateReq.onreadystatechange = function() {
     if (this.readyState === 4) {
       if (this.response) {
-        onFinish(this.status,this.response);
+        onFinish(this.status, this.response);
       } else {
         //todo server returned no string, why
       }
@@ -435,16 +435,36 @@ function updateUser(poststring, onFinish){
   updateReq.send(poststring);
 }
 
-function updateUserFavorites(){
+function updateUserFavorites() {
   //todo stringify and send favorites
 }
 
-function updateUserSettings(){
-  //todo read settings from form // SUPER TODO
-  function notify(code,response){
-    console.log("user settings updated" + code + response);
+function updateUserSettings() {
+
+  function notify(code, response) {
+    console.log('user settings updated' + code + response);
     //todo notify user of setting saved
-  }
+
+    if (code == 201) {
+      var color = 'background-color: lightgreen;';
+      //var message = 'User Settings Saved Successfully';
+    } else {
+      var color = 'background-color: lightcoral;';
+    }
+
+    var popup = document.createElement('div');
+    popup.setAttribute('style',
+      'width: 100%; font-size: large; position: absolute; top: 112px; text-align: center;padding: 5px;' + color);
+    popup.style.top = navHeight;
+    popup.id = 'saveSettingsPopUp';
+    popup.appendChild(document.createTextNode(response));
+    document.getElementsByTagName('body')[0].appendChild(popup);
+
+    $(document.getElementById('saveSettingsPopUp'))
+      .fadeOut(1400*3, function() {
+          this.parentElement.removeChild(this);
+        });
+  } //end of notify
 
   userInfo.prefWave = document.getElementById('userWaveHeight').value;
   userInfo.prefWeather = document.getElementById('userWeather').value;
