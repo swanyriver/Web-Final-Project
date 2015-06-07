@@ -939,7 +939,8 @@ function goBig() {
 
 
   var cp = document.getElementById('controlPanel');
-  document.getElementById('cpHolder').appendChild(cp);
+  //document.getElementById('cpHolder').appendChild(cp);
+  cp.classList.remove('smaller');
 
 }
 
@@ -954,7 +955,8 @@ function goLittle() {
 
   // todo the button group breaks when its moved, maybe clone it and re add it
   var cp = document.getElementById('controlPanel');
-  document.getElementById('logo').appendChild(cp);
+  //document.getElementById('logo').appendChild(cp);
+  cp.classList.add('smaller');
 }
 
 function navsize() {

@@ -174,20 +174,24 @@ padding:0px;
   width: 100%
 }
 
-.controlPanel > * {
+/*.controlPanel > * {
   display: inline;
 }
 
 #controlPanel {
   display: inline;
-}
+}*/
 
 #cpHolder {
-  z-index: -1;
+  /*z-index: -1;*/
 }
 
+/*.smaller > *{
+  width: 50%;
+  display: inline;
+}*/
 
-#logo #controlPanel {
+/*#logo #controlPanel {
  width: 60%;
  display:block;
  float:right
@@ -195,4 +199,4 @@ padding:0px;
 #logo #controlPanel > *, #logo #controlPanel > * > button {
   width:40%;
   display:inline;
-}
+}*/
