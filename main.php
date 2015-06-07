@@ -152,9 +152,49 @@ $userLoggedin = false;
 -->
 <div class="container-fluid" id="bodyContainer">
 <div class="row">
-<div id="mainwindow" class="col-lg-8">
-  <!--todo make a splash page, if they arent logged in! -->
-    
+<div  class="col-lg-8">
+
+<div id="mainwindow" >
+<!--todo make a splash page, if they arent logged in! -->
+</div>
+
+<!--
+Bootstrap.png
+Maps-logo-white.png
+spitlogowhite.png
+OpenWeatherMap_logo_white.png
+-->
+<div id="APIroll" class='row'>
+
+<div id="apiSpit" class="col-lg-3">
+<a href="http://www.spitcast.com/">
+ <img src = 'spitlogowhite.png'>
+ Spitcast Surf Forecast
+</a>
+</div>
+
+<div id="apiOpenWeather" class="col-lg-3">
+<a href="http://openweathermap.org/">
+ <img src = 'OpenWeatherMap_logo_white.png'>
+ Open Weather Map
+</a>
+</div>
+
+<div id="apiBootstrap" class="col-lg-3">
+<a href="http://getbootstrap.com/">
+ <img src = 'Bootstrap.png'>
+ Twitter Bootsrap
+</a>
+</div>
+
+<div id="apiMap" class="col-lg-3" hidden>
+<a href="https://developers.google.com/maps/">
+ <img src = 'Maps-logo-white.png'>
+ Google Maps
+</a>
+</div>
+
+</div> <!--api roll -->
 
 </div>
 <div class="col-lg-4">
@@ -165,13 +205,8 @@ $userLoggedin = false;
 </div>
 </div>
 
-<!-- todo make a api footer roll -->
-<!-- todo make sure it displays at the bottom of the page -->
-<div id="APIroll">
-API FOOTER ROLL HERE
-</div>
 
-</div>
+</div> <!--end of container fluid for body -->
 
 <!-- settings modal -->
 <div class="modal fade" id="settingsMod" role="dialog">

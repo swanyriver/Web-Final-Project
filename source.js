@@ -53,19 +53,19 @@ function requestState(panel) {
 
   this.myBar = panel.getElementsByClassName('progress-bar')[0];
 
-  function ajaxReturn(success,value,view){
+  function ajaxReturn(success, value, view) {
     this.success = success;
     this.value = value;
     
     this.view = view;
-    if(view)this.header = view.parentElement.getElementsByClassName('ReportHeading')[0];
+    if (view)this.header = view.parentElement.getElementsByClassName('ReportHeading')[0];
     return this;
   }
 
   this.response = function(success, key, value, view) {
     this.numRequests++;
 
-    this.responsVals[key]=new ajaxReturn(success, value, view);
+    this.responsVals[key] = new ajaxReturn(success, value, view);
 
     this.myBar.setAttribute('style', 'width:' + Math.round(this.numRequests / this.numWaiting * 100) + '%');
     this.myBar.setAttribute('aria-valuenow', String(this.numRequests));
@@ -90,24 +90,24 @@ function requestState(panel) {
 var spotRequestStates = new Object();
 spotRequestStates.boxKeys = ["watertemp","Grade","waveHeight","weather"]
 
-function updateRequestBoxes(responsVals){
+function updateRequestBoxes(responsVals) {
   console.log(responsVals);
 
-  var keys = spotRequestStates.boxKeys; 
+  var keys = spotRequestStates.boxKeys;
 
-  if(!responsVals.hilo.success) responsVals.hilo.view.innerHTML='';
+  if (!responsVals.hilo.success) responsVals.hilo.view.innerHTML = '';
 
   for (var i = keys.length - 1; i >= 0; i--) {
-    if(!userInfo.name) return;
+    if (!userInfo.name) return;
     var response = responsVals[keys[i]];
     var userPref = userInfo[prefMap[keys[i]]];
 
-    response.header.classList.remove('prefMet');    
+    response.header.classList.remove('prefMet');
     response.header.classList.remove('prefNotMet');
 
-    if(response.success && userPref && userPref != 'null' ) {
+    if (response.success && userPref && userPref != 'null') {
       //todo set class to , below, at, above
-      if(response.value >= userPref){
+      if (response.value >= userPref) {
         response.header.classList.add('prefMet');
       } else {
         response.header.classList.add('prefNotMet');
@@ -116,7 +116,7 @@ function updateRequestBoxes(responsVals){
       //todo define css highlighting
       //todo TIMEPERMIT subdue race condition here
     } else if (!response.success) {
-      responsVals[keys[i]].view.innerHTML='';
+      responsVals[keys[i]].view.innerHTML = '';
       responsVals[keys[i]].view.appendChild(unavailicon());
     }
   }
@@ -140,16 +140,26 @@ function navsize() {
 
   //blocker.setAttribute("style","width:500px");navbar.clientHeight;
 
-  var height = navbar.clientHeight + 'px';
+  var height = navbar.clientHeight 
 
   blocker.setAttribute('style' , 'display:block;height:' + height);
-  blocker.style.height = height;
+  blocker.style.height = height + 'px';
 
   console.log('resize:' + height);
 
   //todo if we are full collumn, make nav not fixed it will cover the content
 
   navHeight = height;
+  var allowed = innerHeight / 4;
+  console.log(height, window.innerHeight, allowed);
+  if (height > allowed) {
+    document.getElementById('navbar').style.position = 'static';
+    blocker.style.height = '0px';
+    document.getElementById('APIroll').style.position = 'static';
+  } else {
+    document.getElementById('navbar').style.position = 'fixed';
+    document.getElementById('APIroll').style.position = 'fixed';
+  }
 
   //todo not working
   var anchors = document.getElementsByClassName('spotAnchor');
@@ -384,7 +394,7 @@ function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata, spotID) {
   sup.appendChild(document.createTextNode('ft'));
   waveout.appendChild(sup);
 
-  spotRequestStates[spotID].response(true,'waveHeight',currentConditions['size'],WaveBox);
+  spotRequestStates[spotID].response(true, 'waveHeight', currentConditions['size'], WaveBox);
 
 }
 
@@ -407,7 +417,7 @@ function updateTemp(tempview) {
   setTemp(tempview.getAttribute('data-kelvin'), tempview);
 }
 
-function changeUnitButton(unit){
+function changeUnitButton(unit) {
   if (unit == 'C') {
     Fbutton.setAttribute('class', 'btn btn-default');
     Cbutton.setAttribute('class', 'btn btn-default active');
@@ -452,16 +462,23 @@ function updateUserSettings() {
       var color = 'background-color: lightcoral;';
     }
 
+    var style = 'width: 100%; font-size: large; position: fixed; text-align: center;padding: 5px;' + color;
+    if (document.getElementById('navbar').style.position == 'fixed') {
+      style += 'top:' + navHeight + 'px;';
+    } else {
+      style += ' bottom:0px;';
+    }
+
+
     var popup = document.createElement('div');
-    popup.setAttribute('style',
-      'width: 100%; font-size: large; position: absolute; top: 112px; text-align: center;padding: 5px;' + color);
+    popup.setAttribute('style', style);
     popup.style.top = navHeight;
     popup.id = 'saveSettingsPopUp';
     popup.appendChild(document.createTextNode(response));
     document.getElementsByTagName('body')[0].appendChild(popup);
 
     $(document.getElementById('saveSettingsPopUp'))
-      .fadeOut(1400*3, function() {
+      .fadeOut(1400 * 3, function() {
           this.parentElement.removeChild(this);
         });
   } //end of notify
@@ -582,12 +599,14 @@ function createPanel(spot, body) {
   pHead.appendChild(document.createTextNode(spot['spot_name']));
 
   var favlink = document.createElement('a');
-  favlink.setAttribute('class', 'favoriteButton');
-  favlink.setAttribute('onclick', 'favorite(' + spot['spot_id'] + ')');
-  var favglyph = document.createElement('span');
-  favglyph.setAttribute('class', 'glyphicon glyphicon-star-empty');
-  favlink.appendChild(favglyph);
-  pHead.appendChild(favlink);
+
+  //todo put favorite buttons back
+  //favlink.setAttribute('class', 'favoriteButton');
+  //favlink.setAttribute('onclick', 'favorite(' + spot['spot_id'] + ')');
+  //var favglyph = document.createElement('span');
+  //favglyph.setAttribute('class', 'glyphicon glyphicon-star-empty');
+  //favlink.appendChild(favglyph);
+  //pHead.appendChild(favlink);
 
 
   panel.appendChild(pHead);

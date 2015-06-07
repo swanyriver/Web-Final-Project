@@ -102,12 +102,47 @@ padding:0px;
 .prefNotMet {
   background-color: lightcoral;
 }
+
+/* todo fix api roll spacings */
 #APIroll {
-  background-color:rgba(178,208,254,.4);
-  color: white;
-  width: 66%;
+  background-color:rgba(178,208,254,.6);
+  width: 100%;
   position: fixed;
   bottom: 0px;
-  padding: 5px
+  padding: 5px;
+  font-size: large;
 }
 
+#APIroll a {
+  text-transform: none;
+  font-weight: bold;
+  color: white; 
+  text-decoration: none;
+}
+
+#APIroll img {
+  height: 40px;
+  width: auto;
+  margin-right: 10px;
+  display: inline;
+}
+
+#APIroll > * {
+  text-align: center;
+}
+
+#apiBootstrap img {
+  height: 35px;
+}
+
+#bodyContainer{
+  margin-bottom: 60px;
+}
+
+#mainwindow {
+  position: relative;
+}
+
+#blocker{
+  margin-bottom: 30px;
+}
