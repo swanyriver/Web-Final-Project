@@ -1,6 +1,5 @@
 <?php
-//todo disable
-ini_set('display_errors', 'On');
+//ini_set('display_errors', 'On');
 
 ini_set('session.save_path',realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/../session'));
 session_start();
@@ -35,6 +34,7 @@ $userLoggedin = false;
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
+    <!-- inverse button style -->
     <link href="inversebutton.css" rel="stylesheet">
     <!-- my CSS -->
     <link href="style.css" rel="stylesheet">
@@ -81,7 +81,6 @@ $userLoggedin = false;
     <title>Your Surf Spots</title>
 
 </head>
-<!-- todo move all style to seperate css -->
 <body onresize="navsize()" onload="load()">
 
 <nav id='navbar' class="navbar navbar-inverse navbar-fixed-top">
@@ -201,7 +200,6 @@ OpenWeatherMap_logo_white.png
 </div>
 <div class="col-lg-4">
 <!-- todo figure out how to get the map to display over here 
-      todo change this from collumn to just all panel divs are n% wide
       and make image a static background
 -->
 </div>
@@ -284,8 +282,6 @@ OpenWeatherMap_logo_white.png
               </select>
             </div>
           </div>
-          <!--todo add another temp control, maybe -->
-        </form>
 
       </div>
       <div class="modal-footer">

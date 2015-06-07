@@ -1,12 +1,11 @@
 <?php
 ini_set('session.save_path',realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/../session'));
 session_start();
-//todo disable
-ini_set('display_errors', 'On');
+
+//ini_set('display_errors', 'On');
 
 header('Content-Type: text/plain');
 include "storedInfo.php"; //contains hostname/username/password/databasename
-//todo on login make a session, set $_SESSION['user'] & $_SESSION['hash']
 
 $minPassLength = 7;
 
