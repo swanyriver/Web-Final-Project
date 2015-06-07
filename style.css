@@ -14,15 +14,7 @@ body {
 .weatherIcon {
   height: 50px;
   width: 50px;
-}
-
-.reportSection > * {
-  /*float: left;*/
-  /*margin-left: 10px;
-  margin-right: 15px;*/
-}
-.reportSection:last-child {
-  clear: right;
+  /* width: 100%; */
 }
 
 .Temperature {
@@ -58,13 +50,22 @@ button .glyphicon {
  /*todo align error to left, possibly put red background when there is message */
 }
 
+.displayBox {
+border-style:ridge;
+height:100%;
+padding:0px;
+}
+
 .ReportHeading {
  
 }
 
-.displayBox {
-/*todo fix warping of boxes on shrink*/
+.reportSection{
+  border-style:ridge;
+
 }
+
+
 
 .progress, .blocker {
   width: 100%;
