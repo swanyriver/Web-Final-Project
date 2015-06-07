@@ -8,6 +8,8 @@ waterCounties['Santa Cruz'] = 'santa-cruz';
 //todo delete allspots.json
 var spotInfo = JSON.parse(spotJSON);
 
+var navHeight;
+
 function load() {
   navsize();
   changeUnitButton(userInfo.tempUnit);
@@ -18,6 +20,8 @@ function requestState(panel) {
   this.numRequests = 0;
   this.numWaiting = 5; //todo 6 if i can get callback for image load
   this.panel = panel;
+
+  var this.responsVals;
 
   this.spotName = panel.getElementsByClassName('panel-heading')[0].textContent;
   console.log(this.spotName + ' begining');
@@ -43,13 +47,25 @@ function requestState(panel) {
 
   this.myBar = panel.getElementsByClassName('progress-bar')[0];
 
-  this.response = function() {
+  function ajaxReturn(success,value,view){
+    this.success = success;
+    this.value = value;
+    this.view = view;
+
+    return this;
+  }
+
+  this.response = function(success, key, value, view) {
     this.numRequests++;
+
+    this.responsVals['key']=new ajaxReturn(success, value, view);
 
     this.myBar.setAttribute('style', 'width:' + Math.round(this.numRequests / this.numWaiting * 100) + '%');
     this.myBar.setAttribute('aria-valuenow', String(this.numRequests));
 
-    if (this.numRequests == this.numWaiting) { 
+    if (this.numRequests == this.numWaiting) {
+      updateRequestBoxes(this.responsVals);
+
       //remove progress and blockers
       console.log(panel.getElementsByClassName('panel-heading')[0].textContent + ' finished');
       $(this.myBar.parentElement).fadeOut(1400, function() {
@@ -65,7 +81,9 @@ function requestState(panel) {
 }
 var spotRequestStates = new Object();
 
-//todo make global user object, parsed from server
+function updateRequestBoxes(responsVals){
+  console.log(responsVals);
+}
 
 
 function navsize() {
@@ -83,7 +101,15 @@ function navsize() {
 
   //todo if we are full collumn, make nav not fixed it will cover the content
   
-  return height;
+  navHeight = height;
+
+  //todo not working
+  var anchors = document.getElementsByClassName('spotAnchor');
+  for (var i = anchors.length - 1; i >= 0; i--) {
+    anchors[i].style.top = -1 * navHeight;
+    anchor.style.position = "relative";
+
+  };
 
 }
 
@@ -115,6 +141,9 @@ function onCountySelect(countyName) {
 
     var anchor = document.createElement('a');
     anchor.setAttribute('class', 'spotAnchor');
+    // todo not working
+    anchor.style.position = "relative";
+    anchor.style.top = -1 * navHeight;
     anchor.setAttribute('id', spotInfo[countyName][i]['spot_name']);
     body.appendChild(anchor);
 
@@ -138,13 +167,10 @@ function waterTempAjax(countyName) {
   //todo respond to error creating
 
   spotReq.onreadystatechange = function() {
-    if (this.readyState === 4 && this.status === 200) {
-      if (this.response) {
-        updateWaterTemp(countyName, this.response);
-      } else {
-        //todo handle errer here
-        console.log(countyName + ' response:' + this.status);
-      }
+    if (this.readyState === 4 && this.status === 200 && this.response) {
+      updateWaterTemp(countyName, this.response, true);
+    } else if (this.readyState === 4){
+      updateWaterTemp(countyName, null, false);
     }
   };
 
@@ -160,13 +186,12 @@ function makeAjaxcalls(spot, views) {
   //todo respond to error creating
 
   spotReq.onreadystatechange = function() {
-    if (this.readyState === 4 && this.status === 200) {
-      if (this.response) {
-        ajaxReturnSpitcast(views['WaveBox'], views['GradeBox'], this.response, spot['spot_id']);
-      } else {
-        //todo handle errer here
-        console.log(spot['spot_name'] + ' response:' + this.status);
-      }
+    if (this.readyState === 4 && this.status === 200 && this.response) {
+      ajaxReturnSpitcast(views['WaveBox'], views['GradeBox'], this.response, spot['spot_id']);
+    } else if (this.readyState === 4) {
+      console.log('no response: spitcast');
+      spotRequestStates[spotID].response(false, 'Grade', null, views['GradeBox']);
+      spotRequestStates[spotID].response(false, 'waveHeight', null, views['WaveBox']);
     }
   };
 
@@ -179,13 +204,11 @@ function makeAjaxcalls(spot, views) {
   //todo respond to error creating
 
   weatherReq.onreadystatechange = function() {
-    if (this.readyState === 4 && this.status === 200) {
-      if (this.response) {
-        ajaxReturnWeather(views['WeatherBox'], this.response, spot['spot_id']);
-      } else {
-        //todo handle errer here
-        console.log(spot['spot_name'] + ' response:' + this.status);
-      }
+    if (this.readyState === 4 && this.status === 200 && this.response){
+      ajaxReturnWeather(views['WeatherBox'], this.response, spot['spot_id']);
+    } else if (this.readyState === 4) {
+      console.log('no response: weather');
+      spotRequestStates[spotID].response(false, 'weather', null, views['WeatherBox']);
     }
   };
 
@@ -205,13 +228,12 @@ function makeAjaxcalls(spot, views) {
   //todo respond to error creating
 
   forecastReq.onreadystatechange = function() {
-    if (this.readyState === 4 && this.status === 200) {
-      if (this.response) {
-        ajaxReturnForecast(views['WeatherBox'], this.response, spot['spot_id']);
-      } else {
-        //todo handle errer here
-        console.log(spot['spot_name'] + ' response:' + this.status);
-      }
+    if (this.readyState === 4 && this.status === 200 && this.response) {
+      ajaxReturnForecast(views['WeatherBox'], this.response, spot['spot_id']);
+    } else if (this.readyState === 4) {
+      console.log('no response: forcast Weather');
+      spotRequestStates[spotID].response(false, 'hilo', null, 
+        views['WeatherBox'].getElementsByClassName('hilo')[0]);
     }
   };
 
@@ -227,11 +249,13 @@ function makeAjaxcalls(spot, views) {
 
 }
 
-function updateWaterTemp(countyName, JSONdata) {
+function updateWaterTemp(countyName, JSONdata, success) {
 
-  //todo record in kelvin
-  //todo find a way to set all temperatures as function from kelvin and switch in one press
-  waterTemp = JSON.parse(JSONdata)['fahrenheit'];
+  if(!success){
+    waterTemp = null;
+  } else{
+    waterTemp = JSON.parse(JSONdata)['fahrenheit'];
+  }
   console.log(countyName + ' waterTemp:' + waterTemp);
 
   for (var i = 0; i < spotInfo[countyName].length; i++) {
@@ -239,13 +263,15 @@ function updateWaterTemp(countyName, JSONdata) {
     var panel = document.getElementById(spotID);
     if (panel) {
       var out = panel.getElementsByClassName("WaterBox")[0].getElementsByClassName("Temperature")[0];
-      setTemp(FtoK(waterTemp), out);
-      spotRequestStates[spotID].response();
+      if(success) setTemp(FtoK(waterTemp), out);
+      spotRequestStates[spotID].response(success, 'watertemp', watertemp,
+        panel.getElementsByClassName("WaterBox")[0]);
     }
   }
 }
 
 function ajaxReturnWeather(WeatherBox, JSONdata, spotID) {
+
   var Weather = JSON.parse(JSONdata);
 
   var tempdiv = WeatherBox.getElementsByClassName('currentTemp')[0];
@@ -259,7 +285,7 @@ function ajaxReturnWeather(WeatherBox, JSONdata, spotID) {
   var descriptionView = WeatherBox.getElementsByClassName('weatherDescription')[0];
   descriptionView.appendChild(document.createTextNode(Weather.weather[0].description));
 
-  spotRequestStates[spotID].response();
+  spotRequestStates[spotID].response(true,'weather',Weather.main.temp,WeatherBox);
 }
 
 function ajaxReturnForecast(WeatherBox, JSONdata, spotID) {
@@ -273,7 +299,7 @@ function ajaxReturnForecast(WeatherBox, JSONdata, spotID) {
   setTemp(Weather.list[0].temp.min, lotemp);
   setTemp(Weather.list[0].temp.max, hitemp);
 
-  spotRequestStates[spotID].response();
+  spotRequestStates[spotID].response(true,'hilo','hilo',null);
 
 }
 
@@ -286,7 +312,8 @@ function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata, spotID) {
   var gradeout = GradeBox.getElementsByClassName('grade')[0];
   gradeout.appendChild(document.createTextNode(currentConditions['shape_full']));
 
-  spotRequestStates[spotID].response();
+  //todo store numerically
+  spotRequestStates[spotID].response(true,'Grade',currentConditions['shape_full'],GradeBox);
 
   var waveout = WaveBox.getElementsByClassName('waveHeight')[0];
   waveout.appendChild(document.createTextNode(currentConditions['size']));
@@ -294,7 +321,7 @@ function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata, spotID) {
   sup.appendChild(document.createTextNode('ft'));
   waveout.appendChild(sup);
 
-  spotRequestStates[spotID].response();
+  spotRequestStates[spotID].response(true,'waveHeight',currentConditions['size'],WaveBox);
 
 }
 
@@ -576,14 +603,21 @@ function userloggedin(JSONprofile) {
   console.log(userInfo);
   console.log(favoriteSpots);
 
-  //todo apply to html, settemp etc put user name in settings and welcom modal
-    //set temp
-    //enable settings controls and remove sign in button
-    // set setting controls to user prefs
-    //disable sign in tooltip on favorites button
-    //jump to myspots ??  or not let them
-    //set favorite icons accordingly
-    //set report box backgrounds according to settings
+  //set temp
+  changeUnitButton(userInfo.tempUnit);
+  changeUnit(userInfo.tempUnit);
+  //change sign in to log out button
+  var loginbutton = document.getElementById('loginButton');
+  var logoutbutton = document.getElementById('logoutbutton');
+  loginbutton.parentElement.replaceChild(logoutbutton,loginbutton);
+  logoutbutton.removeAttribute('hidden');
+  // TODO enable settings controls and remove sign in button
+  // TODO set setting controls to user prefs
+  // TODO disable sign in tooltip on favorites button
+  // TODO jump to myspots ??  or not let them
+  // TODO set favorite icons accordingly
+  // TODO set report box backgrounds according to settings
+  // TODO put user name somwhere on page
 }
 
 function user(request) {

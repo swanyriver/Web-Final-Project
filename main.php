@@ -102,12 +102,13 @@ $userLoggedin = false;
 
          <!--login button -->
         <?php if(!$userLoggedin) 
-          echo "<button class = \"btn btn-success\" data-toggle=\"modal\" data-target=\"#loginMod\">
+          echo "<button id=\"loginButton\"
+            class = \"btn btn-success\" data-toggle=\"modal\" data-target=\"#loginMod\">
             <span class=\"glyphicon glyphicon-user\"></span>
             Login
           </button>";
           else
-          echo "<form action=\"main.php\" method=\"POST\" id=\"logout\">
+          echo "<form action=\"main.php\" method=\"POST\" id=\"logoutbutton\">
           <input type=\"text\" name=\"logout\" value=\"logout\" hidden>
           <button type=\"submit\" class = \"btn btn-danger\">
             <span class=\"glyphicon glyphicon-log-out\"></span>
@@ -115,7 +116,6 @@ $userLoggedin = false;
           </button> 
          </form> "
         ?>
-        
 
         <button class = "btn btn-default" data-toggle="modal" data-target="#settingsMod">
           <span class="glyphicon glyphicon-cog"></span>
@@ -249,6 +249,8 @@ API FOOTER ROLL HERE
 
         <form id="userSettings" <?php if(!$userLoggedin) echo "disabled" ?>>
           <div class="row">
+
+            <!--todo generate settings and select users prefs -->
             <div class="col-lg-3 settingBox">
               <h2>Weather<br><small>Minimum</small></h2>
             </div>
@@ -276,7 +278,7 @@ API FOOTER ROLL HERE
         </button>";
           else
             echo "<button id=\"settingsSave\" class =\"btn btn-success\" 
-          data-dismiss=\"modal\" onclick=\"updateUserSettings(false)\">
+          data-dismiss=\"modal\" onclick=\"updateUserSettings()\">
           <span class=\"glyphicon glyphicon-edit\"></span>
           Save Settings
         </button>"
@@ -363,6 +365,15 @@ API FOOTER ROLL HERE
   </div>
 </div>
 
+<?php if(!$userLoggedin) 
+  echo "<form action=\"main.php\" method=\"POST\" id=\"logoutbutton\" hidden>
+  <input type=\"text\" name=\"logout\" value=\"logout\" hidden>
+  <button type=\"submit\" class = \"btn btn-danger\">
+    <span class=\"glyphicon glyphicon-log-out\"></span>
+    Logout
+  </button> 
+ </form> "
+?>
 
  <script type="text/javascript" src="source.js"></script>
 

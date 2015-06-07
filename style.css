@@ -39,7 +39,7 @@ body {
   font-family: monospace;
 }
 
-.controlPanel > *, #logout > *{
+.controlPanel > *, #logoutbutton > *{
   width: 100%
 }
 
