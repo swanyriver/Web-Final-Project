@@ -969,11 +969,19 @@ function navsize() {
   //console.log('resize:' + height);
 
   navHeight = height;
-  var toobig = innerHeight / 3;
+/*  var toobig = innerHeight / 3;
   var small = (innerHeight / 4)
   if (height > toobig) {
     goLittle();
   } else if (height < small) {
+    goBig();
+  }*/
+
+  if (document.getElementById('cpHolder').clientWidth > innerWidth * .7) {
+    //gone narrow
+    goLittle();
+  }else if (document.getElementById('logo').clientWidth < innerWidth * .7) {
+    //gone wide
     goBig();
   }
 
