@@ -102,5 +102,12 @@ padding:0px;
 .prefNotMet {
   background-color: lightcoral;
 }
-
+#APIroll {
+  background-color:rgba(178,208,254,.4);
+  color: white;
+  width: 66%;
+  position: fixed;
+  bottom: 0px;
+  padding: 5px
+}
 

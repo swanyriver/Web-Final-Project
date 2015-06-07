@@ -52,8 +52,8 @@ $userLoggedin = false;
           echo "<!--user is logged out-->";
         } else if(isset($_SESSION['userInfo'])){
 
-          //todo dont display user info in html
-          echo "<!--user: {$_SESSION['username']} -->";
+          //display user info JSON in html
+          //echo "<!--user: {$_SESSION['username']} -->";
 
 
           $userLoggedin=true;
@@ -154,78 +154,7 @@ $userLoggedin = false;
 <div class="row">
 <div id="mainwindow" class="col-lg-8">
   <!--todo make a splash page, if they arent logged in! -->
-    <div class="panel panel-default" id="testpanel">
-    <div class="panel-heading">
-    <span "spotLabel"> spot name </span>
-    <a class="favoriteButton" onclick="favorite(spotid)">
-      <span class="glyphicon glyphicon-star-empty"></span>
-    </a>
-    </div>
-    <div class="panel-body">
-
-    <div clas="row">
-
-      <!---weather -->
-      <div class="col-lg-4">
-        <label>Weather</label> <br>
-          <div class="reportSection">
-          <img class="weatherIcon">
-          <div style="float:left">
-          88&deg; 
-          </div>
-          <div>
-          HI:<br>
-          LO:
-          </div>
-        </div>
-      </div>
-
-      <!---water temp -->
-      <div class="col-lg-3">
-      
-        <label>Water Temp</label> <br>
-        <div class="reportSection">
-        55&deg; 
-        </div>
-      </div>
-
-      <!---wave height -->
-      <div class="col-lg-3">
-        <label>wave height</label> <br>
-        <div class="reportSection">
-        <div class="waveHeightText"> 10ft </div> 
-
-        <div>
-        HI:<br>
-        LO:
-        </div>
-        </div>
-      </div>
-
-      <!---grade -->
-      <div class="col-lg-2">
-        <label>Rating</label> <br>
-        it sucks
-      </div>
-    </div>
-    </div>user
-    </div>
-    <!--end of panel -->
-
-    <form action="login.php" method="POST">
-      <input type="text" name="username" value="doris">
-      <input type="text" name="password" value="hate">
-      <input type="text" name="request" value="login">
-      <input type="submit" value="login">
-     </form> 
-
-    <form action="main.php" method="POST">
-      <input type="text" name="logout" value="logout" hidden>
-      <button type="submit" class = "btn btn-danger">
-        <span class="glyphicon glyphicon-log-out"></span>
-        Logout
-      </button> 
-     </form> 
+    
 
 </div>
 <div class="col-lg-4">
@@ -238,7 +167,9 @@ $userLoggedin = false;
 
 <!-- todo make a api footer roll -->
 <!-- todo make sure it displays at the bottom of the page -->
+<div id="APIroll">
 API FOOTER ROLL HERE
+</div>
 
 </div>
 
