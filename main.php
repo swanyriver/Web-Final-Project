@@ -35,6 +35,7 @@ $userLoggedin = false;
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
+    <link href="inversebutton.css" rel="stylesheet">
     <!-- my CSS -->
     <link href="style.css" rel="stylesheet">
 
@@ -93,7 +94,7 @@ $userLoggedin = false;
         </a>
       </div>
 
-      <div class="col-lg-9">
+      <div class="col-lg-8">
         <ul class="nav nav-pills nav-justified">
           <?php
           foreach ($counties as $count) {
@@ -106,7 +107,7 @@ $userLoggedin = false;
         </ul>
       </div>
 
-      <div class="col-lg-1 controlPanel">
+      <div class="col-lg-2 controlPanel">
 
          <!--login button -->
         <?php if(!$userLoggedin) 
@@ -125,21 +126,20 @@ $userLoggedin = false;
          </form> "
         ?>
 
-        <button class = "btn btn-default" data-toggle="modal" data-target="#settingsMod">
+        <button class = "btn btn-inverse" data-toggle="modal" data-target="#settingsMod">
           <span class="glyphicon glyphicon-cog"></span>
           Settings
         </button>
 
 
         <div id="tempControls" class="btn-group">
-          <button id="Fbutton" type="button" class="btn btn-default>" onclick="changeUnit('F')">
+          <button id="Fbutton" type="button" class="btn btn-inverse" onclick="changeUnit('F')">
             F&deg;
           </button>
-          <button id="Cbutton" type="button" class="btn btn-default" onclick="changeUnit('C')">
+          <button id="Cbutton" type="button" class="btn btn-inverse" onclick="changeUnit('C')">
             C&deg;
           </button>
         </div>
-        </p>
       </div>
 
     </div>

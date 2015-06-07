@@ -31,10 +31,6 @@ body {
   font-family: monospace;
 }
 
-.controlPanel > *, #logoutbutton > *{
-  width: 100%
-}
-
 button .glyphicon {
   float:left;
   font-size: large;
@@ -145,4 +141,12 @@ padding:0px;
 
 #blocker{
   margin-bottom: 30px;
+}
+
+.controlPanel > *, #logoutbutton > *{
+  width: 100%
+}
+
+.controlPanel > * {
+  display: inline;
 }

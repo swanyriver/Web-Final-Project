@@ -12,6 +12,7 @@ var navHeight;
 
 function load() {
   navsize();
+
   changeUnitButton(userInfo.tempUnit);
   updateAllTemps();
 
@@ -138,16 +139,12 @@ function navsize() {
   var navbar = document.getElementById('navbar');
   var blocker = document.getElementById('blocker');
 
-  //blocker.setAttribute("style","width:500px");navbar.clientHeight;
-
-  var height = navbar.clientHeight 
+  var height = navbar.clientHeight;
 
   blocker.setAttribute('style' , 'display:block;height:' + height);
   blocker.style.height = height + 'px';
 
   console.log('resize:' + height);
-
-  //todo if we are full collumn, make nav not fixed it will cover the content
 
   navHeight = height;
   var allowed = innerHeight / 4;
@@ -156,12 +153,27 @@ function navsize() {
     document.getElementById('navbar').style.position = 'static';
     blocker.style.height = '0px';
     document.getElementById('APIroll').style.position = 'static';
+
+    /*var childs = document.getElementsByClassName('controlPanel')[0].children;
+    for (var i = childs.length - 1; i >= 0; i--) {
+      childs[i].style.width = '30%';
+      childs[i].style.marginLeft = '5px';
+      childs[i].style.marginRight = '5px';
+    }*/
+
   } else {
     document.getElementById('navbar').style.position = 'fixed';
     document.getElementById('APIroll').style.position = 'fixed';
+
+/*    var childs = document.getElementsByClassName('controlPanel')[0].children;
+    for (var i = childs.length - 1; i >= 0; i--) {
+      childs[i].style.width = '100%';
+      childs[i].style.marginLeft = '0px';
+      childs[i].style.marginRight = '0px';
+    }*/
   }
 
-  //todo not working
+  //todo anchors not working
   var anchors = document.getElementsByClassName('spotAnchor');
   for (var i = anchors.length - 1; i >= 0; i--) {
     anchors[i].style.top = '-' + String(navHeight);
@@ -418,12 +430,14 @@ function updateTemp(tempview) {
 }
 
 function changeUnitButton(unit) {
+  var Cbutton = document.getElementById('Cbutton');
+  var Fbutton = document.getElementById('Fbutton');
   if (unit == 'C') {
-    Fbutton.setAttribute('class', 'btn btn-default');
-    Cbutton.setAttribute('class', 'btn btn-default active');
+    Cbutton.classList.add('active');
+    Fbutton.classList.remove('active');
   } else {
-    Cbutton.setAttribute('class', 'btn btn-default');
-    Fbutton.setAttribute('class', 'btn btn-default active');
+    Fbutton.classList.add('active');
+    Cbutton.classList.remove('active');
   }
 }
 
@@ -543,7 +557,7 @@ function changeUnit(unit) {
     var Cbutton = document.getElementById('Cbutton');
     var Fbutton = document.getElementById('Fbutton');
     
-    var onFinish = function(code,response){
+    var onFinish = function(code, response) {
       console.log("temp changed: " + code + response);
     }
     
