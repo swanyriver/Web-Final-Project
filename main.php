@@ -282,6 +282,7 @@ OpenWeatherMap_logo_white.png
               </select>
             </div>
           </div>
+          </form>
 
       </div>
       <div class="modal-footer">
