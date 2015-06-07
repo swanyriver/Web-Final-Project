@@ -179,7 +179,7 @@ function scrollSpot(spotid) {
   top -= navHeight;
   window.scrollTo(0, top);
 
-  console('scrolled to:', top);
+  console.log('scrolled to:', top);
 }
 
 function onCountySelect(countyName) {
@@ -189,6 +189,8 @@ function onCountySelect(countyName) {
   clearNode(body);
   clearNode(navbar);
 
+
+  //todo get it to work or remove these spot names
   for (var i = 0; i < spotInfo[countyName].length; i++) {
     //<li><a href='#'>test1</a></li>
     var listitem = document.createElement('li');
