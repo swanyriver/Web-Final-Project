@@ -108,7 +108,7 @@ function navsize() {
   var anchors = document.getElementsByClassName('spotAnchor');
   for (var i = anchors.length - 1; i >= 0; i--) {
     anchors[i].style.top = -1 * navHeight;
-    anchor.style.position = "relative";
+    anchors[i].style.position = "relative";
 
   };
 
@@ -182,6 +182,8 @@ function waterTempAjax(countyName) {
 
 function makeAjaxcalls(spot, views) {
 
+  var spotID = spot.spot_id;
+
   //////Spitcast call//////////////
   var spotReq = new XMLHttpRequest();
   //todo respond to error creating
@@ -190,11 +192,15 @@ function makeAjaxcalls(spot, views) {
     if (this.readyState === 4 && this.status === 200 && this.response) {
       ajaxReturnSpitcast(views['WaveBox'], views['GradeBox'], this.response, spot['spot_id']);
     } else if (this.readyState === 4) {
-      console.log('no response: spitcast');
-      spotRequestStates[spotID].response(false, 'Grade', null, views['GradeBox']);
-      spotRequestStates[spotID].response(false, 'waveHeight', null, views['WaveBox']);
+      this.ontimeout();
     }
   };
+
+  spotReq.ontimeout = function() {
+    console.log('no response: spitcast');
+    spotRequestStates[spotID].response(false, 'Grade', null, views['GradeBox']);
+    spotRequestStates[spotID].response(false, 'waveHeight', null, views['WaveBox']);
+  }
 
   var url = "http://api.spitcast.com/api/spot/forecast/" + spot['spot_id'] + "/";
   spotReq.open('GET', url);
@@ -208,10 +214,14 @@ function makeAjaxcalls(spot, views) {
     if (this.readyState === 4 && this.status === 200 && this.response){
       ajaxReturnWeather(views['WeatherBox'], this.response, spot['spot_id']);
     } else if (this.readyState === 4) {
-      console.log('no response: weather');
-      spotRequestStates[spotID].response(false, 'weather', null, views['WeatherBox']);
+      this.ontimeout();
     }
   };
+
+  weatherReq.ontimeout = function(){
+    console.log('no response: weather timeout');
+    spotRequestStates[spotID].response(false, 'weather', null, views['WeatherBox']);
+  } 
 
   var wurl = 'http://api.openweathermap.org/data/2.5/weather';
   var lat = 'lat=' + spot['latitude'];
@@ -232,11 +242,15 @@ function makeAjaxcalls(spot, views) {
     if (this.readyState === 4 && this.status === 200 && this.response) {
       ajaxReturnForecast(views['WeatherBox'], this.response, spot['spot_id']);
     } else if (this.readyState === 4) {
-      console.log('no response: forcast Weather');
-      spotRequestStates[spotID].response(false, 'hilo', null, 
-        views['WeatherBox'].getElementsByClassName('hilo')[0]);
+      this.ontimeout();
     }
   };
+
+  forecastReq.ontimeout = function() {
+    console.log('no response: forcast Weather');
+    spotRequestStates[spotID].response(false, 'hilo', null, 
+    views['WeatherBox'].getElementsByClassName('hilo')[0]);
+  }
 
   var wurl = 'http://api.openweathermap.org/data/2.5/forecast/daily';
   var lat = 'lat=' + spot['latitude'];
