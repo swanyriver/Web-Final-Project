@@ -37,9 +37,6 @@ $userLoggedin = false;
     <!-- inverse button style -->
     <link href="inversebutton.css" rel="stylesheet">
 
-    <!-- library scrol function -->
-    <script src="scrollto.js"></script>
-
     <!-- my CSS -->
     <link href="style.css" rel="stylesheet">
 

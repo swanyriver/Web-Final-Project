@@ -38,10 +38,6 @@ Wow Factor Features:
     -A replacement btn-inverse css style sheet for the missing class in Bootstrap 3. Provided by: untuk halaman
     at:  http://www.kelasabil.com/en/library/bootstrap/reviving-inverse-button-bootstrap-3
     
-    -A scrollTo JQuery class, I was have difficulty getting my in page anchors to cooperated with the fixed nav bar.
-    provided by: Ariel Flesler
-    at: http://flesler.blogspot.com/2007/10/jqueryscrollto.html
-    
     -And most importantly these wonderful public API's:
     
         -Spitcast Surf Forecast

@@ -156,7 +156,7 @@ function onCountySelect(countyName) {
     else var href = '#blocker';
 
     anchor.setAttribute('href', href);
-    anchor.setAttribute('onclick', '$.scrollTo( ' + href + ', 750 ); return false;"');
+    //anchor.setAttribute('onclick', '$.scrollTo( ' + href + ', 750 ); return false;"');
     anchor.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
     listitem.appendChild(anchor);
     navbar.appendChild(listitem);
