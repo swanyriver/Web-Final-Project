@@ -154,6 +154,7 @@ $userLoggedin = false;
 //todo get navspy activity to work
 -->
 <div class="container-fluid" id="bodyContainer">
+<img id="backMap" src="whiteMap.png">
 <div class="row">
 <div  class="col-lg-8">
 
@@ -190,14 +191,14 @@ OpenWeatherMap_logo_white.png
 </a>
 </div>
 
-<!-- todo credit google if maps are used
+
 <div id="apiMap">
 <a href="https://developers.google.com/maps/">
  <img src = 'Maps-logo-white.png'>
  Google Maps
 </a>
 </div>
--->
+
 
 </div> <!--api roll -->
 
