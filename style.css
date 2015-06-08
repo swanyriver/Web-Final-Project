@@ -213,3 +213,7 @@ padding:0px;
   top: -5px;
   z-index: -1;
 }
+
+#mainWindow:last-child {
+  margin-bottom:300px;
+}
