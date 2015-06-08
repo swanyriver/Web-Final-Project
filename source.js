@@ -140,6 +140,8 @@ function onCountySelect(countyName) {
   navbar = document.getElementById('spotNav');
   body = document.getElementById('mainwindow');
 
+  document.getElementById('backMap').setAttribute('src', countyName + '.png');
+
   clearNode(body);
   clearNode(navbar);
 
@@ -942,6 +944,8 @@ function goBig() {
   //document.getElementById('cpHolder').appendChild(cp);
   cp.classList.remove('smaller');
 
+  document.getElementById('APIroll').removeAttribute('data-small');
+
 }
 
 function goLittle() {
@@ -957,6 +961,8 @@ function goLittle() {
   var cp = document.getElementById('controlPanel');
   //document.getElementById('logo').appendChild(cp);
   cp.classList.add('smaller');
+
+  document.getElementById('APIroll').setAttribute('data-small', true);
 }
 
 function navsize() {

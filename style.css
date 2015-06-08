@@ -152,6 +152,11 @@ padding:0px;
   white-space: nowrap;
 }
 
+#APIroll[data-small] > * {
+  text-align: left;
+  display: block;
+}
+
 #apiBootstrap img {
   height: 35px;
 }
@@ -207,4 +212,5 @@ padding:0px;
   position: fixed;
   right: 0px;
   top: -5px;
+  z-index: -1;
 }
