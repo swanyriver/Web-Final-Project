@@ -12,7 +12,9 @@ Created by Brandon Swanson During the Week of June 1st - June 7th as a culminati
 - Bootstrap Java and CSS library
 - Security and Scalability
 
-Live-URL: http://web.engr.oregonstate.edu/~swansonb/SurfSpots/main.php
+Live-URL 
+=========
+http://web.engr.oregonstate.edu/~swansonb/SurfSpots/main.php
 
 Summary
 =======
@@ -38,11 +40,13 @@ Wow Factor Features :
 - google map generated backgrounds, fiting perfectly with the theme and content
 - Looks best on Desktop but has been tested on laptop and cell phone and it is very 'Responsive'!
 
-Acknowledgments and external resources : 
--Bootstrap CSS/JS and few JQuery calls for modal show and hide triggers and callbacks (Bootsrap doesnt provide info on how to get these callbacks with Javascript).
--A replacement btn-inverse css style sheet for the missing class in Bootstrap 3. Provided by: untuk halaman
+Acknowledgments and external resources :
+----------------------------------------
+- Bootstrap CSS/JS and few JQuery calls for modal show and hide triggers and callbacks (Bootsrap doesnt provide info on how to get these callbacks with Javascript).
+- A replacement btn-inverse css style sheet for the missing class in Bootstrap 3. Provided by: untuk halaman
 at:  http://www.kelasabil.com/en/library/bootstrap/reviving-inverse-button-bootstrap-3
-And most importantly these wonderful public API's:
+
+And most importantly these wonderful public API's :
 --------------------------------------------------
 - Spitcast Surf Forecast
 http://www.spitcast.com
