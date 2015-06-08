@@ -93,7 +93,7 @@ $userLoggedin = false;
 
       <div id="logo" class = "col-lg-2">
         
-          <img src="logo.png">
+          <img src="img/logo.png">
         
       </div>
 
@@ -154,7 +154,7 @@ $userLoggedin = false;
 //todo get navspy activity to work
 -->
 <div class="container-fluid" id="bodyContainer">
-<img id="backMap" src="verywhiteMap.png">
+<img id="backMap" src="img/verywhiteMap.png">
 <div class="row">
 <div  class="col-lg-8">
 
@@ -196,31 +196,25 @@ $userLoggedin = false;
 
 </div>
 
-<!--
-Bootstrap.png
-Maps-logo-white.png
-spitlogowhite.png
-OpenWeatherMap_logo_white.png
--->
 <div id="APIroll" class='row'>
 
 <div id="apiSpit">
 <a href="http://www.spitcast.com/">
- <img src = 'spitlogowhite.png'>
+ <img src = 'img/spitlogowhite.png'>
  Spitcast Surf Forecast
 </a>
 </div>
 
 <div id="apiOpenWeather">
 <a href="http://openweathermap.org/">
- <img src = 'OpenWeatherMap_logo_white.png'>
+ <img src = 'img/OpenWeatherMap_logo_white.png'>
  Open Weather Map
 </a>
 </div>
 
 <div id="apiBootstrap">
 <a href="http://getbootstrap.com/">
- <img src = 'Bootstrap.png'>
+ <img src = 'img/Bootstrap.png'>
  Twitter Bootsrap
 </a>
 </div>
@@ -228,7 +222,7 @@ OpenWeatherMap_logo_white.png
 
 <div id="apiMap">
 <a href="https://developers.google.com/maps/">
- <img src = 'Maps-logo-white.png'>
+ <img src = 'img/Maps-logo-white.png'>
  Google Maps
 </a>
 </div>

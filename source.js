@@ -140,7 +140,7 @@ function onCountySelect(countyName) {
   navbar = document.getElementById('spotNav');
   body = document.getElementById('mainwindow');
 
-  document.getElementById('backMap').setAttribute('src', countyName + '.png');
+  document.getElementById('backMap').setAttribute('src', 'img/' + countyName + '.png');
 
   clearNode(body);
   clearNode(navbar);
