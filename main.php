@@ -154,12 +154,46 @@ $userLoggedin = false;
 //todo get navspy activity to work
 -->
 <div class="container-fluid" id="bodyContainer">
-<img id="backMap" src="whiteMap.png">
+<img id="backMap" src="verywhiteMap.png">
 <div class="row">
 <div  class="col-lg-8">
 
 <div id="mainwindow" >
 <!--todo make a splash page, if they arent logged in! -->
+
+<?php if($userLoggedin){
+  $greeting = "Welcome Back {$_SESSION['username']}";
+  $text = "Pick a county above to see what spots are just to your liking today." .
+          "If you haven't done so yet hit the <br>
+
+           <button class = \"btn btn-inverse\" data-toggle=\"modal\" data-target=\"#settingsMod\">
+          <span class=\"glyphicon glyphicon-cog\"></span>
+          Settings
+        </button>
+
+           button to get highlighted forecast information";
+} else {
+  $greeting = "Hello there fellow Surfer!!";
+  $text = "Pick a county above to get all the deets on todays surf, " .
+  "If you later decide to <br>
+
+    <button class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#loginMod\" >
+              <span class=\"glyphicon glyphicon-user\"></span>
+              Create Account
+            </button>
+
+  we will will remember exactly how you like your waves and highlight the best spots for you each day!";
+} ?>
+
+<div class="jumbotron" id="welcometron">
+  <h1><?php echo $greeting; ?></h1>
+  <?php echo "<p> $text </p>"; 
+  $randoCounty = "\"onCountySelect('{$counties[rand(0,count($counties)-1)]}')\"";
+  ?>
+  <p id='SurfsUP'><a class="btn btn-primary btn-lg" style="margin-top:60px;"
+  href="#" role="button" onclick= <?php echo $randoCounty; ?> >Show me the Surf!</a></p>
+</div>
+
 </div>
 
 <!--

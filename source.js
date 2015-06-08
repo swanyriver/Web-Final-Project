@@ -721,6 +721,44 @@ function displayMessage(msg, element) {
   element.appendChild(msgNode);
 }
 
+function changeJumbotron() {
+
+  var jumbo = document.getElementById("welcometron");
+
+  if (!jumbo) return;
+  var surfsup = document.getElementById('SurfsUP');
+
+  jumbo.innerHTML = '';
+
+  var h = document.createElement('H1')
+  h.appendChild(
+    document.createTextNode('Welcome Back ' + userInfo.name));
+  jumbo.appendChild(h);
+
+  var p = document.createElement('p')
+  p.appendChild(document.createTextNode('If you haven\'t done so yet hit the '));
+  p.appendChild(document.createElement('br'));
+
+  var button = document.createElement('button');
+  button.setAttribute('class', 'btn btn-inverse');
+  button.setAttribute('data-toggle', 'modal');
+  button.setAttribute('data-target', '#settingsMod');
+
+  var span = document.createElement('span');
+  span.setAttribute('class', 'glyphicon glyphicon-cog');
+  button.appendChild(span);
+  button.appendChild(document.createTextNode('Settings'))
+
+  p.appendChild(button);
+  p.appendChild(document.createTextNode('button to get highlighted forecast information'));
+
+  jumbo.appendChild(p);
+
+  //put surfs up button back
+  jumbo.appendChild(surfsup);
+
+}
+
 function userloggedin(JSONprofile) {
   //console.log(JSONprofile);
 
@@ -750,6 +788,8 @@ function userloggedin(JSONprofile) {
 
   //highlight spots
   refreshSpotHighlights();
+
+  changeJumbotron();
 
   // TODO disable sign in tooltip on favorites button TODO make tooltips
   // TODO jump to myspots ??  TODO make myspots
@@ -994,3 +1034,4 @@ function navsize() {
   }
 
 }
+
