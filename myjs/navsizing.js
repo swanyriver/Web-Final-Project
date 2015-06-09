@@ -1,6 +1,6 @@
 function goBig() {
   document.getElementById('navbar').style.position = 'fixed';
-  document.getElementById('APIroll').style.position = 'fixed';
+  //document.getElementById('APIroll').style.position = 'fixed';
   document.getElementById('spotNav').hidden = false;
 
 
@@ -9,13 +9,14 @@ function goBig() {
   cp.classList.remove('smaller');
 
   document.getElementById('APIroll').removeAttribute('data-small');
+  document.getElementById('cpHolder').removeAttribute('data-small');
 
 }
 
 function goLittle() {
   document.getElementById('navbar').style.position = 'static';
   blocker.style.height = '0px';
-  document.getElementById('APIroll').style.position = 'static';
+  //document.getElementById('APIroll').style.position = 'static';
   document.getElementById('spotNav').hidden = true;
 
   //document.getElementById('cpHolder').hidden = true;
@@ -27,9 +28,13 @@ function goLittle() {
   cp.classList.add('smaller');
 
   document.getElementById('APIroll').setAttribute('data-small', true);
+  document.getElementById('cpHolder').setAttribute('data-small',true);
 }
 
 function navsize() {
+
+  console.log('navsize being called');
+
   var navbar = document.getElementById('navbar');
   var blocker = document.getElementById('blocker');
 
@@ -41,13 +46,6 @@ function navsize() {
   //console.log('resize:' + height);
 
   navHeight = height;
-/*  var toobig = innerHeight / 3;
-  var small = (innerHeight / 4)
-  if (height > toobig) {
-    goLittle();
-  } else if (height < small) {
-    goBig();
-  }*/
 
   if (document.getElementById('cpHolder').clientWidth > innerWidth * .7) {
     //gone narrow
@@ -57,4 +55,23 @@ function navsize() {
     goBig();
   }
 
+  //todo reset anchor margin-top:##px
+
+  //todo being called too many times
+  //setBottomMargin();
+
+}
+
+//TODO MAYBE SWITCH TO PARENT BOTTOM PADDING
+//todo margin not bieng set,  problem a problem of missing the px
+function setBottomMargin(){
+
+  if(!document.getElementById('mainwindow').lastChild) return;
+
+  var bottomPanel = document.getElementById('mainwindow').lastChild;
+  var topPanelmarg = document.getElementById('mainwindow').firstChild.marginTop;
+  margin = innerHeight - (bottomPanel.clientHeight + navHeight + topPanelmarg);
+  bottomPanel.marginBottom = margin;
+
+  console.log('bottom margin set, clientHeight of panel', bottomPanel.clientHeight);
 }

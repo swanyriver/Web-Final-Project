@@ -48,8 +48,6 @@ button .glyphicon {  float:left;  font-size: large;  margin-right: 15px;}
 
 #APIroll > * {  text-align: center;  display: inline;  margin-right:25px;   white-space: nowrap;}
 
-#APIroll[data-small] > * {  text-align: left;  display: block;}
-
 #apiBootstrap img {  height: 35px;}
 
 #bodyContainer{  margin-bottom: 60px;}
@@ -78,3 +76,5 @@ button .glyphicon {  float:left;  font-size: large;  margin-right: 15px;}
 #mainWindow:last-child {  margin-bottom:300px;}
 */
 
+#APIroll[data-small] > * {  text-align: left;  display: block;}
+#cpHolder[data-small] {display: none;}

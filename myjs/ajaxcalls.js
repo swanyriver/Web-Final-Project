@@ -18,7 +18,6 @@ function onCountySelect(countyName) {
     else var href = '#blocker';
 
     anchor.setAttribute('href', href);
-    //anchor.setAttribute('onclick', '$.scrollTo( ' + href + ', 750 ); return false;"');
     anchor.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
     listitem.appendChild(anchor);
     navbar.appendChild(listitem);
@@ -35,6 +34,10 @@ function onCountySelect(countyName) {
     spotviews[i] = createPanel(spotInfo[countyName][i], body);
 
   }
+
+  //need to set this when elements are added to window
+  //todo this might cause jank
+  setBottomMargin();
 
   waterTempAjax(countyName);
 
