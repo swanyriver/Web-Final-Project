@@ -1,219 +1,78 @@
-.favoriteButton {
-  float: right;
-}
+.favoriteButton {  float: right;}
 
-body {
-  background-color: rgb(178,208,254);
-}
+body {  background-color: rgb(178,208,254);}
 
-#logo img {
-  height:100px; 
-  width:auto;
-  display: inline;
-}
+#logo img {  height:100px;   width:auto;  display: inline;}
 
-.weatherIcon {
-  height: 50px;
-  width: 50px;
-  /* width: 100%; */
-}
+.weatherIcon {  height: 50px;  width: 50px;  /* width: 100%; */}
 
-.Temperature {
-  font-size: xx-large;
-  font-family: monospace;
-}
+.Temperature {  font-size: xx-large;  font-family: monospace;}
 
-.hilo .Temperature {
-  font-size:inherit;
-}
+.hilo .Temperature {  font-size:inherit;}
 
-.waveHeight, .grade {
-  font-size: xx-large;
-  font-family: monospace;
-}
+.waveHeight, .grade {  font-size: xx-large;  font-family: monospace;}
 
-button .glyphicon {
-  float:left;
-  font-size: large;
-  margin-right: 15px;
-}
+button .glyphicon {  float:left;  font-size: large;  margin-right: 15px;}
 
+#tempControls > * {  width:50%;}
 
-#tempControls > * {
-  width:50%;
-}
+#loginMessage { /*todo align error to left, possibly put red background when there is message */}
 
-#loginMessage {
- /*todo align error to left, possibly put red background when there is message */
-}
+.displayBox {height:100%;padding:0px;}
 
-.displayBox {
-height:100%;
-padding:0px;
-}
+.ReportHeading {  width:100%;  text-align:center;  border-style:ridge;}
 
-.ReportHeading {
-  width:100%;
-  text-align:center;
-  border-style:ridge;
-}
+.reportSection * {  text-align:center}
 
+.progress, .blocker {  width: 100%;  height: 100%;  position: absolute;  top: 0px;  left: 0px;  text-align: right;  font-size: xx-large;  font-weight: bolder;  padding-top: 25px;  padding-right: 250px;  background-color: rgb(178,208,254);  color: white;  text-shadow: -5px 5px 10px white;  border-style: inset;  border-color: white;  border-width: thick;}
 
-.reportSection * {
-  text-align:center
-}
+.nav a {  font-size: larger;  font-weight: bold;  color: aqua;}
 
+.panel-heading {  height: 50px;  position: relative;  text-align: center;  font-weight: bold;  font-size: large;}
 
+.panel-body {  position: relative;}
 
-.progress, .blocker {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0px;
-  left: 0px;
+.unavailDiv *, .unavailDiv{  text-align: center;  color: red;  align-content:center;}
 
-  text-align: right;
-  font-size: xx-large;
-  font-weight: bolder;
-  padding-top: 25px;
-  padding-right: 250px;
-  background-color: rgb(178,208,254);
-  color: white;
-  text-shadow: -5px 5px 10px white;
-  border-style: inset;
-  border-color: white;
-  border-width: thick;
-}
+.uavailDiv .glyphicon {  font-size: larger;}
 
+.prefMet {  background-color: lightgreen;}
 
-.nav a {
-  font-size: larger;
-  font-weight: bold;
-  color: aqua;
-}
+.prefNotMet {  background-color: lightcoral;}
 
-.panel-heading {
-  height: 50px;
-  position: relative;
-  text-align: center;
-  font-weight: bold;
-  font-size: large;
-}
+#APIroll {  background-color:rgba(178,208,254,.6);  width: 100%;  position: fixed;  bottom: 0px;  padding: 5px;  font-size: large;  padding-left: 35px;}
 
-.panel-body {
-  position: relative;
-}
+#APIroll a {  text-transform: none;  font-weight: bold;  color: white;   text-decoration: none;}
 
-.unavailDiv *, .unavailDiv{
-  text-align: center;
-  color: red;
-  align-content:center;
-}
+#APIroll img {  height: 40px;  width: auto;  margin-right: 10px;  display: inline;}
 
-.uavailDiv .glyphicon {
-  font-size: larger;
-}
+#APIroll > * {  text-align: center;  display: inline;  margin-right:25px;   white-space: nowrap;}
 
-.prefMet {
-  background-color: lightgreen;
-}
-.prefNotMet {
-  background-color: lightcoral;
-}
+#APIroll[data-small] > * {  text-align: left;  display: block;}
 
-#APIroll {
-  background-color:rgba(178,208,254,.6);
-  width: 100%;
-  position: fixed;
-  bottom: 0px;
-  padding: 5px;
-  font-size: large;
-  padding-left: 35px;
-}
+#apiBootstrap img {  height: 35px;}
 
-#APIroll a {
-  text-transform: none;
-  font-weight: bold;
-  color: white; 
-  text-decoration: none;
-}
+#bodyContainer{  margin-bottom: 60px;}
 
-#APIroll img {
-  height: 40px;
-  width: auto;
-  margin-right: 10px;
-  display: inline;
-}
+#mainwindow {  position: relative;}
 
-#APIroll > * {
-  text-align: center;
-  display: inline;
-  margin-right:25px; 
-  white-space: nowrap;
-}
+/*provide spacing for nav info*/#blocker{  margin-bottom: 30px;}
 
-#APIroll[data-small] > * {
-  text-align: left;
-  display: block;
-}
+.controlPanel > *, #logoutbutton > *{  width: 100%}
 
-#apiBootstrap img {
-  height: 35px;
-}
+/*.controlPanel > * {  display: inline;}
 
-#bodyContainer{
-  margin-bottom: 60px;
-}
+#controlPanel {  display: inline;}
 
-#mainwindow {
-  position: relative;
-}
+*/#cpHolder {  /*z-index: -1;*/}
 
-/*provide spacing for nav info*/
-#blocker{
-  margin-bottom: 30px;
-}
+/*.smaller > *{  width: 50%;  display: inline;}
 
-.controlPanel > *, #logoutbutton > *{
-  width: 100%
-}
+*//*#logo #controlPanel { width: 60%; display:block; float:right}
 
-/*.controlPanel > * {
-  display: inline;
-}
+#logo #controlPanel > *, #logo #controlPanel > * > button {  width:40%;  display:inline;}
 
-#controlPanel {
-  display: inline;
-}*/
+*/#backMap {  height: 100%;  margin-top: 0px;  position: fixed;  right: 0px;  top: -5px;  z-index: -1;}
 
-#cpHolder {
-  /*z-index: -1;*/
-}
+#mainWindow:last-child {  margin-bottom:300px;}
 
-/*.smaller > *{
-  width: 50%;
-  display: inline;
-}*/
-
-/*#logo #controlPanel {
- width: 60%;
- display:block;
- float:right
-}
-#logo #controlPanel > *, #logo #controlPanel > * > button {
-  width:40%;
-  display:inline;
-}*/
-
-#backMap {
-  height: 100%;
-  margin-top: 0px;
-  position: fixed;
-  right: 0px;
-  top: -5px;
-  z-index: -1;
-}
-
-#mainWindow:last-child {
-  margin-bottom:300px;
-}
