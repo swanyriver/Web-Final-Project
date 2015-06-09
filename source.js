@@ -98,21 +98,26 @@ function updateRequestBoxes(responsVals) {
   if (!responsVals.hilo.success) responsVals.hilo.view.innerHTML = '';
 
   for (var i = keys.length - 1; i >= 0; i--) {
-    if (!userInfo.name) return;
+
     var response = responsVals[keys[i]];
     var userPref = userInfo[prefMap[keys[i]]];
 
-    response.header.classList.remove('prefMet');
-    response.header.classList.remove('prefNotMet');
+    if (userInfo.name) {
 
-    if (response.success && userPref && userPref != 'null') {
-      if (response.value >= userPref) {
-        response.header.classList.add('prefMet');
-      } else {
-        response.header.classList.add('prefNotMet');
+      response.header.classList.remove('prefMet');
+      response.header.classList.remove('prefNotMet');
+
+      if (response.success && userPref && userPref != 'null') {
+        if (response.value >= userPref) {
+          response.header.classList.add('prefMet');
+        } else {
+          response.header.classList.add('prefNotMet');
+        }
       }
 
-    } else if (!response.success) {
+    } 
+
+    if (!response.success) {
       responsVals[keys[i]].view.innerHTML = '';
       responsVals[keys[i]].view.appendChild(unavailicon());
     }
@@ -131,62 +136,27 @@ function unavailicon() {
 }
 
 
-function navsize() {
-  var navbar = document.getElementById('navbar');
-  var blocker = document.getElementById('blocker');
-
-  var height = navbar.clientHeight;
-
-  blocker.setAttribute('style' , 'display:block;height:' + height);
-  blocker.style.height = height + 'px';
-
-  console.log('resize:' + height);
-
-  navHeight = height;
-  var allowed = innerHeight / 4;
-  console.log(height, window.innerHeight, allowed);
-  if (height > allowed) {
-    document.getElementById('navbar').style.position = 'static';
-    blocker.style.height = '0px';
-    document.getElementById('APIroll').style.position = 'static';
-
-    // todo the button group breaks when its moved, maybe clone it and re add it
-    //var cp = document.getElementById('controlPanel');
-    //document.getElementById('logo').appendChild(cp);
-
-  } else {
-    document.getElementById('navbar').style.position = 'fixed';
-    document.getElementById('APIroll').style.position = 'fixed';
-
-    // todo the button group breaks when its moved, maybe clone it and re add it
-    //var cp = document.getElementById('controlPanel');
-    //document.getElementById('cpHolder').appendChild(cp);
-  }
-
-  //todo anchors not working
-  var anchors = document.getElementsByClassName('spotAnchor');
-  for (var i = anchors.length - 1; i >= 0; i--) {
-    anchors[i].style.top = '-' + String(navHeight);
-    anchors[i].style.position = 'relative';
-    anchors[i].style.padding = navHeight;
-  }
-
-}
-
-
-
 function onCountySelect(countyName) {
   navbar = document.getElementById('spotNav');
   body = document.getElementById('mainwindow');
 
+  document.getElementById('backMap').setAttribute('src', 'img/' + countyName + '.png');
+
   clearNode(body);
   clearNode(navbar);
 
+
+  //todo get it to work or remove these spot names
   for (var i = 0; i < spotInfo[countyName].length; i++) {
     //<li><a href='#'>test1</a></li>
     var listitem = document.createElement('li');
     var anchor = document.createElement('a');
-    anchor.setAttribute('href', '#' + spotInfo[countyName][i]['spot_name']);
+
+    if (i)var href = '#' + spotInfo[countyName][i - 1]['spot_id'];
+    else var href = '#blocker';
+
+    anchor.setAttribute('href', href);
+    //anchor.setAttribute('onclick', '$.scrollTo( ' + href + ', 750 ); return false;"');
     anchor.appendChild(document.createTextNode(spotInfo[countyName][i]['spot_name']));
     listitem.appendChild(anchor);
     navbar.appendChild(listitem);
@@ -198,15 +168,6 @@ function onCountySelect(countyName) {
   spotviews = [];
 
   for (var i = 0; i < spotInfo[countyName].length; i++) {
-
-    var anchor = document.createElement('a');
-    anchor.setAttribute('class', 'spotAnchor');
-    // todo not working
-    anchor.style.position = 'relative';
-    anchor.style.top = '-' + String(navHeight);
-    anchor.style.padding = navHeight;
-    anchor.setAttribute('id', spotInfo[countyName][i]['spot_name']);
-    body.appendChild(anchor);
 
     //add spot to body
     spotviews[i] = createPanel(spotInfo[countyName][i], body);
@@ -225,7 +186,7 @@ function waterTempAjax(countyName) {
 
   //Spitcast call
   var spotReq = new XMLHttpRequest();
-  if(! spotReq) {
+  if (!spotReq) {
     unabletoMakeAjax();
     return;
   }
@@ -233,7 +194,7 @@ function waterTempAjax(countyName) {
   spotReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
       updateWaterTemp(countyName, this.response, true);
-    } else if (this.readyState === 4){
+    } else if (this.readyState === 4) {
       updateWaterTemp(countyName, null, false);
     }
   };
@@ -244,6 +205,7 @@ function waterTempAjax(countyName) {
 }
 
 function unabletoMakeAjax() {
+  console.log('unable to make ajax');
   alert("our apolagies but the browser doesn't want to talk the surf seers");
 }
 
@@ -253,7 +215,7 @@ function makeAjaxcalls(spot, views) {
 
   //////Spitcast call//////////////
   var spotReq = new XMLHttpRequest();
-  if(! spotReq) {
+  if (!spotReq) {
     unabletoMakeAjax();
     return;
   }
@@ -278,10 +240,11 @@ function makeAjaxcalls(spot, views) {
 
   ///////weather call///////////
   var weatherReq = new XMLHttpRequest();
-  if(! weatherReq) {
+  if (!weatherReq) {
     unabletoMakeAjax();
     return;
   }
+
   weatherReq.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200 && this.response) {
       ajaxReturnWeather(views['WeatherBox'], this.response, spot['spot_id']);
@@ -293,7 +256,7 @@ function makeAjaxcalls(spot, views) {
   weatherReq.ontimeout = function() {
     console.log('no response: weather timeout');
     spotRequestStates[spotID].response(false, 'weather', null, views['WeatherBox']);
-  } 
+  };
 
   var wurl = 'http://api.openweathermap.org/data/2.5/weather';
   var lat = 'lat=' + spot['latitude'];
@@ -308,7 +271,8 @@ function makeAjaxcalls(spot, views) {
 
   ///////forecast call///////////
   var forecastReq = new XMLHttpRequest();
-  if(! forecastReq) {
+
+  if (!forecastReq) {
     unabletoMakeAjax();
     return;
   }
@@ -353,7 +317,7 @@ function updateWaterTemp(countyName, JSONdata, success) {
     var panel = document.getElementById(spotID);
     if (panel) {
       var out = panel.getElementsByClassName("WaterBox")[0].getElementsByClassName("Temperature")[0];
-      if(success) setTemp(FtoK(waterTemp), out);
+      if (success) setTemp(FtoK(waterTemp), out);
       spotRequestStates[spotID].response(success, 'watertemp', FtoK(waterTemp),
         panel.getElementsByClassName("WaterBox")[0]);
     }
@@ -612,9 +576,10 @@ function createPanel(spot, body) {
 
   pHead.appendChild(document.createTextNode(spot['spot_name']));
 
-  var favlink = document.createElement('a');
+  
 
   //todo put favorite buttons back
+  //var favlink = document.createElement('a');
   //favlink.setAttribute('class', 'favoriteButton');
   //favlink.setAttribute('onclick', 'favorite(' + spot['spot_id'] + ')');
   //var favglyph = document.createElement('span');
@@ -756,6 +721,44 @@ function displayMessage(msg, element) {
   element.appendChild(msgNode);
 }
 
+function changeJumbotron() {
+
+  var jumbo = document.getElementById("welcometron");
+
+  if (!jumbo) return;
+  var surfsup = document.getElementById('SurfsUP');
+
+  jumbo.innerHTML = '';
+
+  var h = document.createElement('H1')
+  h.appendChild(
+    document.createTextNode('Welcome Back ' + userInfo.name));
+  jumbo.appendChild(h);
+
+  var p = document.createElement('p')
+  p.appendChild(document.createTextNode('If you haven\'t done so yet hit the '));
+  p.appendChild(document.createElement('br'));
+
+  var button = document.createElement('button');
+  button.setAttribute('class', 'btn btn-inverse');
+  button.setAttribute('data-toggle', 'modal');
+  button.setAttribute('data-target', '#settingsMod');
+
+  var span = document.createElement('span');
+  span.setAttribute('class', 'glyphicon glyphicon-cog');
+  button.appendChild(span);
+  button.appendChild(document.createTextNode('Settings'))
+
+  p.appendChild(button);
+  p.appendChild(document.createTextNode('button to get highlighted forecast information'));
+
+  jumbo.appendChild(p);
+
+  //put surfs up button back
+  jumbo.appendChild(surfsup);
+
+}
+
 function userloggedin(JSONprofile) {
   //console.log(JSONprofile);
 
@@ -786,6 +789,8 @@ function userloggedin(JSONprofile) {
   //highlight spots
   refreshSpotHighlights();
 
+  changeJumbotron();
+
   // TODO disable sign in tooltip on favorites button TODO make tooltips
   // TODO jump to myspots ??  TODO make myspots
   // TODO set favorite icons accordingly
@@ -813,7 +818,7 @@ function user(request) {
           return;
         } else if (this.status == 201) {
           $('#loginMod').modal('hide');
-          $('#welcomeMod').modal('show');
+          //$('#welcomeMod').modal('show');
           userloggedin(this.response);
           return;
         }
@@ -968,3 +973,65 @@ function enableSettings() {
   document.getElementById('userRating').removeAttribute('disabled');
 
 }
+
+function goBig() {
+  document.getElementById('navbar').style.position = 'fixed';
+  document.getElementById('APIroll').style.position = 'fixed';
+  document.getElementById('spotNav').hidden = false;
+
+
+  var cp = document.getElementById('controlPanel');
+  //document.getElementById('cpHolder').appendChild(cp);
+  cp.classList.remove('smaller');
+
+  document.getElementById('APIroll').removeAttribute('data-small');
+
+}
+
+function goLittle() {
+  document.getElementById('navbar').style.position = 'static';
+  blocker.style.height = '0px';
+  document.getElementById('APIroll').style.position = 'static';
+  document.getElementById('spotNav').hidden = true;
+
+  //document.getElementById('cpHolder').hidden = true;
+
+
+  // todo the button group breaks when its moved, maybe clone it and re add it
+  var cp = document.getElementById('controlPanel');
+  //document.getElementById('logo').appendChild(cp);
+  cp.classList.add('smaller');
+
+  document.getElementById('APIroll').setAttribute('data-small', true);
+}
+
+function navsize() {
+  var navbar = document.getElementById('navbar');
+  var blocker = document.getElementById('blocker');
+
+  var height = navbar.clientHeight;
+
+  blocker.setAttribute('style' , 'display:block;height:' + height);
+  blocker.style.height = height + 'px';
+
+  //console.log('resize:' + height);
+
+  navHeight = height;
+/*  var toobig = innerHeight / 3;
+  var small = (innerHeight / 4)
+  if (height > toobig) {
+    goLittle();
+  } else if (height < small) {
+    goBig();
+  }*/
+
+  if (document.getElementById('cpHolder').clientWidth > innerWidth * .7) {
+    //gone narrow
+    goLittle();
+  }else if (document.getElementById('logo').clientWidth < innerWidth * .7) {
+    //gone wide
+    goBig();
+  }
+
+}
+

@@ -27,7 +27,7 @@ body {
   font-size:inherit;
 }
 
-.waveHeight {
+.waveHeight, .grade {
   font-size: xx-large;
   font-family: monospace;
 }
@@ -128,6 +128,7 @@ padding:0px;
   bottom: 0px;
   padding: 5px;
   font-size: large;
+  padding-left: 35px;
 }
 
 #APIroll a {
@@ -148,6 +149,12 @@ padding:0px;
   text-align: center;
   display: inline;
   margin-right:25px; 
+  white-space: nowrap;
+}
+
+#APIroll[data-small] > * {
+  text-align: left;
+  display: block;
 }
 
 #apiBootstrap img {
@@ -165,21 +172,48 @@ padding:0px;
 /*provide spacing for nav info*/
 #blocker{
   margin-bottom: 30px;
-
 }
 
 .controlPanel > *, #logoutbutton > *{
   width: 100%
 }
 
-.controlPanel > * {
+/*.controlPanel > * {
   display: inline;
 }
 
 #controlPanel {
   display: inline;
+}*/
+
+#cpHolder {
+  /*z-index: -1;*/
 }
 
-.mainWindow:last-child {
+/*.smaller > *{
+  width: 50%;
+  display: inline;
+}*/
+
+/*#logo #controlPanel {
+ width: 60%;
+ display:block;
+ float:right
+}
+#logo #controlPanel > *, #logo #controlPanel > * > button {
+  width:40%;
+  display:inline;
+}*/
+
+#backMap {
+  height: 100%;
+  margin-top: 0px;
+  position: fixed;
+  right: 0px;
+  top: -5px;
+  z-index: -1;
+}
+
+#mainWindow:last-child {
   margin-bottom:300px;
 }

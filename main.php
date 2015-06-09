@@ -36,6 +36,7 @@ $userLoggedin = false;
 
     <!-- inverse button style -->
     <link href="inversebutton.css" rel="stylesheet">
+
     <!-- my CSS -->
     <link href="style.css" rel="stylesheet">
 
@@ -88,9 +89,9 @@ $userLoggedin = false;
     <div class="row">
 
       <div id="logo" class = "col-lg-2">
-        <a href="#" onclick="mySpots()" >
-          <img src="logo.png">
-        </a>
+        
+          <img src="img/logo.png">
+        
       </div>
 
       <div class="col-lg-8">
@@ -150,50 +151,79 @@ $userLoggedin = false;
 //todo get navspy activity to work
 -->
 <div class="container-fluid" id="bodyContainer">
+<img id="backMap" src="img/verywhiteMap.png">
 <div class="row">
 <div  class="col-lg-8">
 
 <div id="mainwindow" >
 <!--todo make a splash page, if they arent logged in! -->
+
+<?php if($userLoggedin){
+  $greeting = "Welcome Back {$_SESSION['username']}";
+  $text = "Pick a county above to see what spots are just to your liking today." .
+          "If you haven't done so yet hit the <br>
+
+           <button class = \"btn btn-inverse\" data-toggle=\"modal\" data-target=\"#settingsMod\">
+          <span class=\"glyphicon glyphicon-cog\"></span>
+          Settings
+        </button>
+
+           button to get highlighted forecast information";
+} else {
+  $greeting = "Hello there fellow Surfer!!";
+  $text = "Pick a county above to get all the deets on todays surf, " .
+  "If you later decide to <br>
+
+    <button class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#loginMod\" >
+              <span class=\"glyphicon glyphicon-user\"></span>
+              Create Account
+            </button>
+
+  we will will remember exactly how you like your waves and highlight the best spots for you each day!";
+} ?>
+
+<div class="jumbotron" id="welcometron">
+  <h1><?php echo $greeting; ?></h1>
+  <?php echo "<p> $text </p>"; 
+  $randoCounty = "\"onCountySelect('{$counties[rand(0,count($counties)-1)]}')\"";
+  ?>
+  <p id='SurfsUP'><a class="btn btn-primary btn-lg" style="margin-top:60px;"
+  href="#" role="button" onclick= <?php echo $randoCounty; ?> >Show me the Surf!</a></p>
 </div>
 
-<!--
-Bootstrap.png
-Maps-logo-white.png
-spitlogowhite.png
-OpenWeatherMap_logo_white.png
--->
+</div>
+
 <div id="APIroll" class='row'>
 
 <div id="apiSpit">
 <a href="http://www.spitcast.com/">
- <img src = 'spitlogowhite.png'>
+ <img src = 'img/spitlogowhite.png'>
  Spitcast Surf Forecast
 </a>
 </div>
 
 <div id="apiOpenWeather">
 <a href="http://openweathermap.org/">
- <img src = 'OpenWeatherMap_logo_white.png'>
+ <img src = 'img/OpenWeatherMap_logo_white.png'>
  Open Weather Map
 </a>
 </div>
 
 <div id="apiBootstrap">
 <a href="http://getbootstrap.com/">
- <img src = 'Bootstrap.png'>
+ <img src = 'img/Bootstrap.png'>
  Twitter Bootsrap
 </a>
 </div>
 
-<!-- todo credit google if maps are used
+
 <div id="apiMap">
 <a href="https://developers.google.com/maps/">
- <img src = 'Maps-logo-white.png'>
+ <img src = 'img/Maps-logo-white.png'>
  Google Maps
 </a>
 </div>
--->
+
 
 </div> <!--api roll -->
 
@@ -282,7 +312,8 @@ OpenWeatherMap_logo_white.png
               </select>
             </div>
           </div>
-          </form>
+        </form>
+
 
       </div>
       <div class="modal-footer">
