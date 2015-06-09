@@ -1,4 +1,4 @@
-var waterCounties = [];
+/*var waterCounties = [];
 waterCounties['Sonoma'] = 'sonoma';
 waterCounties['Marin'] = 'marin';
 waterCounties['San Francisco'] = 'san-francisco';
@@ -17,9 +17,9 @@ function load() {
 
   if (userInfo.name) adjustSettingsPanel();
   //todo generate favorites page, if user has favorites
-}
+}*/
 
-function requestState(panel) {
+/*function requestState(panel) {
   this.numRequests = 0;
   this.completed = false;
 
@@ -133,10 +133,10 @@ function unavailicon() {
   div.appendChild(document.createElement('br'))
   div.appendChild(document.createTextNode('Unavailable'));
   return div;
-}
+}*/
 
 
-function onCountySelect(countyName) {
+/*function onCountySelect(countyName) {
   navbar = document.getElementById('spotNav');
   body = document.getElementById('mainwindow');
 
@@ -376,17 +376,17 @@ function ajaxReturnSpitcast(WaveBox, GradeBox, JSONdata, spotID) {
 
   spotRequestStates[spotID].response(true, 'waveHeight', currentConditions['size'], WaveBox);
 
-}
+}*/
 
-function favorite(spotid) {
+/*function favorite(spotid) {
   //todo implement
 }
 
 function mySpots() {
   //todo implement
-}
+}*/
 
-function updateAllTemps() {
+/*function updateAllTemps() {
   temps = document.getElementsByClassName('Temperature');
   for (var i = temps.length - 1; i >= 0; i--) {
     updateTemp(temps[i]);
@@ -408,8 +408,13 @@ function changeUnitButton(unit) {
     Cbutton.classList.remove('active');
   }
 }
+*/
 
-function updateUser(poststring, onFinish) {
+/*function updateUserFavorites() {
+ /* //todo stringify and send favorites
+}
+*/
+/*function updateUser(poststring, onFinish) {
   updateReq = new XMLHttpRequest();
 
   updateReq.onreadystatechange = function() {
@@ -425,10 +430,6 @@ function updateUser(poststring, onFinish) {
   updateReq.open('POST', 'updateUser.php');
   updateReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   updateReq.send(poststring);
-}
-
-function updateUserFavorites() {
-  //todo stringify and send favorites
 }
 
 function updateUserSettings() {
@@ -497,7 +498,10 @@ function updateUserSettings() {
   refreshSpotHighlights();
 }
 
-function refreshSpotHighlights() {
+//button click relies on this for submiting
+$('#settingsMod').on('hide.bs.modal', updateUserSettings);*/
+*/
+/*function refreshSpotHighlights() {
   //refresh highlights
   spotPanels = document.getElementsByClassName('spotPanel');
   for (var i = 0; i < spotPanels.length; i++) {
@@ -506,12 +510,11 @@ function refreshSpotHighlights() {
       updateRequestBoxes(spotRequestStates[id].responsVals);
     }
   }
-}
+}*/
 
-//button click relies on this for submiting
-$('#settingsMod').on('hide.bs.modal', updateUserSettings);
 
-function changeUnit(unit) {
+
+/*function changeUnit(unit) {
 
   if (unit != userInfo.tempUnit) {
 
@@ -561,7 +564,7 @@ function FtoK(fahrenheit) {
   var kelvin = (fahrenheit - 32) / 1.8 + 273.15;
   return Math.round(kelvin);
 }
-
+*/
 function createPanel(spot, body) {
 
   var views = [];
@@ -798,7 +801,7 @@ function userloggedin(JSONprofile) {
   // TODO put user name somwhere on page
 }
 
-function user(request) {
+/*function user(request) {
   console.log(request);
 
   var ErrorOut = document.getElementById('loginMessage');
@@ -924,9 +927,9 @@ $('#loginMod').on('show.bs.modal', function(e) {
   nameIn.oninput = function() {buttonControl(nameIn);};
   passIn.oninput = function() {buttonControl(passIn);};
   //passIn.oninput = buttonControl;
-});
+});*/
 
-function adjustSettingsPanel(){
+/*function adjustSettingsPanel(){
 
   var weatherSet = new Object();
   var waterSet = new Object();
@@ -972,9 +975,9 @@ function enableSettings() {
   document.getElementById('userWaveHeight').removeAttribute('disabled');
   document.getElementById('userRating').removeAttribute('disabled');
 
-}
+}*/
 
-function goBig() {
+/*function goBig() {
   document.getElementById('navbar').style.position = 'fixed';
   document.getElementById('APIroll').style.position = 'fixed';
   document.getElementById('spotNav').hidden = false;
@@ -1025,7 +1028,7 @@ function navsize() {
     goBig();
   }*/
 
-  if (document.getElementById('cpHolder').clientWidth > innerWidth * .7) {
+ /* if (document.getElementById('cpHolder').clientWidth > innerWidth * .7) {
     //gone narrow
     goLittle();
   }else if (document.getElementById('logo').clientWidth < innerWidth * .7) {
@@ -1033,5 +1036,5 @@ function navsize() {
     goBig();
   }
 
-}
+}*/
 

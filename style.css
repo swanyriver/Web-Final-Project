@@ -54,9 +54,9 @@ button .glyphicon {  float:left;  font-size: large;  margin-right: 15px;}
 
 #bodyContainer{  margin-bottom: 60px;}
 
-#mainwindow {  position: relative;}
+#mainwindow {  position: relative; padding-top:25px}
 
-/*provide spacing for nav info*/#blocker{  margin-bottom: 30px;}
+/*provide spacing for nav info*/#blocker{  /* margin-bottom: 30px; */}
 
 .controlPanel > *, #logoutbutton > *{  width: 100%}
 
@@ -72,7 +72,9 @@ button .glyphicon {  float:left;  font-size: large;  margin-right: 15px;}
 
 #logo #controlPanel > *, #logo #controlPanel > * > button {  width:40%;  display:inline;}
 
-*/#backMap {  height: 100%;  margin-top: 0px;  position: fixed;  right: 0px;  top: -5px;  z-index: -1;}
+*/#backMap {  height: 100%;  margin-top: 0px;  position: fixed;  right: 0px;  z-index: -1;}
 
+/* TODO Set Programatically 
 #mainWindow:last-child {  margin-bottom:300px;}
+*/
 

@@ -39,7 +39,7 @@ $userLoggedin = false;
     <!-- my CSS -->
     <link href="style.css" rel="stylesheet">
 
-    <script type="text/javascript" src="spotJSON.js"></script>
+    <script type="text/javascript" src="myjs/spotJSON.js"></script>
     <?php
       if(session_status() != PHP_SESSION_ACTIVE){
         echo "<!-- Problem starting session -->";
@@ -431,7 +431,18 @@ $userLoggedin = false;
   </button> </form>";
 ?>
 
- <script type="text/javascript" src="source.js"></script>
+ <!--<script type="text/javascript" src="source.js"></script> -->
+<script type="text/javascript" src="myjs/globalsandload.js"></script>
+<script type="text/javascript" src="myjs/ajaxcalls.js"></script>
+<script type="text/javascript" src="myjs/databasesql.js"></script>
+<script type="text/javascript" src="myjs/generatehtml.js"></script>
+<script type="text/javascript" src="myjs/navsizing.js"></script>
+<script type="text/javascript" src="myjs/requestStates.js"></script>
+<script type="text/javascript" src="myjs/spotJSON.js"></script>
+<script type="text/javascript" src="myjs/Tempcontrols.js"></script>
+<script type="text/javascript" src="myjs/unimplementedMethods.js"></script>
+<script type="text/javascript" src="myjs/updateforuser.js"></script>
+
 
   
 </body>
