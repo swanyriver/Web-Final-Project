@@ -93,8 +93,8 @@ $userLoggedin = false;
         
       </div>
 
-      <div class="col-lg-8">
-        <ul class="nav nav-pills nav-justified">
+      <div class="col-lg-8" id="navMiddleCol">
+        <ul class="nav nav-pills nav-justified" id="countyNav">
           <?php
           foreach ($counties as $count) {
             echo "<li><a onclick='onCountySelect(\"$count\")'>$count</a></li>";

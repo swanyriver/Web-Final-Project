@@ -79,3 +79,9 @@ button .glyphicon {  float:left;  font-size: large;  margin-right: 15px;}
 #APIroll[data-small] > * {  text-align: left;  display: block;}
 #cpHolder[data-small], #spotNav[data-small], #blocker[data-small] {display: none;}
 #navbar[data-small] {position: static;}
+
+
+
+/*for making slide show background */
+/*#mainwindow *, #cpHolder, #navMiddleCol, #APIroll {display:none}*/
+
