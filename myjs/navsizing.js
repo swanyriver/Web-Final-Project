@@ -1,39 +1,31 @@
+//todo make alternat button group to go next to image
+//maybe another logo image,  insert them as a table and just create a whole new layout on collumn
+
 function goBig() {
-  document.getElementById('navbar').style.position = 'fixed';
-  //document.getElementById('APIroll').style.position = 'fixed';
-  document.getElementById('spotNav').hidden = false;
-
-
-  var cp = document.getElementById('controlPanel');
-  //document.getElementById('cpHolder').appendChild(cp);
-  cp.classList.remove('smaller');
 
   document.getElementById('APIroll').removeAttribute('data-small');
   document.getElementById('cpHolder').removeAttribute('data-small');
+  document.getElementById('spotNav').removeAttribute('data-small');
+  document.getElementById('logo').removeAttribute('data-small');
+  document.getElementById('navbar').removeAttribute('data-small');
+  document.getElementById('navbar').removeAttribute('data-small');
 
 }
 
 function goLittle() {
-  document.getElementById('navbar').style.position = 'static';
-  blocker.style.height = '0px';
-  //document.getElementById('APIroll').style.position = 'static';
-  document.getElementById('spotNav').hidden = true;
-
-  //document.getElementById('cpHolder').hidden = true;
-
-
-  // todo the button group breaks when its moved, maybe clone it and re add it
-  var cp = document.getElementById('controlPanel');
-  //document.getElementById('logo').appendChild(cp);
-  cp.classList.add('smaller');
 
   document.getElementById('APIroll').setAttribute('data-small', true);
   document.getElementById('cpHolder').setAttribute('data-small',true);
+  document.getElementById('spotNav').setAttribute('data-small', true);
+  document.getElementById('logo').setAttribute('data-small', true);
+  document.getElementById('navbar').setAttribute('data-small', true);
+  blocker.setAttribute('data-small',true);
+
 }
 
 function navsize() {
 
-  console.log('navsize being called');
+  //console.log('navsize being called');
 
   var navbar = document.getElementById('navbar');
   var blocker = document.getElementById('blocker');
