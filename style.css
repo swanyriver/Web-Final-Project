@@ -50,11 +50,9 @@ button .glyphicon {  float:left;  font-size: large;  margin-right: 15px;}
 
 #apiBootstrap img {  height: 35px;}
 
-#bodyContainer{  margin-bottom: 60px;}
+
 
 #mainwindow {  position: relative; padding-top:25px}
-
-/*provide spacing for nav info*/#blocker{  /* margin-bottom: 30px; */}
 
 .controlPanel > *, #logoutbutton > *{  width: 100%}
 
@@ -76,12 +74,18 @@ button .glyphicon {  float:left;  font-size: large;  margin-right: 15px;}
 #mainWindow:last-child {  margin-bottom:300px;}
 */
 
+/*provide spacing for nav info*/
+#blocker{  display: block;}
+
 #APIroll[data-small] > * {  text-align: left;  display: block;}
-#cpHolder[data-small], #spotNav[data-small], #blocker[data-small] {display: none;}
+#APIroll[data-small] {position: static;}
 #navbar[data-small] {position: static;}
 
 
+#SurfsUP { text-align:right}
 
 /*for making slide show background */
 /*#mainwindow *, #cpHolder, #navMiddleCol, #APIroll {display:none}*/
+/*body { overflow:hidden;}*/ /* on the active page */
 
+#bodyContainer{ /* margin-bottom: 60px; */}  /*wrong it put 60px below apiroll*/

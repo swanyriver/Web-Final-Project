@@ -4,22 +4,23 @@
 function goBig() {
 
   document.getElementById('APIroll').removeAttribute('data-small');
-  document.getElementById('cpHolder').removeAttribute('data-small');
-  document.getElementById('spotNav').removeAttribute('data-small');
+  //document.getElementById('cpHolder').removeAttribute('data-small');
+  //document.getElementById('spotNav').removeAttribute('data-small');
   document.getElementById('logo').removeAttribute('data-small');
   document.getElementById('navbar').removeAttribute('data-small');
-  document.getElementById('navbar').removeAttribute('data-small');
+  //document.getElementById('navbar').removeAttribute('data-small');
+  //document.getElementById('blocker').removeAttribute('data-small');
 
 }
 
 function goLittle() {
 
   document.getElementById('APIroll').setAttribute('data-small', true);
-  document.getElementById('cpHolder').setAttribute('data-small',true);
-  document.getElementById('spotNav').setAttribute('data-small', true);
+  //document.getElementById('cpHolder').setAttribute('data-small',true);
+  //document.getElementById('spotNav').setAttribute('data-small', true);
   document.getElementById('logo').setAttribute('data-small', true);
   document.getElementById('navbar').setAttribute('data-small', true);
-  blocker.setAttribute('data-small',true);
+  //document.getElementById('blocker').setAttribute('data-small',true);
 
 }
 
@@ -32,30 +33,34 @@ function navsize() {
 
   var height = navbar.clientHeight;
 
-  blocker.setAttribute('style' , 'display:block;height:' + height);
+  blocker.setAttribute('style' , 'height:' + height);
   blocker.style.height = height + 'px';
 
   //console.log('resize:' + height);
 
   navHeight = height;
 
-  if (document.getElementById('cpHolder').clientWidth > innerWidth * .7) {
-    //gone narrow
-    goLittle();
-  }else if (document.getElementById('logo').clientWidth < innerWidth * .7) {
-    //gone wide
+  if( isBreakpoint('lg') ) {
     goBig();
+  } else {
+    goLittle();
   }
+
+  //if( isBreakpoint('xs') ) {
+  //  $('.someClass').css('property', 'value');
+  //}
+  //console.log(isBreakpoint('sm'));
 
   //todo reset anchor margin-top:##px
 
   //todo being called too many times
+  //todo get this to work
   //setBottomMargin();
 
 }
 
 //TODO MAYBE SWITCH TO PARENT BOTTOM PADDING
-//todo margin not bieng set,  problem a problem of missing the px
+//todo margin not bieng set,  probably a problem of missing the px
 function setBottomMargin(){
 
   if(!document.getElementById('mainwindow').lastChild) return;
@@ -66,4 +71,8 @@ function setBottomMargin(){
   bottomPanel.marginBottom = margin;
 
   console.log('bottom margin set, clientHeight of panel', bottomPanel.clientHeight);
+}
+
+function isBreakpoint( alias ) {
+    return $('.device-' + alias).is(':visible');
 }

@@ -102,11 +102,11 @@ $userLoggedin = false;
           ?>
         </ul>
         <br>
-        <ul id="spotNav" class="nav navbar-nav">
+        <ul id="spotNav" class="nav navbar-nav visible-lg-block">
         </ul>
       </div>
 
-      <div class="col-lg-2" id="cpHolder"> <div id="controlPanel" class = "controlPanel">
+      <div class="col-lg-2 visible-lg-block" id="cpHolder"> <div id="controlPanel" class = "controlPanel">
 
          <!--login button -->
         <?php if(!$userLoggedin) 
@@ -145,7 +145,7 @@ $userLoggedin = false;
   </div>
 </nav>
 
-<div id="blocker"></div>
+<div id="blocker" class="visible-lg-block"></div>
 <!-- data-spy="scroll" data-target=".navbar"
 //todo get navspy activity to work
 -->
@@ -431,6 +431,11 @@ $userLoggedin = false;
   </button> </form>";
 ?>
 
+<div class="device-xs visible-xs"></div>
+<div class="device-sm visible-sm"></div>
+<div class="device-md visible-md"></div>
+<div class="device-lg visible-lg"></div>
+
  <!--<script type="text/javascript" src="source.js"></script> -->
 <script type="text/javascript" src="myjs/globalsandload.js"></script>
 <script type="text/javascript" src="myjs/ajaxcalls.js"></script>
@@ -442,7 +447,6 @@ $userLoggedin = false;
 <script type="text/javascript" src="myjs/Tempcontrols.js"></script>
 <script type="text/javascript" src="myjs/unimplementedMethods.js"></script>
 <script type="text/javascript" src="myjs/updateforuser.js"></script>
-
 
   
 </body>
