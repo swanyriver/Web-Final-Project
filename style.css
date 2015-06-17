@@ -56,26 +56,12 @@ button .glyphicon {  float:left;  font-size: large;  margin-right: 15px;}
 
 .controlPanel > *, #logoutbutton > *{  width: 100%}
 
-/*.controlPanel > * {  display: inline;}
-
-#controlPanel {  display: inline;}
-
-*/#cpHolder {  /*z-index: -1;*/}
-
-/*.smaller > *{  width: 50%;  display: inline;}
-
-*//*#logo #controlPanel { width: 60%; display:block; float:right}
-
-#logo #controlPanel > *, #logo #controlPanel > * > button {  width:40%;  display:inline;}
 
 */#backMap {  height: 100%;  margin-top: 0px;  position: fixed;  right: 0px;  z-index: -1;}
 
 /* TODO Set Programatically 
 #mainWindow:last-child {  margin-bottom:300px;}
 */
-
-/*provide spacing for nav info*/
-#blocker{  display: block;}
 
 #APIroll[data-small] > * {  text-align: left;  display: block;}
 #APIroll[data-small] {position: static;}
@@ -88,4 +74,3 @@ button .glyphicon {  float:left;  font-size: large;  margin-right: 15px;}
 /*#mainwindow *, #cpHolder, #navMiddleCol, #APIroll {display:none}*/
 /*body { overflow:hidden;}*/ /* on the active page */
 
-#bodyContainer{ /* margin-bottom: 60px; */}  /*wrong it put 60px below apiroll*/
