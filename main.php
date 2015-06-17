@@ -88,8 +88,44 @@ $userLoggedin = false;
     <div class="row">
 
       <div id="logo" class = "col-lg-2">
-        
           <img src="img/logo.png">
+
+          <!--alternate buttons -->
+          <div class="hidden-lg" id="cpHoldersmall"> <div id="controlPanelsmall" class = "controlPanelsmall">
+
+             <!--login button -->
+            <?php if(!$userLoggedin) 
+              echo "<button id=\"loginButton\"
+                class = \"btn btn-success\" data-toggle=\"modal\" data-target=\"#loginMod\">
+                <span class=\"glyphicon glyphicon-user\"></span>
+                Login
+              </button>";
+              else
+              echo "<form action=\"main.php\" method=\"POST\" id=\"logoutbutton\">
+              <input type=\"text\" name=\"logout\" value=\"logout\" hidden>
+              <button type=\"submit\" class = \"btn btn-danger\">
+                <span class=\"glyphicon glyphicon-log-out\"></span>
+                Logout
+              </button> 
+             </form> "
+            ?>
+
+            <button class = "btn btn-inverse" data-toggle="modal" data-target="#settingsMod">
+              <span class="glyphicon glyphicon-cog"></span>
+              Settings
+            </button>
+
+
+            <div id="tempControls" class="btn-group">
+              <button id="Fbutton" type="button" class="btn btn-inverse" onclick="changeUnit('F')">
+                F&deg;
+              </button>
+              <button id="Cbutton" type="button" class="btn btn-inverse" onclick="changeUnit('C')">
+                C&deg;
+              </button>
+            </div>
+          </div></div>
+        <!--alternate buttons end -->
         
       </div>
 

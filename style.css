@@ -54,10 +54,10 @@ button .glyphicon {  float:left;  font-size: large;  margin-right: 15px;}
 
 #mainwindow {  position: relative; padding-top:25px}
 
-.controlPanel > *, #logoutbutton > *{  width: 100%}
+.controlPanel > *, #logoutbutton > *{  width: 100%;}
 
 
-*/#backMap {  height: 100%;  margin-top: 0px;  position: fixed;  right: 0px;  z-index: -1;}
+#backMap {  height: 100%;  margin-top: 0px;  position: fixed;  right: 0px;  z-index: -1;}
 
 /* TODO Set Programatically 
 #mainWindow:last-child {  margin-bottom:300px;}
@@ -70,7 +70,12 @@ button .glyphicon {  float:left;  font-size: large;  margin-right: 15px;}
 
 #SurfsUP { text-align:right}
 
+#logo > * { display: inline; }
+
+
 /*for making slide show background */
 /*#mainwindow *, #cpHolder, #navMiddleCol, #APIroll {display:none}*/
 /*body { overflow:hidden;}*/ /* on the active page */
 
+.controlPanelsmall > *, #logoutbuttonsmall > *{  width: 100%;}
+.controlPanelsmall {float: right; width: 16.66666667%;}
