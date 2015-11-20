@@ -9,7 +9,7 @@ Created by Brandon Swanson During the Week of June 1st - June 7th as a culminati
 - JavaScript
 - PHP
 - Mysqli
-- Bootstrap Java and CSS library
+- Bootstrap JavaScript and CSS library
 - Security and Scalability
 
 Live-URL 
