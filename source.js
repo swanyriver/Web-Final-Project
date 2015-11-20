@@ -263,7 +263,8 @@ function makeAjaxcalls(spot, views) {
   var lat = 'lat=' + spot['latitude'];
   var lon = 'lon=' + spot['longitude'];
   var weatheroptions = 'mode=json';
-  var weatherRequest = wurl + '?' + lat + '&' + lon + '&' + weatheroptions;
+  var apikey = 'APPID=4e43be43a6ad8d7f0655ddfb5d8275d4'
+  var weatherRequest = wurl + '?' + lat + '&' + lon + '&' + weatheroptions + '&' + apikey;
 
   weatherReq.open('GET', weatherRequest);
   weatherReq.send();

@@ -214,6 +214,11 @@ padding:0px;
   z-index: -1;
 }
 
-#mainWindow:last-child {
-  margin-bottom:300px;
+#mainwindow > .spotPanel {
+  margin-bottom: 50px;
 }
+#mainwindow > .spotPanel:last-child {
+  margin-bottom:700px;
+}
+
+
